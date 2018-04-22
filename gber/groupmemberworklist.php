@@ -13,6 +13,7 @@ require_logined_session();
 <div data-role="page" id="mypage">
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
+    include __DIR__ . '/model/calcMatch.php';
 
     $activitylog
         = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
@@ -50,6 +51,13 @@ require_logined_session();
             if (count($records) == 0) {
                 echo "<li>現在仕事はありません</li>";
             } else {
+                // それぞれの仕事に対してマッチング係数Mを計算
+                foreach($records as &$work){
+                    $match = calcMatch($userno, $work['id']);
+                    $work["match"] = $match;
+                }
+                unset($work);
+
                 $undefined = array_filter($records, function($v, $k) {
                     return is_null($v['interest']);
                 }, ARRAY_FILTER_USE_BOTH);
@@ -60,33 +68,30 @@ require_logined_session();
                     return $v['interest'] == 1;
                 }, ARRAY_FILTER_USE_BOTH);
 
+                // TODO それぞれの配列をマッチング係数のの降順に並べ替える
+
+                // 参加希望ごとにマッチング係数の高いものから順に表示
                 if(count($undefined) > 0){
                     echo "<li data-role=\"list-divider\">参加希望未回答</li>\n";
                     foreach($undefined as $eachwork){
-                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
-                            . $eachwork['id'] . "&groupno=" . $groupno
-                            . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
-                            . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
+                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid={$eachwork['id']}&groupno=$groupno\" rel=\"external\">
+                                <h2>" . h($eachwork['worktitle']) . " (M={$eachwork['match']})</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
                     }
                 }
 
                 if(count($negative) > 0){
                     echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
                     foreach($negative as $eachwork){
-                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
-                            . $eachwork['id'] . "&groupno=" . $groupno
-                            . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
-                            . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
+                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid={$eachwork['id']}&groupno=$groupno\" rel=\"external\">
+                                <h2>" . h($eachwork['worktitle']) . " (M={$eachwork['match']})</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
                     }
                 }
 
                 if(count($positive) > 0){
                     echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
                     foreach($positive as $eachwork){
-                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
-                            . $eachwork['id'] . "&groupno=" . $groupno
-                            . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
-                            . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
+                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid={$eachwork['id']}&groupno=$groupno\" rel=\"external\">
+                                <h2>" . h($eachwork['worktitle']) . " (M={$eachwork['match']})</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
                     }
                 }
             }
