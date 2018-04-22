@@ -77,6 +77,18 @@ $groupno = $_GET['groupno'];
             <span>※ 依頼者氏名、団体名、もしくは概要を記入してください。</span>
             <input type="text" id="worktitle" size="50" name="worktitle"
                    placeholder="タイトルを記入してください。(50文字まで)" required/></br>
+            <label for="worktype">【仕事タイプ】</label>
+            <select name="worktype" id="worktype" data-inline="true" data-theme="c">
+                <option value="choose-one">仕事タイプをお選びください</option>
+                <?php
+                $result = mysql_query("SELECT id, name FROM predefined_work", $con);
+                while ($row = mysql_fetch_assoc($result)) {
+                    echo "<option value=\"{$row['id']}\">{$row['name']}</option>";
+                }
+                ?>
+                <option value="0">その他</option>
+            </select>
+            </br></br>
             <label for="content">【具体的な内容】</label>
             <span>※ 仕事内容、場所など勤務に必要な情報を入力してください。</span>
             <textarea data-role="none" id="content" name="content"

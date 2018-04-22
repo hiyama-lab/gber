@@ -125,6 +125,8 @@ function uploadData(){
         sweetAlert("エラー","仕事タイトルが未入力です。","error");
     } else if( $("[name='genre']").val() == "choose-one" ){
         sweetAlert("エラー","グループが未選択です。","error");
+    } else if( $("[name='worktype']").val() == "choose-one" ){
+        sweetAlert("エラー","仕事タイプが未選択です。","error");
     } else if( $("[name='content']").val() == "" ){
         sweetAlert("エラー","依頼内容が未入力です。","error");
     } else if( $("[name='workdatetime']").val() == "" ){
@@ -149,7 +151,8 @@ function uploadData(){
                         window.location.href = "index.php";
             }});
         },
-        error: function(){
+        error: function(err){
+            console.log(err);
             sweetAlert("エラー", "エラーのため依頼できませんでした", "error");
         }
     })}
