@@ -1665,6 +1665,92 @@ LOCK TABLES `photodata` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `predefined_work`
+--
+
+DROP TABLE IF EXISTS `predefined_work`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `predefined_work` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `worktype_prune` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_agriculture` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_cleaning` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_housework` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_shopping` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_repair` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_caretaking` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_teaching` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `worktype_consulting` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_english` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_foreignlanguage` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_it` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_business` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_caretaking` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_housework` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_liberalarts` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `study_art` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_health` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_elderly` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_disable` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_children` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_sport` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_town` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_safety` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_nature` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_disaster` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `volunteer_international` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_musicalinstrument` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_chorus` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_dance` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_shodo` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_kado` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_sado` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_wasai` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_knit` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_cooking` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_gardening` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_diy` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_painting` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_pottery` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_photo` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_writing` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_go` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_camp` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_watchsport` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_watchperformance` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_watchmovie` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_listenmusic` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_reading` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_pachinko` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_karaoke` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_game` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_attraction` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_train` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `hobby_car` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `trip_daytrip` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `trip_domestic` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `trip_international` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_baseball` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_tabletennis` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_tennis` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_badminton` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_golf` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_gateball` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_bowling` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_fishing` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_swimming` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_skiing` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_climbing` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_cycling` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_jogging` decimal(5,1) NOT NULL DEFAULT '0.0',
+  `sport_walking` decimal(5,1) NOT NULL DEFAULT '0.0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `questionnaire_demographic`
 --
 
