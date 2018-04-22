@@ -50,31 +50,44 @@ require_logined_session();
             if (count($records) == 0) {
                 echo "<li>現在仕事はありません</li>";
             } else {
-                $interestlevel = 0;
-                foreach ($records as $eachwork) {
-                    if ($interestlevel < 1 && is_null($eachwork['interest'])) {
-                        echo "<li data-role=\"list-divider\">参加希望未回答</li>\n";
-                        $interestlevel = 1;
-                    } else {
-                        if ($interestlevel < 2
-                            && !is_null($eachwork['interest'])
-                            && $eachwork['interest'] == 0
-                        ) {
-                            echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
-                            $interestlevel = 2;
-                        } else {
-                            if ($interestlevel < 3
-                                && $eachwork['interest'] == 1
-                            ) {
-                                echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
-                                $interestlevel = 3;
-                            }
-                        }
+                $undefined = array_filter($records, function($v, $k) {
+                    return is_null($v['interest']);
+                }, ARRAY_FILTER_USE_BOTH);
+                $negative = array_filter($records, function($v, $k) {
+                    return !is_null($v['interest']) && $v['interest'] == 0;
+                }, ARRAY_FILTER_USE_BOTH);
+                $positive = array_filter($records, function($v, $k) {
+                    return $v['interest'] == 1;
+                }, ARRAY_FILTER_USE_BOTH);
+
+                if(count($undefined) > 0){
+                    echo "<li data-role=\"list-divider\">参加希望未回答</li>\n";
+                    foreach($undefined as $eachwork){
+                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
+                            . $eachwork['id'] . "&groupno=" . $groupno
+                            . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
+                            . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
                     }
-                    echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
-                        . $eachwork['id'] . "&groupno=" . $groupno
-                        . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
-                        . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
+                }
+
+                if(count($negative) > 0){
+                    echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
+                    foreach($negative as $eachwork){
+                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
+                            . $eachwork['id'] . "&groupno=" . $groupno
+                            . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
+                            . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
+                    }
+                }
+
+                if(count($positive) > 0){
+                    echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
+                    foreach($positive as $eachwork){
+                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
+                            . $eachwork['id'] . "&groupno=" . $groupno
+                            . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
+                            . "</h2><p>" . h($eachwork['content']) . "</p></a></li>\n";
+                    }
                 }
             }
             ?>
