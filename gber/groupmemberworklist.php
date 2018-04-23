@@ -52,8 +52,18 @@ require_logined_session();
         return $v['interest'] == 1;
     }, ARRAY_FILTER_USE_BOTH);
 
-    // TODO それぞれの配列をマッチング係数の降順に並べ替える
-    // ...
+    // それぞれの配列をマッチング係数の降順に並べ替える
+    if($matching_enabled){
+        function cmp($a, $b){
+            if ($a['match'] == $b['match']){
+                return 0;
+            }
+            return ($a['match'] > $b['match']) ? -1 : 1;
+        }
+        uasort($undefined, 'cmp');
+        uasort($negative, 'cmp');
+        uasort($positive, 'cmp');
+    }
     ?>
 
     <!-- HEADER -->
