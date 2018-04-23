@@ -208,13 +208,38 @@ class DB {
         ]);
     }
 
-    public function updateAccountWithoutPass($userno, $mail, $nickname){
+    public function updateAccountWithoutPass($userno, $mail, $nickname) {
         $stmt = $this->pdo->prepare("UPDATE db_user SET mail = :mail, nickname = :nickname WHERE userno = :userno");
         return $stmt->execute([
             ':userno' => $userno,
             ':mail' => $mail,
             ':nickname' => $nickname,
         ]);
+    }
+
+    public function getOngoingWork($groupno, $userno){
+        $stmt = $this->pdo->prepare("SELECT worklist.worktitle,worklist.content,worklist.id,workinterest.interest FROM worklist LEFT OUTER JOIN workinterest ON worklist.id = workinterest.workid AND workinterest.userno = :userno WHERE worklist.groupno = :groupno AND worklist.status='2' ORDER BY workinterest.interest LIMIT 100");
+        $stmt->execute([':groupno' => $groupno, ':userno' => $userno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getMatchingParamByUserno($userno){
+        $stmt = $this->pdo->prepare('SELECT * FROM matchingparam_human WHERE userno = :userno');
+        $stmt->execute(['userno' => $userno]);
+        $row = $stmt->fetch();
+        unset($row['matchingparamid']);
+        unset($row['userno']);
+        return array_values($row);
+    }
+
+    public function getMatchingParamByWorkid($workid){
+        $stmt = $this->pdo->prepare('SELECT * FROM matchingparam_work WHERE workid = :workid');
+        $stmt->execute(['workid' => $workid]);
+        $row = $stmt->fetch();
+        unset($row['matchingparamid']);
+        unset($row['groupno']);
+        unset($row['workid']);
+        return array_values($row);
     }
 
 }
