@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>chat@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M48,48 L50,54 L42,52 L12,52 C9.790861,52 8,50.209139 8,48 L8,32 C8,29.790861 9.790861,28 12,28 L44,28 C46.209139,28 48,29.790861 48,32 L48,48 Z" id="path-1"></path>
+    </defs>
+    <g id="chat" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M54,29 L56,35 L48,33 L18,33 C15.790861,33 14,31.209139 14,29 L14,13 C14,10.790861 15.790861,9 18,9 L50,9 C52.209139,9 54,10.790861 54,13 L54,29 Z" id="Combined-Shape" fill="#9DC170"></path>
+        <g id="Combined-Shape" transform="translate(29.000000, 41.000000) scale(-1, 1) translate(-29.000000, -41.000000) ">
+            <use fill="#FFE236" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <path stroke="#FFFFFF" stroke-width="1" d="M48.5,47.9188612 L50.7623735,54.7059816 L41.9384472,52.5 L12,52.5 C9.51471863,52.5 7.5,50.4852814 7.5,48 L7.5,32 C7.5,29.5147186 9.51471863,27.5 12,27.5 L44,27.5 C46.4852814,27.5 48.5,29.5147186 48.5,32 L48.5,47.9188612 Z"></path>
+        </g>
+        <g id="Group" transform="translate(23.000000, 19.000000)" fill="#FFFFFF">
+            <circle id="Oval-18" cx="2" cy="2" r="2"></circle>
+            <circle id="Oval-18" cx="22" cy="2" r="2"></circle>
+            <circle id="Oval-18" cx="12" cy="2" r="2"></circle>
+        </g>
+        <g id="Group" transform="translate(17.000000, 39.000000)" fill="#FFFFFF">
+            <circle id="Oval-18" cx="2" cy="2" r="2"></circle>
+            <circle id="Oval-18" cx="22" cy="2" r="2"></circle>
+            <circle id="Oval-18" cx="12" cy="2" r="2"></circle>
+        </g>
+    </g>
+</svg>

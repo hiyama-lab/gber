@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>map@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M42,32 L28,40 L14,32 L0,40 L0,8 L14,0 L28,8 L42,0 L56,8 L56,40 L42,32 Z" id="path-1"></path>
+    </defs>
+    <g id="map" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Combined-Shape" transform="translate(4.000000, 12.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#F3ECE2" xlink:href="#path-1"></use>
+            <polygon id="Rectangle-2" fill="#9DC170" mask="url(#mask-2)" transform="translate(46.687080, 25.133683) rotate(-44.000000) translate(-46.687080, -25.133683) " points="28.351568 10.0217705 70.0274919 7.17267108 67.3229027 43.094695 23.3466687 43.094695 23.3466687 22.8464798"></polygon>
+            <path d="M20.8766972,17.0681793 L35.8766972,17.0681793 L35.8766972,-5.93182067 L41.8766972,-5.93182067 L41.8766972,17.0681793 L69.8766972,17.0681793 L69.8766972,23.0681793 L41.8766972,23.0681793 L41.8766972,55.0681793 L35.8766972,55.0681793 L35.8766972,23.0681793 L20.8766972,23.0681793 L20.8766972,49.0681793 L14.8766972,49.0681793 L14.8766972,23.0681793 L-10.1233028,23.0681793 L-10.1233028,17.0681793 L14.8766972,17.0681793 L14.8766972,-11.9318207 L20.8766972,-11.9318207 L20.8766972,17.0681793 Z" fill="#FFE236" mask="url(#mask-2)" transform="translate(29.876697, 21.568179) rotate(-44.000000) translate(-29.876697, -21.568179) "></path>
+        </g>
+        <g id="Group" transform="translate(4.000000, 12.000000)" fill="#535353" fill-opacity="0.191519475">
+            <polygon id="Rectangle-14" points="0 8 14 0 14 32 0 40"></polygon>
+            <polygon id="Rectangle-14" points="28 8 42 0 42 32 28 40"></polygon>
+        </g>
+        <g id="Group-2" transform="translate(21.000000, 25.000000)">
+            <path d="M3,8 C5,5.77123617 6,4.1045695 6,3 C6,1.34314575 4.65685425,0 3,0 C1.34314575,0 0,1.34314575 0,3 C0,4.1045695 1,5.77123617 3,8 Z" id="Oval-2" fill="#F7182C"></path>
+            <circle id="Oval-3" fill="#FFFFFF" cx="3" cy="3" r="1"></circle>
+        </g>
+    </g>
+</svg>

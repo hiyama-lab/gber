@@ -1,0 +1,151 @@
+---
+# deploy MySQL server container
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: hiyamalab/gber-mysql:v1
+        name: mysql
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+        ports:
+        - containerPort: 3306
+        envFrom:
+        - secretRef:
+            name: gber-secrets
+        volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          gcePersistentDisk:
+            pdName: gber-disk
+            fsType: ext4
+
+---
+# expose MySQL port 3306 to the rest of the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+    protocol: TCP
+  selector:
+    app: mysql
+
+---
+# deploy PHP container
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: php
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: php
+    spec:
+      containers:
+      - image: hiyamalab/gber-php:v1
+        imagePullPolicy: Always
+        name: php
+        livenessProbe:
+          tcpSocket:
+            port: 9000
+        ports:
+        - containerPort: 9000
+        envFrom:
+        - secretRef:
+            name: gber-secrets
+
+---
+# deploy nginx container
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: hiyamalab/gber-nginx:v1
+        imagePullPolicy: Always
+        name: nginx
+        livenessProbe:
+          tcpSocket:
+            port: 80
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        ports:
+        - containerPort: 80
+
+
+---
+# expose PHP port 9000 to the rest of the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: php
+  labels:
+    app: php
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9000
+    protocol: TCP
+  selector:
+    app: php
+
+---
+# expose NGINX port 80 to the rest of the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: nginx
+
+---
+# deploy ingress
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gber-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: gber-static-ip
+spec:
+  tls:
+  - secretName: gber-cert
+  backend:
+    serviceName: nginx
+    servicePort: 80

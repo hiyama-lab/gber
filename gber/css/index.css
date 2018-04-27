@@ -1,0 +1,197 @@
+@charset "utf-8";
+
+html, body { height: 100%; margin: 0; padding: 0; }
+
+body {
+    /* prevent callout to copy image, etc when tap to hold */
+    -webkit-touch-callout: none;
+    /* prevent webkit from resizing text to fit */
+    -webkit-text-size-adjust: none;
+    /* prevent copy paste, to allow, change 'none' to 'text' */
+    /*-webkit-user-select: none;*/
+    -webkit-user-select: text;
+
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    width:100%;
+}
+
+#header-logo {
+    height: 38px;
+    margin: -10px 0;
+    padding: 0;
+    background: url(/img/logo2.svg) center no-repeat;
+}
+
+#toplogo{
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#topmanual{
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.list-icon{
+    width: 80px;
+    height: 80px;
+}
+
+#profile-container{
+    margin: 0 auto;
+    text-align: center;
+}
+
+#toplogo img{
+    height: 200px;
+}
+#skill-profile-container img{
+    height: 200px;
+}
+#profile-container img{
+    height: 200px;
+}
+#skill-profile-container h1 img{
+    height: 25px;
+}
+#profile-container h2 img{
+    height: 25px;
+}
+#profile-container td img{
+    height: 50px;
+}
+#preview_field img{
+    height: 200px;
+}
+
+h2.chuo-yose{
+    margin: 0 auto;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #bbb;
+    cellspacing: 0;
+    cellpadding: 0;
+    white-space:nowrap;
+}
+
+table.smallcalendar{
+}
+
+table.admin{
+    width: 100%;
+}
+
+table.admin td,th{
+    padding: 10px 10px;
+}
+
+td,th {
+    border: 1px solid #ddd;
+    padding: 0px 0px;
+}
+
+tbody tr:nth-child(even)  td { background-color: #eee; }
+
+@media screen and (max-width: 640px) {
+    table {
+    overflow-x: auto;
+    display: block;
+    }
+}
+
+/* チャットレイアウト */
+.chat-box {
+    width: 100%;
+    height: auto;
+    overflow: hidden; /*floatの解除*/
+    margin-bottom: 20px;
+}
+.chat-face {
+    float: left;
+    margin-right: -70px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+.chat-area {
+    width: 100%;
+    float: right;
+}
+.chat-hukidashi {
+    display: inline-block; /*コメントの文字数に合わせて可変*/
+    padding: 15px 15px;
+    margin-left: 70px;
+    /* border: 1px solid gray; ←削除 */
+    border-radius: 10px;
+    position: relative; /*追記*/
+    background-color: #A9F5F2; /*追記*/
+}
+
+.chat-hukidashi:after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: -10px;
+    margin-top: -10px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #A9F5F2 transparent transparent;
+}
+.someone {background-color: #A9F5A9;}
+.someone:after {border-color: transparent #A9F5A9 transparent transparent;}
+.bbsjobpost {background-color: #F3E2A9;}
+.bbsjobpost:after {border-color: transparent #F3E2A9 transparent transparent;}
+span.smallletter {font-size :small;}
+
+#search-map {height: 100%;}
+#upload-map {height: 30%;}
+
+#notification{
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+
+#jumpmenu {
+    margin-bottom: 20px;
+}
+
+th.memberprof{
+    padding: 10px 10px;
+}
+td.memberprof {
+    padding: 0px 10px;
+}
+
+.class-holiday > .ui-state-default {
+  background: #FFCCCC !important;
+  color: red !important;
+}
+
+textarea {
+  border: 1px solid #000000;
+  width:99.5%;
+  margin:5px 0;
+  padding:3px;
+}
+
+.boxsizingBorder {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+/*a.ui-collapsible-heading-toggle.ui-btn.ui-icon-plus.ui-btn-icon-right.ui-btn-c{
+    margin-top: -1px;
+}*/

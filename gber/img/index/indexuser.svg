@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>indexuser@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="24" cy="24" r="24"></circle>
+    </defs>
+    <g id="indexuser" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(8.000000, 8.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Oval-24" fill="#41B4D8" xlink:href="#path-1"></use>
+            <ellipse id="Oval-20" fill="#4A4A4A" mask="url(#mask-2)" cx="24" cy="19.3181818" rx="9.375" ry="9.31818182"></ellipse>
+            <path d="M19.5515451,29.2498714 C20.8751368,29.9603472 22.3901846,30.3636364 24,30.3636364 C25.6098154,30.3636364 27.1248632,29.9603472 28.4484549,29.2498714 C34.1671905,31.2328313 38.4214336,36.9384367 38.9455329,43.8332777 C35.5214991,46.9725931 30.101045,49 24,49 C17.898955,49 12.4785009,46.9725931 9.05446705,43.8332777 C9.57856645,36.9384367 13.8328095,31.2328313 19.5515451,29.2498714 Z" id="Combined-Shape" fill="#4A4A4A" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>

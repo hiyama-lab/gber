@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>bulletin@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="bulletin" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(12.000000, 5.000000)" fill="#41B4D8">
+            <path d="M14.0829584,7 C14.0283988,6.67479153 14,6.34071221 14,6 C14,2.6862915 16.6862915,0 20,0 C23.3137085,0 26,2.6862915 26,6 C26,6.34071221 25.9716012,6.67479153 25.9170416,7 L34,7 C37.3137085,7 40,9.6862915 40,13 L40,49 C40,52.3137085 37.3137085,55 34,55 L6,55 C2.6862915,55 4.05812251e-16,52.3137085 0,49 L0,13 C-4.05812251e-16,9.6862915 2.6862915,7 6,7 L14.0829584,7 Z" id="Combined-Shape"></path>
+        </g>
+        <rect id="Rectangle-2" fill="#FFFFFF" x="16" y="17" width="32" height="38"></rect>
+        <circle id="Oval-2" fill="#FFFFFF" cx="32" cy="11" r="2"></circle>
+        <rect id="Rectangle-10" fill="#70B0C4" x="20" y="22" width="24" height="4" rx="2"></rect>
+        <rect id="Rectangle-10" fill="#70B0C4" x="20" y="29" width="24" height="4" rx="2"></rect>
+        <rect id="Rectangle-10" fill="#70B0C4" x="20" y="36" width="24" height="4" rx="2"></rect>
+        <rect id="Rectangle-10" fill="#70B0C4" x="20" y="43" width="12" height="4" rx="2"></rect>
+    </g>
+</svg>

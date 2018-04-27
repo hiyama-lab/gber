@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>introjobs@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="introjobs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle-21" fill="#EAEAEA" x="11" y="11" width="42" height="42" rx="4"></rect>
+        <path d="M35,22 L35,26 L35,27 L31,27 L31,26 L34,26 L34,21 L35,21 L36,21 L36,22 L35,22 Z M24,27 L24,31 L24,32 L19,32 L19,31 L23,31 L23,26 L24,26 L25,26 L25,27 L24,27 Z M26,26 L27,26 L27,27 L26,27 L26,26 Z M28,26 L29,26 L29,27 L28,27 L28,26 Z" id="Combined-Shape" fill="#393939"></path>
+        <rect id="Rectangle-5" fill="#393939" x="38" y="17" width="2" height="1"></rect>
+        <path d="M11,45 L53,45 L53,49 C53,51.209139 51.209139,53 49,53 L15,53 C12.790861,53 11,51.209139 11,49 L11,45 Z" id="Rectangle-2" fill="#9DC170"></path>
+        <rect id="Rectangle-3" fill="#979797" x="18" y="37" width="8" height="8"></rect>
+        <rect id="Rectangle-3" fill="#979797" x="38" y="25" width="8" height="20"></rect>
+        <rect id="Rectangle-4" fill="#393939" x="39" y="18" width="1" height="7"></rect>
+        <rect id="Rectangle-4" fill="#C26868" x="40" y="19" width="5" height="4"></rect>
+        <rect id="Rectangle-3" fill="#979797" x="28" y="29" width="8" height="16"></rect>
+        <rect id="Rectangle-22" fill="#68A0C2" x="18" y="37" width="8" height="2"></rect>
+        <rect id="Rectangle-22" fill="#9DC170" x="28" y="29" width="8" height="2"></rect>
+        <rect id="Rectangle-22" fill="#DB8A46" x="38" y="25" width="8" height="2"></rect>
+    </g>
+</svg>

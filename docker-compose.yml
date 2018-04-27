@@ -1,0 +1,34 @@
+version: '3'
+services:
+  nginx:
+      build:
+        context: .
+        dockerfile: docker/nginx/Dockerfile.dev
+      image: gber-nginx
+      volumes:
+        - "./gber:/var/www/html"
+      ports:
+          - "8080:80"
+          - "8443:443"
+      depends_on:
+          - php
+  php:
+      build:
+        context: .
+        dockerfile: docker/php/Dockerfile.dev
+      image: gber-php
+      env_file:
+        - config/gber.env
+      volumes:
+        - "./gber:/var/www/html"
+      depends_on:
+          - mysql
+  mysql:
+      build:
+        context: .
+        dockerfile: docker/mysql/Dockerfile
+      image: gber-mysql
+      ports:
+          - "13306:3306"
+      env_file:
+        - config/gber.env

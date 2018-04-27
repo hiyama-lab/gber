@@ -1,0 +1,13 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: letsencrypt
+  namespace: default
+spec:
+  acme:
+    server: https://acme-v01.api.letsencrypt.org/directory
+    email: foo@example.com
+    privateKeySecretRef:
+      name: letsencrypt
+    http01: {}

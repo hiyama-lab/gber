@@ -1,0 +1,4 @@
+/gber/vendor/*
+/gber/php/vendor/*
+
+/config/*.env

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>todo@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="24" y="21" width="12" height="12" rx="2"></rect>
+        <rect id="path-2" x="24" y="36" width="12" height="12" rx="2"></rect>
+    </defs>
+    <g id="todo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Rectangle-17">
+            <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <rect stroke="#9DC170" stroke-width="2" x="25" y="22" width="10" height="10" rx="2"></rect>
+        </g>
+        <g id="Rectangle-17">
+            <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-2"></use>
+            <rect stroke="#9DC170" stroke-width="2" x="25" y="37" width="10" height="10" rx="2"></rect>
+        </g>
+        <g id="check.2" transform="translate(22.000000, 16.000000)" fill="#0C9E13" fill-rule="nonzero">
+            <path d="M6.79687467,14.40642 L0.273437333,8.06300935 C0.091146,7.88468087 0,7.65540065 0,7.37517 C0,7.0949387 0.091146,6.86565913 0.273437333,6.68733 L1.71875,5.31165065 C1.90104133,5.1078463 2.128906,5.00594413 2.402344,5.00594413 C2.67578133,5.00594413 2.91666667,5.1078463 3.125,5.31165065 L7.5,9.59154196 L16.875,0.420346304 C17.0833333,0.216541957 17.3242187,0.114639783 17.597656,0.114639783 C17.871094,0.114639783 18.0989587,0.216541957 18.28125,0.420346304 L19.7265627,1.79602565 C19.908854,1.97435478 20,2.20363435 20,2.48386565 C20,2.7640963 19.908854,2.99337652 19.7265627,3.171705 L8.20312533,14.40642 C8.02083333,14.6102243 7.78645867,14.7121265 7.5,14.7121265 C7.21354133,14.7121265 6.97916667,14.6102243 6.79687467,14.40642 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>
