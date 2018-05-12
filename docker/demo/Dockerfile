@@ -5,11 +5,12 @@ ENV TZ Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # setup php-fpm
-RUN apt-get update && apt-get install -y libcurl3-dev libmcrypt-dev
+RUN apt-get update && apt-get install -y libcurl3-dev libmcrypt-dev zip unzip
 RUN docker-php-ext-install mysql curl mcrypt pdo_mysql
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 COPY ./gber/ /var/www/html
 COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+RUN cd /var/www/html; composer install
 
 # install nginx
 RUN apt-get install -y nginx
