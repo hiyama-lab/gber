@@ -7,8 +7,10 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 
 COPY ./gber/ /var/www/html
 COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-
 RUN cd /var/www/html; composer install
+
+ARG gber_version
+ENV GBER_VERSION=$gber_version
 
 ENV TZ Asia/Tokyo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
