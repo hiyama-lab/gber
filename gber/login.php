@@ -17,7 +17,15 @@
         <div id="toplogo" margin="0 auto">
             <img src="./img/logo1.svg"/></br>
         </div>
-        <!--div>ログアウトされています。下のフォームからログインしてください。</div-->
+        <?php
+        if($_ENV["IS_DEMO"] === 'false'){
+            ?>
+            <p>デモ用アカウント</p>
+            <p>メールアドレス:user1@example.com</br>パスワード:password</p>
+            <p>メールアドレス:user2@example.com</br>パスワード:password</p>
+            <?php
+        }
+        ?>
         <form id="login-form" autocomplete="on" data-ajax="false" method="post"
               action="model/login.php">
             <label for="mail">メールアドレス</label>
@@ -33,15 +41,6 @@
         </button>
         <button class="ui-btn" onclick="location.href='registeruser.php'">新規登録
         </button>
-        <?php
-        if($_ENV["IS_DEMO"] === 'true'){
-        ?>
-            <p>登録済アカウント</p>
-            user1@example.com, password</br>
-            user2@example.com, password
-        <?php
-        }
-        ?>
     </div>
 
     <?php include("./common/commonFooter.php"); ?>
