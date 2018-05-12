@@ -17,7 +17,15 @@
         <div id="toplogo" margin="0 auto">
             <img src="./img/logo1.svg"/></br>
         </div>
-        <!--div>ログアウトされています。下のフォームからログインしてください。</div-->
+        <?php
+        if($_ENV["IS_DEMO"] === 'false'){
+            ?>
+            <p>デモ用アカウント</p>
+            <p>メールアドレス:user1@example.com</br>パスワード:password</p>
+            <p>メールアドレス:user2@example.com</br>パスワード:password</p>
+            <?php
+        }
+        ?>
         <form id="login-form" autocomplete="on" data-ajax="false" method="post"
               action="model/login.php">
             <label for="mail">メールアドレス</label>
