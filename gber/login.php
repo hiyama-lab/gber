@@ -33,6 +33,15 @@
         </button>
         <button class="ui-btn" onclick="location.href='registeruser.php'">新規登録
         </button>
+        <?php
+        if($_ENV["IS_DEMO"] === 'true'){
+        ?>
+            <p>登録済アカウント</p>
+            user1@example.com, password</br>
+            user2@example.com, password
+        <?php
+        }
+        ?>
     </div>
 
     <?php include("./common/commonFooter.php"); ?>
