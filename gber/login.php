@@ -18,7 +18,7 @@
             <img src="./img/logo1.svg"/></br>
         </div>
         <?php
-        if($_ENV["IS_DEMO"] === 'false'){
+        if($_ENV["IS_DEMO"] === 'true'){
             ?>
             <p>デモ用アカウント</p>
             <p>メールアドレス:user1@example.com</br>パスワード:password</p>
