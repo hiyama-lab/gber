@@ -1,4 +1,6 @@
 <?php
+include("./common/Constant.php");
+echo '<p id="gber-version">Powered by <a href="https://github.com/hiyama-lab/gber">GBER</a> ' . Constant::VERSION . '</p>';
 echo "<script type=\"text/javascript\">\n";
 echo "var baseurl = \"" . $baseurl . "\";\n";
 echo "var groupnamelist = [" . $groupstr . "];\n";
