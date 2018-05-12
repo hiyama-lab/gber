@@ -16,8 +16,6 @@ services:
       build:
         context: .
         dockerfile: docker/php/Dockerfile.dev
-        args:
-          gber_version: "x.x.x"
       image: gber-php
       env_file:
         - config/gber.env
