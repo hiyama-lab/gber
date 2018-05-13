@@ -8,7 +8,7 @@
     </div>
     <h1>
         <a href="index.php" rel="external">
-          <div id="header-logo"></div>
+          <div id="header-logo" <?php if ($_ENV["IS_DEMO"] === 'true') { ?>class="demo"<?php } ?>></div>
         </a>
     </h1>
     <div class="ui-btn-right">

@@ -25,6 +25,10 @@ body {
     background: url(/img/logo2.svg) center no-repeat;
 }
 
+#header-logo.demo {
+    background-image: url(/img/logo2_demo.svg);
+}
+
 #toplogo{
     margin: 0 auto;
     text-align: center;
@@ -196,4 +200,27 @@ textarea {
     text-align: center;
     font-size: 12px;
     margin-bottom: 16px;
+}
+
+#demo-account {
+    background-color: #9dc16f;
+    margin-bottom: 30px;
+    padding: 5px;
+}
+
+#demo-account h2 {
+    margin: 0;
+}
+
+#demo-account dl {
+    margin: 10px 0 0 0;
+}
+
+#demo-account dt {
+    float: left;
+    margin-right: 5px;
+}
+
+#demo-account dd {
+    margin-bottom: 3px;
 }

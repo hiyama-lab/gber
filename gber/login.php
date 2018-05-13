@@ -20,9 +20,17 @@
         <?php
         if($_ENV["IS_DEMO"] === 'true'){
             ?>
-            <p>デモ用アカウント</p>
-            <p>メールアドレス:user1@example.com</br>パスワード:password</p>
-            <p>メールアドレス:user2@example.com</br>パスワード:password</p>
+            <div id="demo-account">
+                <h2>デモ用アカウント</h2>
+                <dl>
+                    <dt>メールアドレス:</dt><dd>user1@example.com</dd>
+                    <dt>パスワード:</dt><dd>password</dd>
+                </dl>
+                <dl>
+                    <dt>メールアドレス:</dt><dd>user2@example.com</dd>
+                    <dt>パスワード:</dt><dd>password</dd>
+                </dl>
+            </div>
             <?php
         }
         ?>
