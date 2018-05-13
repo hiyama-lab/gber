@@ -17,6 +17,7 @@ gber-demoを導入する前に、以下の作業を行ってください。
 ### 1. 起動
 
 ```bash
+$ docker pull hiyamalab/gber-demo
 $ docker run -it -e "GOOGLE_MAP_APIKEY=<YOUR API KEY>" -p 8080:80 -p 8443:443 hiyamalab/gber-demo
 ```
 
