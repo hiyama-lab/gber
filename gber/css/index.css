@@ -201,3 +201,26 @@ textarea {
     font-size: 12px;
     margin-bottom: 16px;
 }
+
+#demo-account {
+    background-color: #9dc16f;
+    margin-bottom: 30px;
+    padding: 5px;
+}
+
+#demo-account h2 {
+    margin: 0;
+}
+
+#demo-account dl {
+    margin: 10px 0 0 0;
+}
+
+#demo-account dt {
+    float: left;
+    margin-right: 5px;
+}
+
+#demo-account dd {
+    margin-bottom: 3px;
+}
