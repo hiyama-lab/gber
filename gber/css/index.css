@@ -25,6 +25,10 @@ body {
     background: url(/img/logo2.svg) center no-repeat;
 }
 
+#header-logo.demo {
+    background-image: url(/img/logo2_demo.svg);
+}
+
 #toplogo{
     margin: 0 auto;
     text-align: center;
