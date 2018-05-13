@@ -29,18 +29,4 @@ if (isset($_SESSION['userno']) && $_SESSION['time'] + 604800 > time()) {
     }
 }
 
-//----------------------------------------
-//ログアウト処理
-//----------------------------------------
-
-if (isset($_POST["out"])) {
-    $_SESSION = array();
-    if (ini_get("session.use_cookies")) {
-        setcookie(session_id(), '', time() - 604800);
-    }
-    session_destroy();
-    setcookie('userno', '', time() - 604800, '/');
-    exit;
-}
-
 ?>
