@@ -8,31 +8,25 @@ header('Content-type: application/json');
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/db.php';
 include __DIR__ . '/../lib/sendEmail.php';
+include __DIR__ . '/../lib/sessionUtil.php';
 
 //ログイン認証
-$mail = $_POST["mail"];
-$pass = $_POST["pass"];
+$mail = h($_POST["mail"]);
+$pass = h($_POST["pass"]);
+$token = h($_POST["token"]);
 
 $db = DB::getInstance();
 $row = $db->findUserByMail($mail);
 
-if (password_verify($pass, $row['pass'])) {//有効ログイン
+if (validate_token($token) && password_verify($pass, $row['pass'])) {//有効ログイン
+    session_regenerate_id(true);
     $_SESSION['time'] = time();
     $_SESSION['userno'] = $row['userno'];
-    if (ini_get("session.use_cookies")) {
-        setcookie(session_id(), '', time() + 604800, '/');
-    }
-    setcookie('userno', $_SESSION['userno'], time() + 604800, '/');
-    header("Location: " . $baseurl);
+    header("Location: $baseurl");
+    exit;
 
-} else {//無効ログイン(ログアウト処理と同じ)
-    $_SESSION = array();
-    if (ini_get("session.use_cookies")) {
-        setcookie(session_id(), '', time() - (7 * 24 * 60 * 60), '/');
-    }
-    session_destroy();
-    setcookie('userno', '', time() - (7 * 24 * 60 * 60), '/');
-    header("Location: " . $baseurl);
+} else {//無効ログイン
+    header("Location: $baseurl/login.php");
     exit;
 }
 ?>

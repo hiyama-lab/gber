@@ -7,11 +7,15 @@ ini_set('display_errors', 0);
 //include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/db.php';
 include __DIR__.'/../lib/sendEmail.php';
+include __DIR__ . '/../lib/sessionUtil.php';
 
 //登録
-$mail = $_POST["mail"];
-$pass = $_POST["pass"];
-$nickname = $_POST["nickname"];
+$mail = h($_POST["mail"]);
+$pass = h($_POST["pass"]);
+$nickname = h($_POST["nickname"]);
+
+$token = h($_POST["token"]);
+if (validate_token($token)) exit;
 
 $options = array('cost' => 10);
 $hash = password_hash($pass, PASSWORD_DEFAULT, $options);

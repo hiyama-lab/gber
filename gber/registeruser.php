@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/lib/sessionUtil.php';
+require_unlogined_session();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +26,7 @@
             <input type="password" id="pass" name="pass" required/></br>
             <label for="pass_re">パスワード(再入力)</label>
             <input type="password" id="pass_re" name="pass_re" required/></br>
+            <input type="hidden" name="token" value="<?=h(generate_token())?>">
             <input type="button" value="登録する" data-theme="b" name="go"
                    onClick="registerData();"/>
         </form>
