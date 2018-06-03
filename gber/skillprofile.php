@@ -22,7 +22,7 @@ require_logined_session();
     $userno = $_GET['userno'];
     $userselect = true;
 
-    if ($_SESSION['userno'] != 1 && $_SESSION['userno'] != $userno) {
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
         echo "閲覧権限がありません";
         exit;
     }

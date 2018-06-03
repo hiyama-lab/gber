@@ -18,7 +18,7 @@ require_logined_session();
     $groupno = $_GET['groupno'];
     $workid = $_GET['workid'];
 
-    if ($_SESSION['userno'] != 1) {
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
         echo "閲覧権限がありません";
         exit;
     }

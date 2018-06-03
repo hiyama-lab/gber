@@ -4,6 +4,12 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
+    http_response_code(403);
+    exit;
+}
 
 $post = json_decode(file_get_contents('php://input'), true);
 
