@@ -12,137 +12,62 @@ include __DIR__ . '/lib/sessioncheck.php';
 <body>
 
 <?php
-include __DIR__ . '/lib/mysql_credentials.php';
+include __DIR__ . '/lib/db.php';
 
-$activitylog
-    = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
-    . $_SESSION['userno'] . "', 'index.php', '" . date('Y-m-d G:i:s') . "')", $con)
-or die('Error: ' . mysql_error());
-
-// マスター権限か調べる
-$result = mysql_query("SELECT master FROM db_user WHERE userno="
-    . $_SESSION['userno']) or die ("Query error: " . mysql_error());
-$masterflag = mysql_fetch_assoc($result)['master'] == 1 ? true : false;
-
+$userno = $_SESSION['userno'];
+$db = DB::getInstance();
+$db->addToActivityLog($userno, 'index.php');
+$masterflag = $db->isMaster($userno);
 //Q&Aカード_ソーシャルアクティビティ用に、未回答質問一覧をダウンロードする
-$qanda_social_sql
-    = mysql_query("SELECT * FROM questionnaire_socialactivity WHERE userno='"
-    . $_SESSION['userno'] . "'") or die ("Query error: " . mysql_error());
-while ($qanda_social_row = mysql_fetch_assoc($qanda_social_sql)) {
-    $qanda_social = $qanda_social_row;
-}
-
-//Q&Aカード_ワーク用に、未興味一覧をダウンロードする。
-//本来なら、未来の案件だけ表示するようにしたいが案件数が足りない...
-//グループ仕事はとりあえず除外で、サマリー入力済みのもの。
-$qanda_work_sql
-    = mysql_query("SELECT id,worktitle,summary FROM helplist WHERE id NOT IN (SELECT DISTINCT workid FROM helpmatching WHERE applyuserno='"
-    . $_SESSION['userno'] . "') and summary IS NOT NULL") or die ("Query error: "
-    . mysql_error());
-$qanda_work = array();
-while ($qanda_work_row = mysql_fetch_assoc($qanda_work_sql)) {
-    $qanda_work[] = $qanda_work_row;
-}
-
-// 所属グループを調べる。管理者になっているグループも調べる
-$groupmembersql
-    = mysql_query("SELECT groupno,admin FROM grouplist WHERE userno='"
-    . $_SESSION['userno'] . "' and groupno > 0") or die ("Query error: "
-    . mysql_error());
-$groupresult = array();
-$groupresultflag = false;
-while ($groupmemberrow = mysql_fetch_assoc($groupmembersql)) {
-    $groupresultflag = true;
-    $groupresult[] = $groupmemberrow;
-}
+$qanda_social = $db->getQandaSocial($userno);
+//Q&Aカード_ワーク用に、未興味一覧をダウンロードする。本来なら、未来の案件だけ表示するようにしたいが案件数が足りない...グループ仕事はとりあえず除外で、サマリー入力済みのもの。
+$qanda_work = $db->getQandaWorks($userno);
+$groupresult = $db->getGroupInfo($userno);
+$groupresultflag = count($groupresult) > 0 ? true : false;
 
 //*** 通知用 ***//
-
-//通知用文章は$noticestrに統一。
 $noticestr = "";
 
-
-// グループメンバーで，今日以降の未回答のオファーがあったとき通知(workdate_"groupno"のstatus==0)
-$numunansweredoffer = array();
-if ($groupresultflag) {
-    foreach ($groupresult as $group) {
-        $numunansweredoffer[$group['groupno']] = 0;
-        $result6 = mysql_query("SELECT dateid FROM workdate LEFT JOIN worklist ON workdate.workid=worklist.id WHERE (workerno IN (SELECT taker FROM caretakerlist WHERE giver='"
-            . $_SESSION['userno'] . "') or workerno='" . $_SESSION['userno']
-            . "') and worklist.groupno=". $group['groupno'] . " and workdate.status='0' and workdate.workday > DATE_SUB(CURRENT_DATE(),interval 1 day)")
-        or die ("Query error: " . mysql_error());
-        $numunansweredoffer[$group['groupno']] = mysql_num_rows($result6);
-        if ($numunansweredoffer[$group['groupno']] > 0) {
-            $noticestr .= "<p><a href=\"jobofferlist.php?groupno="
-                . $group['groupno'] . "\" rel=\"external\">オファーが未回答です</a></p>";
-        }
-    }
-}
-
-
-// グループメンバーで，今日までで未入力の日報があったとき通知(workdateの，今日>workday && status=1 && reportflag=0)
-$numunwrittenreport = array();
-if ($groupresultflag) {
-    foreach ($groupresult as $group) {
-        $numunwrittenreport[$group['groupno']] = 0;
-        $result11 = mysql_query("SELECT dateid FROM workdate LEFT JOIN worklist ON workdate.workid=worklist.id WHERE (workerno IN (SELECT taker FROM caretakerlist WHERE giver='"
-            . $_SESSION['userno'] . "') or workerno='" . $_SESSION['userno']
-            . "') and worklist.groupno=". $group['groupno'] . " and workdate.status='1' and reportflag='0' and workdate.workday < CURRENT_DATE()")
-        or die ("Query error: " . mysql_error());
-        $numunwrittenreport[$group['groupno']] = mysql_num_rows($result11);
-        if ($numunwrittenreport[$group['groupno']] > 0) {
-            $noticestr .= "<p><a href=\"jobreportlist.php?groupno="
-                . $group['groupno'] . "\" rel=\"external\">日報が未記入です</a></p>";
-        }
-    }
-}
-
-
-// 24時間以内に掲示板に新規投稿があれば表示
+// 24時間以内に全体掲示板に新規投稿があれば表示
 $numnewbbspost = array();
 $numnewbbspost[0] = 0;
-$result7
-    = mysql_query("SELECT messageid FROM bbs_group WHERE datetime > DATE_SUB(CURRENT_DATE(),interval 1 day) AND groupno=0")
-or die ("Query error: " . mysql_error());
-$numnewbbspost[0] = mysql_num_rows($result7);
+$numnewbbspost[0] = $db->getBbsNewPostNum(0);
 if ($numnewbbspost[0] > 0) {
     $noticestr .= "<p><a href=\"groupbbs.php?groupno=0\" rel=\"external\">全体掲示板に新規投稿があります</a></p>";
 }
+
+$numunansweredoffer = array();
+$numunwrittenreport = array();
 if ($groupresultflag) {
     foreach ($groupresult as $group) {
-        $numnewbbspost[$group['groupno']] = 0;
-        $result7 = mysql_query("SELECT messageid FROM bbs_group WHERE datetime > DATE_SUB(CURRENT_DATE(),interval 1 day) AND groupno=" . $group['groupno'])
-        or die ("Query error: " . mysql_error());
-        $numnewbbspost[$group['groupno']] = mysql_num_rows($result7);
-        if ($numnewbbspost[$group['groupno']] > 0) {
-            $noticestr .= "<p><a href=\"groupbbs.php?groupno=" . $group['groupno']
-                . "\" rel=\"external\">" . $groupnamelist[$group['groupno']]
-                . "G掲示板に新規投稿があります</a></p>";
+        $groupno = $group['groupno'];
+        // グループメンバーで，今日以降の未回答のオファーがあったとき通知(workdate_"groupno"のstatus==0)
+        $numunansweredoffer[$groupno] = $db->getUnansweredOfferNum($userno, $groupno);
+        if ($numunansweredoffer[$groupno] > 0) {
+            $noticestr .= "<p><a href=\"jobofferlist.php?groupno="
+                . $groupno . "\" rel=\"external\">オファーが未回答です</a></p>";
+        }
+        // グループメンバーで，今日までで未入力の日報があったとき通知(workdateの，今日>workday && status=1 && reportflag=0)
+        $numunwrittenreport[$groupno] = $db->getUnwrittenReportNum($userno, $groupno);
+        if ($numunwrittenreport[$groupno] > 0) {
+            $noticestr .= "<p><a href=\"jobreportlist.php?groupno="
+                . $groupno . "\" rel=\"external\">日報が未記入です</a></p>";
+        }
+        // 24時間以内にグループ掲示板に新規投稿があれば表示
+        $numnewbbspost[$groupno] = $db->getBbsNewPostNum($groupno);
+        if ($numnewbbspost[$groupno] > 0) {
+            $noticestr .= "<p><a href=\"groupbbs.php?groupno=" . $groupno
+                . "\" rel=\"external\">" . $groupnamelist[$groupno]
+                . "グループ掲示板に新規投稿があります</a></p>";
         }
     }
 }
 
-
 // 24時間以内に新規メッセージがあれば表示
-$numnewmessage = 0;
-$result8
-    = mysql_query("SELECT messageeach.messageeachid FROM messageeach LEFT JOIN messagemember ON messageeach.messageid = messagemember.messageid WHERE messageeach.messagedate > DATE_SUB(CURRENT_DATE(),interval 1 day) and messagemember.memberid='"
-    . $_SESSION['userno'] . "'") or die ("Query error: " . mysql_error());
-$numnewmessage = mysql_num_rows($result8);
+$numnewmessage = $db->getNewMessageNum($userno);
 if ($numnewmessage > 0) {
     $noticestr .= "<p><a href=\"messagelist.php\" rel=\"external\">新規メッセージがあります</a></p>";
 }
-
-
-// アンケートに回答済みかどうか取得する。
-
-$resultinterestuserlist
-    = mysql_query("SELECT socialactivityid FROM interest_user_list WHERE userno = '"
-    . $_SESSION['userno'] . "'") or die ("Query error: " . mysql_error());
-$numinterestuserlist = mysql_num_rows($resultinterestuserlist);
-
-
-mysql_close($con);
 ?>
 
 <div data-role="page">
