@@ -134,14 +134,10 @@ class DB {
         return $stmt->fetchColumn($userno);
     }
 
-    public function getGroupNameList(){
+    public function getGroupNameRecords(){
         $stmt = $this->pdo->prepare("SELECT groupname FROM groupnamelist");
         $stmt->execute();
-        $result = $stmt->fetchAll();
-        foreach($result as $key => $value){
-            $result[$key] = $value['groupname'];
-        }
-        return $result;
+        return $stmt->fetchAll();
     }
 
     public function getSchedule($userno, $year, $month){
@@ -175,11 +171,40 @@ class DB {
         ]);
     }
 
+    public function isClientOfWork($userno, $workid){
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM helplist WHERE id = :workid and userno = :userno");
+        $stmt->execute([
+            ':userno' => $userno,
+            ':workid' => $workid
+        ]);
+        return $stmt->fetchColumn() == 1 ? true : false;
+    }
 
+    public function isGroupAdmin($userno, $groupno){
+        $stmt = $this->pdo->prepare("SELECT admin FROM grouplist WHERE userno = :userno and groupno = :groupno");
+        $stmt->execute([
+           ':userno' => $userno,
+           ':groupno' => $groupno
+        ]);
+        return $stmt->fetchColumn() == 1 ? true : false;
+    }
+
+    public function isGroupMember($userno, $groupno){
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM grouplist WHERE userno = :userno and groupno = :groupno");
+        $stmt->execute([
+            ':userno' => $userno,
+            ':groupno' => $groupno
+        ]);
+        return $stmt->fetchColumn() > 0 ? true : false;
+    }
 
 }
 
 $db = DB::getInstance();
-$groupnamelist = $db->getGroupNameList();
+$groupnamerecords =  $db->getGroupNameRecords();
+$groupnamelist = array();
+foreach($groupnamerecords as $key => $value){
+    $groupnamelist[] = $value['groupname'];
+}
 
 ?>

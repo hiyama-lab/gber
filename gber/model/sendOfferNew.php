@@ -4,6 +4,7 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
 
 $post = json_decode(file_get_contents('php://input'), true);
 $workid = $post['workid'];
@@ -12,6 +13,12 @@ $am = $post['am'];
 $pm = $post['pm'];
 $workerno = $post['workerno'];
 $groupno = $post['groupno'];
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $groupno])){
+    http_response_code(403);
+    exit;
+}
 
 //重複チェック
 $result7 = mysql_query("SELECT dateid FROM workdate WHERE workid='"

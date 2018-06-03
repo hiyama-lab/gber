@@ -4,16 +4,17 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
 
 // 仕事ID
 $post = json_decode(file_get_contents('php://input'), true);
 $workid = $post['workid'];
 
-// 仕事IDを基に応募者リストを削除する
-/* 削除する必要なし
-$sql = "DELETE FROM helpmatching WHERE workid='".$workid."'";
-$result = mysql_query($sql, $con) or die ("Query error: " . mysql_error());
-*/
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GLOBAL_CLIENT'], ['workid' => $workid])){
+    http_response_code(403);
+    exit;
+}
 
 // 仕事IDを基にステータスを4(非公開)に設定する
 $sql2 = "UPDATE helplist SET status = 4 WHERE id = '" . $workid . "'";

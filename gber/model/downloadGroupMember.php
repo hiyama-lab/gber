@@ -3,6 +3,8 @@ header('Content-type: text/plain; charset=UTF-8');
 header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 //マスターページで管理者を任命する際に，選択されたグループのメンバーリストから管理者でない人のデータを取得して返す
 

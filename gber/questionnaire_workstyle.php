@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/lib/sessioncheck.php';
+require_once __DIR__ . '/lib/auth.php';
+require_logined_session();
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,7 @@ include __DIR__ . '/lib/sessioncheck.php';
 
     //本人のみ記入できることにする。代理人もこういうこと知らないはずなので。
     $userno = $_GET['userno'];
-    if ($userno != $_SESSION['userno'] && $_SESSION['userno'] != 1) {
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
         echo "閲覧権限がありません";
         exit;
     }

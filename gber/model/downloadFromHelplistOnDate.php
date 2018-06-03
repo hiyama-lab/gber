@@ -3,6 +3,8 @@ header('Content-type: text/plain; charset=UTF-8');
 header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 //一般募集について，日付が選択されたらその日の仕事をDBから選んでJSON形式で返す
 

@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/lib/sessioncheck.php';
+require_once __DIR__ . '/lib/auth.php';
+require_logined_session();
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,11 +13,10 @@ include __DIR__ . '/lib/sessioncheck.php';
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
 
-    //****** IDを確認 ******//
-    /*if($_SESSION['userno']!=1){
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
         echo "閲覧権限がありません";
         exit;
-    }*/
+    }
 
     //****** タグ付けされていない仕事一覧 ******//
     $i = 0;
@@ -57,44 +57,42 @@ include __DIR__ . '/lib/sessioncheck.php';
                 $j++;
             }
         } else {
-            if ($eachgroup['groupno'] != 4) { //実験用グループを除外。柏限定設定。
-                $result = mysql_query("SELECT worktitle,id FROM worklist WHERE groupno = " . $eachgroup['groupno'] . " AND id NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='"
-                    . $eachgroup['groupno'] . "') and status<5")
-                or die ("Query error: " . mysql_error());
-                $groupnamerecords[$i]['worklist'] = array();
-                while ($row = mysql_fetch_assoc($result)) {
-                    $groupnamerecords[$i]['worklist'][] = $row;
-                }
-                $result2
-                    = mysql_query("SELECT workid,userno FROM matchingparam_worktemp WHERE groupno = '"
-                    . $eachgroup['groupno']
-                    . "' and workid NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='"
-                    . $eachgroup['groupno'] . "')") or die ("Query error: "
-                    . mysql_error());
-                $records2 = array();
-                while ($row2 = mysql_fetch_assoc($result2)) {
-                    $records2[] = $row2;
-                }
-                $j = 0;
-                foreach ($groupnamerecords[$i]['worklist'] as $eachrecord) {
-                    $groupnamerecords[$i]['worklist'][$j]['ok'] = true;
-                    $groupnamerecords[$i]['worklist'][$j]['userno'][0] = "";
-                    $groupnamerecords[$i]['worklist'][$j]['userno'][1] = "";
-                    $groupnamerecords[$i]['worklist'][$j]['userno'][2] = "";
-                    $k = 0;
-                    foreach ($records2 as $eachuser) {
-                        if ($eachrecord['id'] == $eachuser['workid']) {
-                            $groupnamerecords[$i]['worklist'][$j]['userno'][$k]
-                                = $eachuser['userno'];
-                            if ($eachuser['userno'] == $_SESSION['userno']) {
-                                $groupnamerecords[$i]['worklist'][$j]['ok']
-                                    = false;
-                            }
-                            $k++;
+            $result = mysql_query("SELECT worktitle,id FROM worklist WHERE groupno = " . $eachgroup['groupno'] . " AND id NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='"
+                . $eachgroup['groupno'] . "') and status<5")
+            or die ("Query error: " . mysql_error());
+            $groupnamerecords[$i]['worklist'] = array();
+            while ($row = mysql_fetch_assoc($result)) {
+                $groupnamerecords[$i]['worklist'][] = $row;
+            }
+            $result2
+                = mysql_query("SELECT workid,userno FROM matchingparam_worktemp WHERE groupno = '"
+                . $eachgroup['groupno']
+                . "' and workid NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='"
+                . $eachgroup['groupno'] . "')") or die ("Query error: "
+                . mysql_error());
+            $records2 = array();
+            while ($row2 = mysql_fetch_assoc($result2)) {
+                $records2[] = $row2;
+            }
+            $j = 0;
+            foreach ($groupnamerecords[$i]['worklist'] as $eachrecord) {
+                $groupnamerecords[$i]['worklist'][$j]['ok'] = true;
+                $groupnamerecords[$i]['worklist'][$j]['userno'][0] = "";
+                $groupnamerecords[$i]['worklist'][$j]['userno'][1] = "";
+                $groupnamerecords[$i]['worklist'][$j]['userno'][2] = "";
+                $k = 0;
+                foreach ($records2 as $eachuser) {
+                    if ($eachrecord['id'] == $eachuser['workid']) {
+                        $groupnamerecords[$i]['worklist'][$j]['userno'][$k]
+                            = $eachuser['userno'];
+                        if ($eachuser['userno'] == $_SESSION['userno']) {
+                            $groupnamerecords[$i]['worklist'][$j]['ok']
+                                = false;
                         }
+                        $k++;
                     }
-                    $j++;
                 }
+                $j++;
             }
         }
         $i++;

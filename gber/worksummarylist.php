@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/lib/sessioncheck.php';
+require_once __DIR__ . '/lib/auth.php';
+require_logined_session();
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,7 @@ include __DIR__ . '/lib/sessioncheck.php';
     include __DIR__ . '/lib/mysql_credentials.php';
 
     //****** IDを確認 ******//
-    if ($_SESSION['userno'] != 1) {
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
         echo "閲覧権限がありません";
         exit;
     }

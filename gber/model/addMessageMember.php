@@ -4,6 +4,8 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 $inputdata = json_decode(file_get_contents('php://input'), true);
 $userno = $inputdata['userno'];

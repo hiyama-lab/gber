@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/lib/sessioncheck.php';
+include __DIR__ . '/lib/auth.php';
+require_logined_session();
 ?>
 <!DOCTYPE html>
 <html>
@@ -220,7 +221,8 @@ include __DIR__ . '/lib/sessioncheck.php';
                 }
 
                 if ($userno == $_SESSION['userno']) {
-                    echo "</br><input type=\"button\" value=\"ログアウト\" onClick=\"logout();\" />";
+                    $token = h(generate_token());
+                    echo "</br><input type=\"button\" value=\"ログアウト\" onClick=\"logout('$token');\" />";
                 }
 
                 ?>

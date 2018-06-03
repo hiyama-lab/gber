@@ -3,6 +3,8 @@ header('Content-type: text/plain; charset=UTF-8');
 header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 //statusは，0応募なし，1応募あり，2確定，3評価済み，4削除済み
 $demosql = $_ENV["IS_DEMO"] === 'true' ? "" : "and helpdate.workdate > DATE_SUB(CURRENT_DATE(),interval 1 day)";

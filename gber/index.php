@@ -1,5 +1,6 @@
 <?php
-include __DIR__ . '/lib/sessioncheck.php';
+require_once __DIR__ . '/lib/auth.php';
+require_logined_session();
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,7 @@ include __DIR__ . '/lib/sessioncheck.php';
 <body>
 
 <?php
-include __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/db.php';
 
 $userno = $_SESSION['userno'];
 $db = DB::getInstance();

@@ -4,6 +4,7 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
 
 $userno = mysql_real_escape_string($_POST["userno"]);
 $lat = mysql_real_escape_string($_POST["lat"]);
@@ -13,6 +14,12 @@ $content = mysql_real_escape_string($_POST["content"]);
 $workdatetime = mysql_real_escape_string($_POST["workdatetime"]);
 $contact = mysql_real_escape_string($_POST["contact"]);
 $genre = mysql_real_escape_string($_POST["genre"]);
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $genre])){
+    http_response_code(403);
+    exit;
+}
 
 //仕事を追加
 $sql = "INSERT INTO worklist (groupno, userno, lat, lng, worktitle, content, workdatetime, contact) VALUES ('$genre', '$userno', '$lat', '$lng', '$worktitle', '$content', '$workdatetime', '$contact')";
