@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/lib/sessionUtil.php';
+require_once __DIR__ . '/lib/auth.php';
 require_logined_session();
 ?>
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ require_logined_session();
 <body>
 
 <?php
-include __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/db.php';
 
 $userno = $_SESSION['userno'];
 $db = DB::getInstance();

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../lib/sessionUtil.php';
+require_once __DIR__ . '/../lib/auth.php';
 require_logined_session();
 
 // CSRFトークンを検証

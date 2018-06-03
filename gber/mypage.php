@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/lib/sessionUtil.php';
+include __DIR__ . '/lib/auth.php';
 require_logined_session();
 ?>
 <!DOCTYPE html>

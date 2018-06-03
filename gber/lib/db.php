@@ -171,6 +171,29 @@ class DB {
         ]);
     }
 
+    public function isClientOfWork($userno, $workid){
+        $stmt = $this->pdo->prepare('');
+        return true;
+    }
+
+    public function isGroupAdmin($userno, $groupno){
+        $stmt = $this->pdo->prepare("SELECT admin FROM grouplist WHERE userno = :userno and groupno = :groupno");
+        $stmt->execute([
+           ':userno' => $userno,
+           ':groupno' => $groupno
+        ]);
+        return $stmt->fetchColumn() == 1 ? true : false;
+    }
+
+    public function isGroupMember($userno, $groupno){
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM grouplist WHERE userno = :userno and groupno = :groupno");
+        $stmt->execute([
+            ':userno' => $userno,
+            ':groupno' => $groupno
+        ]);
+        return $stmt->fetchColumn() > 0 ? true : false;
+    }
+
 }
 
 $db = DB::getInstance();

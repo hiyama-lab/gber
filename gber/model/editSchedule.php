@@ -2,7 +2,7 @@
 header('Content-type: text/plain; charset=UTF-8');
 header('Content-type: application/json');
 
-include __DIR__ . '/../lib/db.php';
+require_once __DIR__ . '/../lib/db.php';
 
 $post = json_decode(file_get_contents('php://input'), true);
 $db = DB::getInstance();

@@ -6,9 +6,9 @@ header('Content-type: application/json');
 
 //接続
 include __DIR__ . '/../lib/mysql_credentials.php';
-include __DIR__ . '/../lib/db.php';
+require_once __DIR__ . '/../lib/db.php';
 include __DIR__ . '/../lib/sendEmail.php';
-include __DIR__ . '/../lib/sessionUtil.php';
+include __DIR__ . '/../lib/auth.php';
 
 //ログイン認証
 $mail = h($_POST["mail"]);
