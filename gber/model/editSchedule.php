@@ -3,6 +3,8 @@ header('Content-type: text/plain; charset=UTF-8');
 header('Content-type: application/json');
 
 require_once __DIR__ . '/../lib/db.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 $post = json_decode(file_get_contents('php://input'), true);
 $db = DB::getInstance();

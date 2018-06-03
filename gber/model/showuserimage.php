@@ -2,6 +2,9 @@
 //header('Content-type: text/plain; charset=UTF-8');
 //echo "test";
 include __DIR__ . '/../lib/mysql_credentials.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
+
 $userno = $_GET['userno'];
 $result
     = mysql_query("SELECT mime,photodata, length(photodata) as size FROM photodata WHERE userno = '"

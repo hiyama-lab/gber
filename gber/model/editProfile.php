@@ -3,6 +3,8 @@ header('Content-type: text/plain; charset=UTF-8');
 header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 $userno = mysql_real_escape_string($_POST["userno"]);
 $mail = mysql_real_escape_string($_POST["mail"]);
