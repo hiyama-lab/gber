@@ -4,14 +4,21 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
 
 // 仕事ID
-$input = json_decode(file_get_contents('php://input'), true);
+$post = json_decode(file_get_contents('php://input'), true);
 
-$clientid = $input['clientid'];
-$workid = $input['workid'];
-$comment = $input['comment'];
+$clientid = $post['clientid'];
+$workid = $post['workid'];
+$comment = $post['comment'];
+$groupno = $post['groupno'];
 
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $groupno])){
+    http_response_code(403);
+    exit;
+}
 
 // コメントが存在すればUpdate、なければInsert
 $result = mysql_query("SELECT infoid FROM clientinfo WHERE workid='" . $workid . "'", $con) or die ("Query error: "

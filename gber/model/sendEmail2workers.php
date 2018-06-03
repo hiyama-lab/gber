@@ -4,8 +4,15 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
 
 $post = json_decode(file_get_contents('php://input'), true);
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $post['groupno']])){
+    http_response_code(403);
+    exit;
+}
 
 //確定済みのワーカーのメアドを一覧で取得
 $result

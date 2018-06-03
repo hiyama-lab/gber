@@ -172,8 +172,12 @@ class DB {
     }
 
     public function isClientOfWork($userno, $workid){
-        $stmt = $this->pdo->prepare('');
-        return true;
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM helplist WHERE id = :workid and userno = :userno");
+        $stmt->execute([
+            ':userno' => $userno,
+            ':workid' => $workid
+        ]);
+        return $stmt->fetchColumn() == 1 ? true : false;
     }
 
     public function isGroupAdmin($userno, $groupno){

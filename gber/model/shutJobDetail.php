@@ -4,10 +4,17 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
+require_once __DIR__ . '/../lib/auth.php';
 
 // 仕事ID
 $post = json_decode(file_get_contents('php://input'), true);
 $workid = $post['workid'];
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GLOBAL_CLIENT'], ['workid' => $workid])){
+    http_response_code(403);
+    exit;
+}
 
 // 仕事IDを基にステータスを1(締め切り済み)に設定する
 $sql2 = "UPDATE helplist SET status = 1 WHERE id = '" . $workid . "'";
