@@ -27,6 +27,12 @@ class DB {
         return $stmt->fetch();
     }
 
+    public function findUserById($userno){
+        $stmt = $this->pdo->prepare('SELECT * FROM db_user WHERE userno = :userno');
+        $stmt->execute([':userno' => $userno]);
+        return $stmt->fetch();
+    }
+
     public function registerUser($mail, $nickname, $pass, $date) {
         $stmt = $this->pdo->prepare('INSERT INTO db_user (mail,nickname,pass,registered_date) VALUES (:mail, :nickname, :pass, :date)');
         return $stmt->execute([
@@ -137,6 +143,40 @@ class DB {
         }
         return $result;
     }
+
+    public function getSchedule($userno, $year, $month){
+        $stmt = $this->pdo->prepare("SELECT * FROM schedule WHERE userno = :userno AND year = :year AND month = :month");
+        $stmt->execute([
+           ':userno' => $userno,
+           ':year' => $year,
+           ':month' => $month
+        ]);
+        return $stmt->fetchAll();
+    }
+
+    public function addSchedule($userno, $year, $month){
+        $stmt = $this->pdo->prepare("INSERT INTO schedule (userno, year, month) VALUES (:userno, :year, :month)");
+        return $stmt->execute([
+            ':userno' => $userno,
+            ':year' => $year,
+            ':month' => $month
+        ]);
+    }
+
+    public function updateSchedule($userno, $dateprefix, $am, $pm, $year, $month, $lastupdated){
+        $stmt = $this->pdo->prepare("UPDATE schedule SET ${dateprefix}_am = :am, ${dateprefix}_pm = :pm, lastupdated = :lastupdated WHERE userno = :userno AND year = :year AND month = :month");
+        return $stmt->execute([
+            ':userno' => $userno,
+            ':am' => $am,
+            ':pm' => $pm,
+            ':year' => $year,
+            ':month' => $month,
+            ':lastupdated' => $lastupdated
+        ]);
+    }
+
+
+
 }
 
 $db = DB::getInstance();
