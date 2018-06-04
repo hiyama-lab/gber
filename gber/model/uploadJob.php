@@ -4,7 +4,6 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 date_default_timezone_set('Asia/Tokyo');
 
@@ -24,6 +23,12 @@ $price = mysql_real_escape_string($_POST["price"]);
 $contact = mysql_real_escape_string($_POST["contact"]);
 
 $workdatelist = $_POST["workdatelist"];
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
+    http_response_code(403);
+    exit;
+}
 
 //ヘルプリストに挿入
 mysql_query("INSERT INTO helplist (userno, lat, lng, address, worktitle, content, price, workernum,  contact, workgenre, groupgenre) VALUES ('$userno', '$lat', '$lng', '$address', '$worktitle', '$content', '$price', '$workernum', '$contact', '$workgenre', '$groupgenre')",

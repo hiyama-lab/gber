@@ -11,7 +11,8 @@ const ROLE = array(
     'GLOBAL_MASTER' => 0,
     'GLOBAL_CLIENT' => 1,
     'GROUP_ADMIN' => 2,
-    'GROUP_MEMBER' => 3
+    'GROUP_MEMBER' => 3,
+    'USER' => 4
 );
 
 function require_unlogined_session () {
@@ -54,20 +55,22 @@ function h ($var) {
     }
 }
 
-function authorize($userno, $role, array $args){
-    $defaults = ['workid' => 0, 'groupno' => 0];
+function authorize($userno_session, $role, array $args){
+    $defaults = ['workid' => 0, 'groupno' => 0, 'userno' => 0];
     $args = array_merge($defaults, $args);
 
     $db = DB::getInstance();
     switch($role){
         case ROLE['GLOBAL_MASTER']:
-            return $db->isMaster($userno);
+            return $db->isMaster($userno_session);
         case ROLE['GLOBAL_CLIENT']:
-            return $db->isClientOfWork($userno, $args['workid']);
+            return $db->isClientOfWork($userno_session, $args['workid']);
         case ROLE['GROUP_ADMIN']:
-            return $db->isGroupAdmin($userno, $args['groupno']);
+            return $db->isGroupAdmin($userno_session, $args['groupno']);
         case ROLE['GROUP_MEMBER']:
-            return $db->isGroupMember($userno, $args['groupno']);
+            return $db->isGroupMember($userno_session, $args['groupno']);
+        case ROLE['USER']:
+            return $userno_session == $args['userno'];
     }
 }
 

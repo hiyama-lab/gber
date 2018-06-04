@@ -6,9 +6,14 @@ include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
 include __DIR__ . '/updateMatchingParam_human.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 $workdata = json_decode(file_get_contents('php://input'), true);
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $workdata['workerno']])){
+    http_response_code(403);
+    exit;
+}
 
 if ($workdata['status'] == 1) {//オファーを受けるとき
     mysql_query("UPDATE workdate SET status='1' WHERE workid='" . $workdata['workid'] . "' and workerno='"

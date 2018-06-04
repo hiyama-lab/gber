@@ -2,6 +2,8 @@
 header('Content-type: text/plain; charset=UTF-8');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
+require_once __DIR__ . '/../lib/auth.php';
+require_logined_session();
 
 //グループ管理者画面のメンバー追加機能で，入力されたニックネームに部分一致する近いユーザを取得し返す
 

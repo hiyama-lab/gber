@@ -17,21 +17,14 @@ require_logined_session();
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
 
-    // マスター権限がないとこれは見せない
 
     $userno = $_GET['userno'];
     $userselect = true;
-
-    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
-        echo "閲覧権限がありません";
-        exit;
-    }
 
     // ユーザー番号が指定されていない時は、セレクターのみ表示させる。
     if ($userno == "") {
         $userselect = false;
     }
-
 
     // 閲覧したいユーザーのIDが指定されている時
     if ($userselect) {

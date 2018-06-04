@@ -15,6 +15,12 @@ $groupno = mysql_real_escape_string($_POST["groupno"]);
 $postcontent = mysql_real_escape_string($_POST["postcontent"]);
 $postcontenthtml = nl2br($_POST["postcontent"]);
 
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GROUP_MEMBER'], ['groupno' => $groupno])){
+    http_response_code(403);
+    exit;
+}
+
 $sql = "INSERT INTO bbs_group (groupno, senderid, message, datetime) VALUES ('$groupno', '$userno', '$postcontent', '$datetime')";
 
 if (!mysql_query($sql, $con)) {

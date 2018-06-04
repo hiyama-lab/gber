@@ -4,7 +4,6 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 date_default_timezone_set('Asia/Tokyo');
 $datetime = date('Y-m-d G:i:s');
@@ -12,6 +11,12 @@ $datetime = date('Y-m-d G:i:s');
 $userno = mysql_real_escape_string($_POST["userno"]);
 $groupno = mysql_real_escape_string($_POST["groupno"]);
 $postcontent = mysql_real_escape_string($_POST["postcontent"]);
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['GROUP_MEMBER'], ['groupno' => $groupno])){
+    http_response_code(403);
+    exit;
+}
 
 $sql = "INSERT INTO bbs_group (groupno, senderid, message, datetime) VALUES ('$groupno', '$userno', '$postcontent', '$datetime')";
 

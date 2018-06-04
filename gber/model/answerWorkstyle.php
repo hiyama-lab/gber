@@ -4,7 +4,6 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 $post = json_decode(file_get_contents('php://input'), true);
 $userno = $post['userno'];
@@ -26,6 +25,12 @@ $workobject_asked = $post['workobject_asked'];
 $workobject_sparetime = $post['workobject_sparetime'];
 $workobject_skill = $post['workobject_skill'];
 $workobject_other = $post['workobject_other'];
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
+    http_response_code(403);
+    exit;
+}
 
 // 登録済ならアップデート
 $result = mysql_query("SELECT * FROM questionnaire_workstyle WHERE userno='"
