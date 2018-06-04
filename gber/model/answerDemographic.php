@@ -4,7 +4,6 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 $post = json_decode(file_get_contents('php://input'), true);
 $userno = $post['userno'];
@@ -18,6 +17,12 @@ $undou_light = $post['undou_light'];
 $undou_medium = $post['undou_medium'];
 $undou_heavy = $post['undou_heavy'];
 $shikaku = $post['shikaku'];
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
+    http_response_code(403);
+    exit;
+}
 
 // 登録済ならアップデート
 $result

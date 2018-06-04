@@ -32,10 +32,7 @@ require_logined_session();
     }
 
     //****** 管理者権限のあるSESSION_IDかどうか確認 ******//
-    $admincheck = mysql_query("SELECT admin FROM grouplist WHERE groupno = '"
-        . $groupno . "' and userno = '" . $_SESSION['userno'] . "'")
-    or die ("Query error: " . mysql_error());
-    if (mysql_fetch_assoc($admincheck)['admin'] == 0) {
+    if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $groupno])){
         echo "管理者権限がありません";
         exit;
     }

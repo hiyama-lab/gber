@@ -4,7 +4,6 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 $userno = mysql_real_escape_string($_POST["userno"]);
 $mail = mysql_real_escape_string($_POST["mail"]);
@@ -16,6 +15,12 @@ $intro = mysql_real_escape_string($_POST["intro"]);
 $address = mysql_real_escape_string($_POST["address"]);
 $lat = mysql_real_escape_string($_POST["lat"]);
 $lng = mysql_real_escape_string($_POST["lng"]);
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
+    http_response_code(403);
+    exit;
+}
 
 $sql = "UPDATE db_user SET mail='" . $mail . "', phone='" . $phone . "', nickname='"
     . $nickname . "', birthyear='" . $birthyear . "', gender='" . $gender . "', intro='"

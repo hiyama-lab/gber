@@ -3,9 +3,14 @@ header('Content-type: text/plain; charset=UTF-8');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
-require_logined_session();
 
 $userno = mysql_real_escape_string($_GET['userno']);
+
+require_logined_session();
+if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
+    http_response_code(403);
+    exit;
+}
 
 $img = addslashes(file_get_contents($_FILES['file']['tmp_name']));
 
