@@ -12,7 +12,7 @@ spec:
         app: mysql
     spec:
       containers:
-      - image: hiyamalab/gber-mysql:v1
+      - image: hiyamalab/gber-mysql:1.0.3
         name: mysql
         livenessProbe:
           tcpSocket:
@@ -61,7 +61,7 @@ spec:
         app: php
     spec:
       containers:
-      - image: hiyamalab/gber-php:v1
+      - image: hiyamalab/gber-php:1.0.3
         imagePullPolicy: Always
         name: php
         livenessProbe:
@@ -87,7 +87,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: hiyamalab/gber-nginx:v1
+      - image: hiyamalab/gber-nginx:1.0.3
         imagePullPolicy: Always
         name: nginx
         livenessProbe:

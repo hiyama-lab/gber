@@ -35,6 +35,7 @@ DBのパスワードやAPI Keyなどのcredential情報をGKEに登録します�
 ```bash
 $ git clone https://github.com/hiyama-lab/gber.git
 $ cd gber
+$ git checkout 1.0.3
 $ cp config/gber.env.example config/gber.env
 $ vi config/gber.env
 $ kubectl create secret generic gber-secrets --from-env-file config/gber.env
