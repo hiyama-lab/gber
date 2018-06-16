@@ -1,13 +1,16 @@
 function registerData(){
+    var pass = $("input[name='pass']").val();
     if( $("input[name='mail']").val() == "" ){
         sweetAlert("エラー","メールアドレスが未入力です。","error");
     } else if( !$("input[name='mail']").val().match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)){
         sweetAlert("エラー","メールアドレスの書式が無効です。","error");
     } else if( $("input[name='nickname']").val() == "" ){
         sweetAlert("エラー","ニックネームが未入力です。","error");
-    } else if( $("input[name='pass']").val() == "" ){
+    } else if( pass == "" ){
         sweetAlert("エラー","パスワードが未入力です。","error");
-    } else if( $("input[name='pass']").val() != $("input[name='pass_re']").val() ){
+    } else if (pass != "" && (pass.length < 6 || pass.length > 32)) {
+        sweetAlert("エラー", "パスワードは6文字以上32文字以下で設定してください。", "error");
+    } else if( pass != $("input[name='pass_re']").val() ){
         sweetAlert("エラー","パスワードが再入力のものと一致しません。","error");
     } else {
     $.ajax({

@@ -9,6 +9,8 @@ $userno = h($_POST["userno"]);
 $mail = h($_POST["mail"]);
 $nickname = h($_POST["nickname"]);
 $pass = h($_POST["pass"]);
+$token = h($_POST["token"]);
+if (validate_token($token)) exit;
 
 require_logined_session();
 if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){

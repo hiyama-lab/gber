@@ -71,6 +71,7 @@ require_logined_session();
             <input type="password" id="pass" name="pass" required/></br>
             <label for="pass_re">パスワード(再入力)</label>
             <input type="password" id="pass_re" name="pass_re" required/></br>
+            <input type="hidden" name="token" value="<?=h(generate_token())?>">
             <input type="button" value="アカウント情報を更新する" onClick="uploadData();"/>
         </form>
     </div>
