@@ -18,7 +18,7 @@ require_logined_session();
     $groupno = $_GET['groupno'];
     $workid = $_GET['workid'];
 
-    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], ['isapi' => false])){
         echo "閲覧権限がありません";
         exit;
     }

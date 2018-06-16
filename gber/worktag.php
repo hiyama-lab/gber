@@ -12,7 +12,7 @@ require_logined_session();
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
 
-    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], [])){
+    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], ['isapi' => false])){
         echo "閲覧権限がありません";
         exit;
     }

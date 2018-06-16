@@ -56,8 +56,13 @@ function h ($var) {
 }
 
 function authorize($userno_session, $role, array $args){
-    $defaults = ['workid' => 0, 'groupno' => 0, 'userno' => 0];
+    $defaults = ['workid' => 0, 'groupno' => 0, 'userno' => 0, 'isapi' => true];
     $args = array_merge($defaults, $args);
+
+    // APIの場合、X-Requested-Withヘッダがなければ拒否(CSRF対策)
+    if($args['isapi'] && !isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+        return false;
+    }
 
     $db = DB::getInstance();
     switch($role){
