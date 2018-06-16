@@ -33,7 +33,7 @@ require_logined_session();
     // Get User Profile
     if ($userno == $_SESSION['userno'] || $caretakerflag) {
         $sql
-            = "SELECT userno,mail,phone,nickname,gender,birthyear,intro,mylat,mylng,address_string FROM db_user WHERE userno='"
+            = "SELECT userno,phone,gender,birthyear,intro,mylat,mylng,address_string FROM db_user WHERE userno='"
             . $userno . "'";
         $result = mysql_query($sql) or die ("Query error: " . mysql_error());
         $records = array();
@@ -82,24 +82,7 @@ require_logined_session();
                 <input type="text" id="lng" size="20" name="lng"
                        value="<?php echo $records[0]['mylng']; ?>"
                        readonly="readonly" required/></br>
-                <input type="text" id="mail" size="30" name="mail"
-                       value="<?php echo $records[0]['mail']; ?>"
-                       autocapitalize="none" readonly="readonly" required/></br>
             </div>
-            <label for="address">自宅住所</label>
-            <input type="text" name="address" id="mapsearch"
-                   value="<?php echo $records[0]['address_string']; ?>"
-                   placeholder="住所を入力してください" required/></br>
-            <label for="mail">メールアドレス(現在変更不可)</label>
-            <p>　<?php echo $records[0]['mail']; ?></p>
-            <label for="phone">電話番号</label>
-            <input type="text" id="phone" size="30" name="phone"
-                   value="<?php echo $records[0]['phone']; ?>"
-                   placeholder="電話番号を記入してください。" required/></br>
-            <label for="nickname">ニックネーム</label>
-            <input type="text" id="nickname" name="nickname"
-                   value="<?php echo $records[0]['nickname']; ?>"
-                   required/></br>
             <label for="birthyear">生年(西暦，半角数字4桁)</label>
             <input type="number" name="birthyear" id="birthyear" min="1900"
                    step="1" value="<?php echo $records[0]['birthyear']; ?>"
@@ -113,6 +96,14 @@ require_logined_session();
                 <option value="女性">女性</option>
                 <option value="その他">その他</option>
             </select>
+            <label for="phone">電話番号</label>
+            <input type="text" id="phone" size="30" name="phone"
+                   value="<?php echo $records[0]['phone']; ?>"
+                   placeholder="電話番号を記入してください。" required/></br>
+            <label for="address">自宅住所</label>
+            <input type="text" name="address" id="mapsearch"
+                   value="<?php echo $records[0]['address_string']; ?>"
+                   placeholder="住所を入力してください" required/></br>
             <label for="intro">自己紹介</label>
             <textarea data-role="none" id="intro" name="intro"
                       placeholder="自己紹介文をご記入ください。" required></textarea></br>
@@ -134,30 +125,10 @@ require_logined_session();
 
         function uploadData() {
             // プロフィール部分のチェック
-            if ($("input[name='mail']").val() == "") {
-                sweetAlert("エラー", "メールアドレスが未入力です。", "error");
-            } else if (!$("input[name='mail']").val().match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
-                sweetAlert("エラー", "メールアドレスの書式が無効です。", "error");
-            } else if ($("input[name='phone']").val() == "") {
-                sweetAlert("エラー", "電話番号が未入力です。", "error");
-            } else if ($("input[name='address']").val() == "") {
-                sweetAlert("エラー", "住所が未入力です。", "error");
-            } else if ($("input[name='lat']").val() == "") {
-                sweetAlert("エラー", "緯度が未入力です。", "error");
-            } else if ($("input[name='lng']").val() == "") {
-                sweetAlert("エラー", "経度が未入力です。", "error");
-            } else if ($("input[name='nickname']").val() == "") {
-                sweetAlert("エラー", "ニックネームが未入力です。", "error");
-            } else if ($("input[name='userno']").val() == "") {
-                sweetAlert("エラー", "ユーザナンバーが未入力です。", "error");
-            } else if ($("input[name='birthyear']").val() == "") {
-                sweetAlert("エラー", "生年が未入力です。", "error");
-            } else if (!$("input[name='birthyear']").val().match(/^-?[0-9]+$/)) {
+            if ($("input[name='birthyear']").val() && !$("input[name='birthyear']").val().match(/^-?[0-9]+$/)) {
                 sweetAlert("エラー", "生年が整数ではありません。", "error");
-            } else if ($("input[name='birthyear']").val() < 1900) {
+            } else if ($("input[name='birthyear']").val() && $("input[name='birthyear']").val() < 1900) {
                 sweetAlert("エラー", "生年が過去すぎます。", "error");
-            } else if ($("[name='gender']").val() == "choose-one") {
-                sweetAlert("エラー", "性別が選択されていません。", "error");
             } else {
                 if (imgchangeflag == 0) { // 画像を変更していない時
                     uploadprofile();
@@ -263,7 +234,7 @@ require_logined_session();
                     document.getElementById('lat').value = addressLatLng.lat();
                     document.getElementById('lng').value = addressLatLng.lng();
                 } else {
-                    alert("Error");
+                    // alert("Error");
                 }
             });
         }

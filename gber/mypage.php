@@ -156,27 +156,44 @@ require_logined_session();
                             . "\" rel=\"external\" data-role=\"none\">編集</a>";
                     } ?></h3>
                 <?php
-                if ($records[0]['birthyear'] == 0) {
-                    echo "<p>プロフィールが未設定です</p>";
+                if ($records[0]['birthyear'] == null) {
+                    echo "<p>【生年】未設定</p>\n";
                 } else {
-                    echo "<p>【生年】" . $records[0]['birthyear'] . "年</p>\n";
-                    echo "<p>【性別】" . $records[0]['gender'] . "</p>\n";
-                    echo "<p>【紹介文】</br>" . $records[0]['intro'] . "</p>\n";
+                    echo "【生年】{$records[0]['birthyear']}年</p>\n";
+                }
+                if ($records[0]['gender'] == null) {
+                    echo "<p>【性別】未設定</p>\n";
+                } else {
+                    echo "【性別】{$records[0]['gender']}</p>\n";
+                }
+                if ($records[0]['phone'] == null) {
+                    echo "<p>【電話】未設定</p>\n";
+                } else {
+                    echo "【電話】{$records[0]['phone']}</p>\n";
+                }
+                if ($records[0]['address_string'] == null) {
+                    echo "<p>【住所】未設定</p>\n";
+                } else {
+                    echo "【住所】{$records[0]['address_string']}</p>\n";
+                }
+                if ($records[0]['intro'] == null) {
+                    echo "<p>【紹介文】未設定</p>\n";
+                } else {
+                    echo "【紹介文】{$records[0]['intro']}</p>\n";
                 }
                 ?>
                 <?php
                 if ($userno == $_SESSION['userno'] || $groupmemberflag
                     || $caretakerflag
                 ) { //自分もしくはグループ管理者なら表示
-                    echo "</br><h3>連絡先";
+                    echo "</br><h3>アカウント";
                     if ($userno == $_SESSION['userno'] || $caretakerflag) {
                         echo "　<a href=\"editprofile.php?userno=" . $userno
                             . "\" rel=\"external\" data-role=\"none\">編集</a>";
                     }
                     echo "</h3>";
                     echo "<p>【メール】" . $records[0]['mail'] . "</p>\n";
-                    echo "<p>【電話】" . $records[0]['phone'] . "</p>\n";
-                    echo "<p>【住所】" . $records[0]['address_string'] . "</p>\n";
+                    echo "<p>【パスワード】********</p>\n";
                 }
 
                 //代理人であれば表示

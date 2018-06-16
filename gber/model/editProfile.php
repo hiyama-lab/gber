@@ -6,9 +6,7 @@ include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
 
 $userno = mysql_real_escape_string($_POST["userno"]);
-$mail = mysql_real_escape_string($_POST["mail"]);
 $phone = mysql_real_escape_string($_POST["phone"]);
-$nickname = mysql_real_escape_string($_POST["nickname"]);
 $birthyear = mysql_real_escape_string($_POST["birthyear"]);
 $gender = mysql_real_escape_string($_POST["gender"]);
 $intro = mysql_real_escape_string($_POST["intro"]);
@@ -22,10 +20,12 @@ if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
     exit;
 }
 
-$sql = "UPDATE db_user SET mail='" . $mail . "', phone='" . $phone . "', nickname='"
-    . $nickname . "', birthyear='" . $birthyear . "', gender='" . $gender . "', intro='"
-    . $intro . "', address_string='" . $address . "', mylat='" . $lat . "', mylng='" . $lng
-    . "' WHERE userno = '" . $userno . "'";
+$birthyear = $birthyear ? $birthyear : 'NULL';
+$lat = $lat ? $lat : 'NULL';
+$lng = $lng ? $lng : 'NULL';
+
+$sql = "UPDATE db_user SET phone='" . $phone . "', birthyear=$birthyear, gender='" . $gender . "', intro='"
+    . $intro . "', address_string='" . $address . "', mylat=$lat, mylng=$lng WHERE userno = '" . $userno . "'";
 if (!mysql_query($sql, $con)) {
     die('Error: ' . mysql_error());
 } else {

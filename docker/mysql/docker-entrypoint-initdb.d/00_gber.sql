@@ -76,7 +76,7 @@ CREATE TABLE `db_user` (
   `mail` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `nickname` varchar(20) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT '未設定',
+  `gender` varchar(10) DEFAULT NULL,
   `birthyear` int(11) DEFAULT '0',
   `pass` varchar(255) DEFAULT NULL,
   `intro` text,
