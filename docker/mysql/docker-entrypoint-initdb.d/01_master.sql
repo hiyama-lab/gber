@@ -1,0 +1,1 @@
+INSERT INTO `db_user` VALUES (1,'admin@example.com', NULL,'admin',NULL,NULL,'$2y$10$In2Pe46RHwpuwEWEPz8jFu206VobOnGP1hIi9Q06JFxK4BGea.Sjy',NULL,NULL,NULL,NULL,1,'','2018-04-22');
