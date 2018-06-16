@@ -32,7 +32,7 @@ require_logined_session();
     }
 
     //****** 管理者権限のあるSESSION_IDかどうか確認 ******//
-    if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $groupno])){
+    if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $groupno, 'isapi' => false])){
         echo "管理者権限がありません";
         exit;
     }

@@ -19,7 +19,7 @@ require_logined_session();
 
     //本人のみ記入できることにする。代理人もこういうこと知らないはずなので。
     $userno = $_GET['userno'];
-    if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno])){
+    if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $userno, 'isapi' => false])){
         echo "閲覧権限がありません";
         exit;
     }

@@ -23,3 +23,12 @@
         src="js/common/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src="js/common/autosize.min.js"></script>
 <script type="text/javascript" src="js/common/sweetalert.min.js"></script>
+
+<script>
+    // ajaxでAPIを叩く場合はCSRF対策としてX-Requested-Withヘッダを付与する
+    $.ajaxSetup({
+        headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+        }
+    });
+</script>>
