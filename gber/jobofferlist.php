@@ -62,9 +62,9 @@ require_logined_session();
                     }
                     echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
                         . $eachwork['workid'] . "&groupno=" . $groupno
-                        . "\" rel=\"external\"><h2>" . $eachwork['worktitle']
+                        . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
                         . "</h2><p><strong>" . $groupnamelist[$groupno]
-                        . "グループ</strong></p><p>" . $eachwork['content']
+                        . "グループ</strong></p><p>" . h($eachwork['content'])
                         . "</p></a></li>\n";
                 }
             }

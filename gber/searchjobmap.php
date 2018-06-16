@@ -57,10 +57,10 @@ require_logined_session();
                     $records as $eachrecord
                 ) {
                     if ($firstflag == 0) {
-                        echo "'" . $eachrecord . "'";
+                        echo "'" . h($eachrecord) . "'";
                         $firstflag = 1;
                     } else {
-                        echo ",'" . $eachrecord . "'";
+                        echo ",'" . h($eachrecord) . "'";
                     }
                 }?>];
                 $(function () {

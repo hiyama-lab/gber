@@ -47,8 +47,8 @@ require_logined_session();
 
     <!-- CONTENT -->
     <div data-role="content">
-        <h2><?php echo $workdetail['worktitle']; ?></h2>
-        <p><?php echo nl2br($workdetail['content']); ?></p>
+        <h2><?php echo h($workdetail['worktitle']); ?></h2>
+        <p><?php echo nl2br(h($workdetail['content'])); ?></p>
         <?php
         if ($groupno == 0) {
             echo "<p><a href=\"jobdetail.php?workid=" . $workid

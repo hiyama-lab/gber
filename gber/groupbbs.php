@@ -57,7 +57,7 @@ require_logined_session();
 
     <!-- CONTENT -->
     <div data-role="content">
-        <h2 style="margin:0 auto; text-align: center;"><?php echo $groupnamelist[$groupno]; ?>
+        <h2 style="margin:0 auto; text-align: center;"><?php echo h($groupnamelist[$groupno]); ?>
             掲示板</h2>
         <div>
             <?php
@@ -65,7 +65,7 @@ require_logined_session();
             foreach ($groupnamerecords as $eachgroup) {
                 if ($eachgroup['groupno'] == $groupno) {
                     if (array_key_exists('groupmemo', $groupnamerecords)) {
-                        echo $eachgroup['groupmemo'];
+                        echo h($eachgroup['groupmemo']);
                     }
                 }
             }
@@ -102,7 +102,7 @@ require_logined_session();
                     . "\"><div class=\"chat-face\"><img src=\"./model/showuserimage.php?userno="
                     . $eachrecord['senderid']
                     . "\" onerror=\"this.src='img/noimage.svg';\" class=\"bbsphoto\" width=\"50px\"></div>";
-                $eachrecord['message'] = nl2br($eachrecord['message']);
+                $eachrecord['message'] = nl2br(h($eachrecord['message']));
                 if ($eachrecord['senderid'] == $userno
                     || $userno == 1
                 ) { //そのポストの投稿者のとき

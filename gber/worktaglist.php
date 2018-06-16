@@ -129,26 +129,26 @@ require_logined_session();
 
         foreach ($groupnamerecords as $eachgroup) {
 
-            echo "</br><h3>" . $eachgroup['groupname'] . "</h3>";
+            echo "</br><h3>" . h($eachgroup['groupname']) . "</h3>";
             echo "<table><tr><th>タイトル</th><th style=\"text-align:center; padding: 8px;\">1人目</th><th style=\"text-align:center; padding: 8px;\">2人目</th><th style=\"text-align:center; padding: 8px;\">3人目</th></tr>";
             foreach ($eachgroup['worklist'] as $eachwork) {
                 echo "<tr><td style=\"padding: 8px;\">";
                 if ($eachwork['ok']) {
                     echo "<a href=\"worktag.php?groupno=" . $eachgroup['groupno']
                         . "&workid=" . $eachwork['id'] . "\" rel=\"external\">"
-                        . substr($eachwork['worktitle'], 0, 100) . "</a>";
+                        . substr(h($eachwork['worktitle']), 0, 100) . "</a>";
                 } else {
-                    echo "【記入済】" . substr($eachwork['worktitle'], 0, 100);
+                    echo "【記入済】" . substr($h(eachwork['worktitle']), 0, 100);
                 }
                 echo "<br></td><td style=\"text-align:center; padding: 8px;\"><a href=\"mypage.php?userno="
                     . $eachwork['userno'][0] . "\" rel=\"external\">"
-                    . $nicknamelist[$eachwork['userno'][0]]
+                    . h($nicknamelist[$eachwork['userno'][0]])
                     . " </a></td><td style=\"text-align:center; padding: 8px;\"><a href=\"mypage.php?userno="
                     . $eachwork['userno'][1] . "\" rel=\"external\">"
-                    . $nicknamelist[$eachwork['userno'][1]]
+                    . h($nicknamelist[$eachwork['userno'][1]])
                     . "</a></td><td style=\"text-align:center; padding: 8px;\"><a href=\"mypage.php?userno="
                     . $eachwork['userno'][2] . "\" rel=\"external\">"
-                    . $nicknamelist[$eachwork['userno'][2]] . "</a></td></tr>";
+                    . h($nicknamelist[$eachwork['userno'][2]]) . "</a></td></tr>";
             }
             echo "</table>";
 

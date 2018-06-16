@@ -78,7 +78,7 @@ require_logined_session();
                     . "\" onerror=\"this.src='img/noimage.svg';\" width=\"50px\" /></a></td>";
                 $str .= "<td class=\"memberprof\">" . $eachmember['userno']
                     . "</td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['nickname']
+                $str .= "<td class=\"memberprof\">" . h($eachmember['nickname'])
                     . "</td>";
                 $str .= "<td class=\"memberprof\">" . $eachmember['birthyear']
                     . "</td>";

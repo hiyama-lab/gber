@@ -92,7 +92,7 @@ require_logined_session();
             echo "<h3>興味あり一覧</h3>";
             foreach ($records as $eachrecord) {
                 echo "<p><a href=\"jobdetail.php?workid=" . $eachrecord['id']
-                    . "\" rel=\"external\">" . $eachrecord['worktitle'] . "</a></p>";
+                    . "\" rel=\"external\">" . h($eachrecord['worktitle']) . "</a></p>";
             }
         } else {
             echo "<h2>" . $groupnamelist[$groupno] . "グループ</h2>";
@@ -101,7 +101,7 @@ require_logined_session();
             foreach ($records as $eachrecord) {
                 echo "<p><a href=\"quotation.php?groupno=" . $groupno . "&workid="
                     . $eachrecord['id'] . "\" rel=\"external\">"
-                    . $eachrecord['worktitle'] . "</a></p>";
+                    . h($eachrecord['worktitle']) . "</a></p>";
             }
         }
         ?>

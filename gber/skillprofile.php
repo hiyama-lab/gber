@@ -45,7 +45,6 @@ require_logined_session();
         while ($row = mysql_fetch_assoc($result)) {
             $records[] = $row;
         }
-//$records[0]['intro'] = nl2br($records[0]['intro']);
 
 // 参加しているグループのリスト
         $result2 = mysql_query("SELECT * FROM grouplist WHERE userno='" . $userno
@@ -198,7 +197,7 @@ require_logined_session();
             echo "<option value=\"\" >ユーザ一覧</option>";
             foreach ($userlist as $eachuser) {
                 echo "<option value=\"" . $eachuser['userno'] . "\">["
-                    . $eachuser['userno'] . "] " . $eachuser['nickname'] . "</option>";
+                    . $eachuser['userno'] . "] " . h($eachuser['nickname']) . "</option>";
             }
             echo "</select><br><br>";
 
@@ -210,7 +209,7 @@ require_logined_session();
             //名前と写真、本人確認済かどうか
             echo "<div id=\"skill-profile-container\"><img src=\"./model/showuserimage.php?userno="
                 . $userno . "\" onerror=\"this.src='img/noimage.svg';\" />";
-            echo "<h1>" . $records[0]['nickname'];
+            echo "<h1>" . h($records[0]['nickname']);
             echo "</h1></div>";
 
             //定性的紹介文
@@ -221,7 +220,7 @@ require_logined_session();
             if ($records[0]['adminmemo'] == "") {
                 $records[0]['adminmemo'] = "記載なし";
             }
-            echo "<p>【運営者メモ】" . $records[0]['adminmemo'] . "</p>\n";
+            echo "<p>【運営者メモ】" . h($records[0]['adminmemo']) . "</p>\n";
 
             //基本情報
             echo "<br><br><h2>基本情報</h2>";
@@ -238,12 +237,12 @@ require_logined_session();
             echo "</tr>\n";
             echo "<tr>";
             echo "<td class=\"memberprof\">" . $records[0]['userno'] . "</td>";
-            echo "<td class=\"memberprof\">" . $records[0]['nickname'] . "</td>";
-            echo "<td class=\"memberprof\">" . $records[0]['mail'] . "</td>";
-            echo "<td class=\"memberprof\">" . $records[0]['phone'] . "</td>";
+            echo "<td class=\"memberprof\">" . h($records[0]['nickname']) . "</td>";
+            echo "<td class=\"memberprof\">" . h($records[0]['mail']) . "</td>";
+            echo "<td class=\"memberprof\">" . h($records[0]['phone']) . "</td>";
             echo "<td class=\"memberprof\">" . $records[0]['birthyear'] . "</td>";
-            echo "<td class=\"memberprof\">" . $records[0]['gender'] . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['doukyo']
+            echo "<td class=\"memberprof\">" . h($records[0]['gender']) . "</td>";
+            echo "<td class=\"memberprof\">" . h($demographicresult['doukyo'])
                 . "</td>";
             echo "<td class=\"memberprof\">" . $records[0]['registered_date']
                 . "</td>";
@@ -502,9 +501,9 @@ require_logined_session();
             echo "<th class=\"memberprof\">1日の希望就業時間</th>";
             echo "</tr>\n";
             echo "<tr>";
-            echo "<td class=\"memberprof\">" . $workstyleresult['workdayperweek']
+            echo "<td class=\"memberprof\">" . h($workstyleresult['workdayperweek'])
                 . "</td>";
-            echo "<td class=\"memberprof\">" . $workstyleresult['worktimeperday']
+            echo "<td class=\"memberprof\">" . h($workstyleresult['worktimeperday'])
                 . "</td>";
             echo "</tr>\n";
             echo "</table>";
@@ -520,7 +519,7 @@ require_logined_session();
             echo "<th class=\"memberprof\">自宅経度</th>";
             echo "</tr>\n";
             echo "<tr>";
-            echo "<td class=\"memberprof\">" . $records[0]['address_string']
+            echo "<td class=\"memberprof\">" . h($records[0]['address_string'])
                 . "</td>";
             echo "<td class=\"memberprof\">" . $records[0]['mylat'] . "</td>";
             echo "<td class=\"memberprof\">" . $records[0]['mylng'] . "</td>";
@@ -540,18 +539,18 @@ require_logined_session();
             echo "</tr>\n";
             echo "<tr>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['transit_car']] . "</td>";
+                . h($marubatsu[$workstyleresult['transit_car']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['transit_train']] . "</td>";
+                . h($marubatsu[$workstyleresult['transit_train']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['transit_bus']] . "</td>";
+                . h($marubatsu[$workstyleresult['transit_bus']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['transit_bicycle']] . "</td>";
+                . h($marubatsu[$workstyleresult['transit_bicycle']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['transit_onfoot']] . "</td>";
+                . h($marubatsu[$workstyleresult['transit_onfoot']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['transit_other']] . "</td>";
-            echo "<td class=\"memberprof\">" . $workstyleresult['commutetime']
+                . h($marubatsu[$workstyleresult['transit_other']]) . "</td>";
+            echo "<td class=\"memberprof\">" . h($workstyleresult['commutetime'])
                 . "</td>";
             echo "</tr>\n";
             echo "</table>";
@@ -567,11 +566,11 @@ require_logined_session();
             echo "<th class=\"memberprof\">激しく息がはずむ運動</th>";
             echo "</tr>\n";
             echo "<tr>";
-            echo "<td class=\"memberprof\">" . $demographicresult['undou_light']
+            echo "<td class=\"memberprof\">" . h($demographicresult['undou_light'])
                 . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['undou_medium']
+            echo "<td class=\"memberprof\">" . h($demographicresult['undou_medium'])
                 . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['undou_heavy']
+            echo "<td class=\"memberprof\">" . h($demographicresult['undou_heavy'])
                 . "</td>";
             echo "</tr>\n";
             echo "</table>";
@@ -587,17 +586,17 @@ require_logined_session();
             echo "<th class=\"memberprof\">資格</th>";
             echo "</tr>\n";
             echo "<tr>";
-            echo "<td class=\"memberprof\">" . $demographicresult['gakureki']
+            echo "<td class=\"memberprof\">" . h($demographicresult['gakureki'])
                 . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['gyoushu']
+            echo "<td class=\"memberprof\">" . h($demographicresult['gyoushu'])
                 . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['gyoushudetail']
+            echo "<td class=\"memberprof\">" . h($demographicresult['gyoushudetail'])
                 . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['shokushu']
+            echo "<td class=\"memberprof\">" . h($demographicresult['shokushu'])
                 . "</td>";
             echo "<td class=\"memberprof\">"
-                . $demographicresult['shokushudetail'] . "</td>";
-            echo "<td class=\"memberprof\">" . $demographicresult['shikaku']
+                . h($demographicresult['shokushudetail']) . "</td>";
+            echo "<td class=\"memberprof\">" . h($demographicresult['shikaku'])
                 . "</td>";
             echo "</tr>\n";
             echo "</table>";
@@ -617,25 +616,25 @@ require_logined_session();
             echo "</tr>\n";
             echo "<tr>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_money_1']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_money_1']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_money_2']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_money_2']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_purposeoflife']]
+                . h($marubatsu[$workstyleresult['workobject_purposeoflife']])
                 . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_health']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_health']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_contribution']]
+                . h($marubatsu[$workstyleresult['workobject_contribution']])
                 . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_asked']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_asked']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_sparetime']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_sparetime']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_skill']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_skill']]) . "</td>";
             echo "<td class=\"memberprof\">"
-                . $marubatsu[$workstyleresult['workobject_other']] . "</td>";
+                . h($marubatsu[$workstyleresult['workobject_other']]) . "</td>";
             echo "</tr>\n";
             echo "</table>";
             echo "<br>";
@@ -1038,7 +1037,7 @@ require_logined_session();
                     . $eachuser['userno']
                     . "\" onerror=\"this.src='img/noimage.svg';\" width=\"150px\" height=\"150px\"/></br><a href=\"skillprofile.php?userno="
                     . $eachuser['userno'] . "\" rel=\"external\">"
-                    . $eachuser['nickname'] . "</a></td>";
+                    . h($eachuser['nickname']) . "</a></td>";
                 $tablecounter++;
                 if ($tablecounter == 6) {
                     $tablecounter = 1;

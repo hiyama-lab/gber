@@ -34,7 +34,7 @@ require_logined_session();
     while ($row = mysql_fetch_assoc($result)) {
         $records[] = $row;
     }
-    $records[0]['intro'] = nl2br($records[0]['intro']);
+    $records[0]['intro'] = nl2br(h($records[0]['intro']));
 
     // 参加しているグループのリスト
     $sql2 = "SELECT * FROM grouplist WHERE userno='" . $userno . "'";
@@ -128,7 +128,7 @@ require_logined_session();
                          onerror="this.src='img/noimage.svg';"/></div>
                 <h2>
                     <?php
-                    echo $records[0]['nickname'];
+                    echo h($records[0]['nickname']);
                     ?>
                 </h2>
                 <?php
@@ -159,27 +159,27 @@ require_logined_session();
                 if ($records[0]['birthyear'] == null) {
                     echo "<p>【生年】未設定</p>\n";
                 } else {
-                    echo "【生年】{$records[0]['birthyear']}年</p>\n";
+                    echo "【生年】" . h($records[0]['birthyear']) . "年</p>\n";
                 }
                 if ($records[0]['gender'] == null) {
                     echo "<p>【性別】未設定</p>\n";
                 } else {
-                    echo "【性別】{$records[0]['gender']}</p>\n";
+                    echo "【性別】". h($records[0]['gender']) . "</p>\n";
                 }
                 if ($records[0]['phone'] == null) {
                     echo "<p>【電話】未設定</p>\n";
                 } else {
-                    echo "【電話】{$records[0]['phone']}</p>\n";
+                    echo "【電話】" . h($records[0]['phone']) . "</p>\n";
                 }
                 if ($records[0]['address_string'] == null) {
                     echo "<p>【住所】未設定</p>\n";
                 } else {
-                    echo "【住所】{$records[0]['address_string']}</p>\n";
+                    echo "【住所】" . h($records[0]['address_string']) . "</p>\n";
                 }
                 if ($records[0]['intro'] == null) {
                     echo "<p>【紹介文】未設定</p>\n";
                 } else {
-                    echo "【紹介文】{$records[0]['intro']}</p>\n";
+                    echo "【紹介文】" . $records[0]['intro'] . "</p>\n";
                 }
                 ?>
                 <?php
@@ -192,7 +192,7 @@ require_logined_session();
                             . "\" rel=\"external\" data-role=\"none\">編集</a>";
                     }
                     echo "</h3>";
-                    echo "<p>【メール】" . $records[0]['mail'] . "</p>\n";
+                    echo "<p>【メール】" . h($records[0]['mail']) . "</p>\n";
                     echo "<p>【パスワード】********</p>\n";
                 }
 
@@ -218,13 +218,13 @@ require_logined_session();
                         $str .= "<td class=\"memberprof\">"
                             . $eachmember['userno'] . "</td>";
                         $str .= "<td class=\"memberprof\">"
-                            . $eachmember['nickname'] . "</td>";
-                        $str .= "<td class=\"memberprof\">" . $eachmember['mail']
+                            . h($eachmember['nickname']) . "</td>";
+                        $str .= "<td class=\"memberprof\">" . h($eachmember['mail'])
                             . "</td>";
-                        $str .= "<td class=\"memberprof\">" . $eachmember['phone']
+                        $str .= "<td class=\"memberprof\">" . h($eachmember['phone'])
                             . "</td>";
                         $str .= "<td class=\"memberprof\">"
-                            . $eachmember['address_string'] . "</td>";
+                            . h($eachmember['address_string']) . "</td>";
                         $str .= "</tr>\n";
                         echo $str;
                     }

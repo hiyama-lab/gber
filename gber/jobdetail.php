@@ -140,9 +140,9 @@ require_logined_session();
         <h2 id="worktitle"><?php if ($record['worktitle'] == "") {
                 echo "未入力";
             } else {
-                echo $record['worktitle'];
+                echo h($record['worktitle']);
             } ?></h2>
-        <p><?php echo $status; ?></p>
+        <p><?php echo h($status); ?></p>
         <?php
         if ($nointerestflag) {
             echo "<p>【参加希望なし】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"希望ありに変更\" onClick=\"changeippaninterest("
@@ -164,10 +164,10 @@ require_logined_session();
         <p id="content"><?php if ($record['content'] == "") {
                 echo "未入力";
             } else {
-                echo nl2br($record['content']);
+                echo nl2br(h($record['content']));
             } ?></p>
         <p>開催場所: <span id="address"><?php if ($record['address'] != "") {
-                    echo $record['address'];
+                    echo h($record['address']);
                 } else {
                     echo "未入力";
                 } ?></span></p>
@@ -184,12 +184,12 @@ require_logined_session();
                             echo "<span id=\"eachworkdate_"
                                 . $eachworkdate['workdate'] . "\">"
                                 . $eachworkdate['workdate'] . "　"
-                                . $eachworkdate['comment']
+                                . h($eachworkdate['comment'])
                                 . "</span>　<a onclick=\"deleteeachdate('"
                                 . $eachworkdate['helpdateid'] . "')\">削除</a></br>";
                         } else {
                             echo "<span>" . $eachworkdate['workdate'] . "　"
-                                . $eachworkdate['comment'] . "</span></br>";
+                                . h($eachworkdate['comment']) . "</span></br>";
                         }
                     }
                 }
@@ -211,22 +211,22 @@ require_logined_session();
         <p>【対象、人数】<span id="workernum"><?php if ($record['workernum'] == "") {
                     echo "未入力";
                 } else {
-                    echo $record['workernum'];
+                    echo h($record['workernum']);
                 } ?></span></p>
         <p>【費用/日給】<span id="price"><?php if ($record['price'] == "") {
                     echo "未入力";
                 } else {
-                    echo $record['price'];
+                    echo h($record['price']);
                 } ?></span></p>
         <p>【募集種類】<span id="workgenre"><?php if ($record['workgenre'] == "") {
                     echo "未入力";
                 } else {
-                    echo $record['workgenre'];
+                    echo h($record['workgenre']);
                 } ?></span></p>
         <p>【募集団体】<span id="groupgenre"><?php if ($record['groupgenre'] == "") {
                     echo "未入力";
                 } else {
-                    echo $record['groupgenre'];
+                    echo h($record['groupgenre']);
                 } ?></span></p>
         <p>【掲示責任者】<span id="nickname"><?php if ($record['userno'] == "") {
                     echo "未入力";
@@ -237,7 +237,7 @@ require_logined_session();
         <p>【申込方法、連絡先】<span id="contact"><?php if ($record['contact'] == "") {
                     echo "未入力";
                 } else {
-                    echo $record['contact'];
+                    echo h($record['contact']);
                 } ?></span></p>
         </br>
 
@@ -281,7 +281,7 @@ require_logined_session();
             echo "</tr><tr>";
             foreach ($records3 as $eachmember) {
                 echo "<td><a href=\"mypage.php?userno=" . $eachmember['userno']
-                    . "\" rel=\"external\">" . $eachmember['nickname'] . "</a></td>";
+                    . "\" rel=\"external\">" . h($eachmember['nickname']) . "</a></td>";
             }
             echo "</tr></table>";
         }
