@@ -41,7 +41,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `bbs_group` WRITE;
 /*!40000 ALTER TABLE `bbs_group` DISABLE KEYS */;
-INSERT INTO `bbs_group` VALUES (1,0,1,'user1です。gberはじめました。よろしくお願いします！','2018-02-19 16:01:39',0),(2,0,1,'<a href=\"jobdetail.php?workid=1\" rel=\"external\">庭の剪定</a>','2018-02-19 16:08:03',1),(3,0,2,'<a href=\"jobdetail.php?workid=2\" rel=\"external\">家の清掃</a>','2018-02-19 16:22:38',1);
+INSERT INTO `bbs_group` VALUES (1,0,1,'user1です。gberはじめました。よろしくお願いします！','2018-02-19 16:01:39',0),(2,0,1,'庭の剪定','2018-02-19 16:08:03',1),(3,0,2,'家の清掃','2018-02-19 16:22:38',2);
 /*!40000 ALTER TABLE `bbs_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
