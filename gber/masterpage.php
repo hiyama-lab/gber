@@ -59,7 +59,7 @@ require_logined_session();
         グループ<select name="groupno" data-role="none">
         <?php
             foreach($groupnamerecords as $eachgroup){
-                echo "<option value=\"".$eachgroup['groupno']."\">".$eachgroup['groupname']."</option>";
+                echo "<option value=\"".$eachgroup['groupno']."\">".h($eachgroup['groupname'])."</option>";
             }
         ?>
         </select>

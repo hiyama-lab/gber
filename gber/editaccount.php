@@ -61,11 +61,11 @@ require_logined_session();
             </div>
             <label for="nickname">ニックネーム</label>
             <input type="text" id="nickname" name="nickname"
-                   value="<?php echo $records[0]['nickname']; ?>"
+                   value="<?php echo h($records[0]['nickname']); ?>"
                    required/></br>
             <label for="mail">メールアドレス</label>
             <input type="text" id="mail" name="mail"
-                   value="<?php echo $records[0]['mail']; ?>"
+                   value="<?php echo h($records[0]['mail']); ?>"
                    required/></br>
             <label for="pass">パスワード</label>
             <input type="password" id="pass" name="pass" required/></br>

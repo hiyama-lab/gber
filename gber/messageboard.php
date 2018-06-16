@@ -73,7 +73,7 @@ require_logined_session();
     <!-- CONTENT -->
     <div data-role="content">
         <h2 style="margin:0 auto; text-align: center;"
-            id="messagetitle"><?php echo $messagetitle; ?></h2></br>
+            id="messagetitle"><?php echo h($messagetitle); ?></h2></br>
         <?php
         if ($workid != 0) {
             echo "<a href=\"jobdetail.php?workid=" . $workid
@@ -103,7 +103,7 @@ require_logined_session();
         foreach ($memberlist as $eachmember) {
             echo "<td><a href=\"mypage.php?userno=" . $eachmember['userno']
                 . "\" rel=\"external\">"
-                . $memberlist[$eachmember['userno']]['nickname'] . "</a></td>";
+                . h($memberlist[$eachmember['userno']]['nickname']) . "</a></td>";
         }
         echo "</tr><tr>";
         foreach ($memberlist as $eachmember) {
@@ -138,7 +138,7 @@ require_logined_session();
                        value="<?php echo $messageid; ?>" readonly="readonly"
                        required/></br>
                 <input type="text" id="messagename" name="messagename"
-                       value="<?php echo $messagetitle; ?>" readonly="readonly"
+                       value="<?php echo h($messagetitle); ?>" readonly="readonly"
                        required/></br>
             </div>
             <textarea data-role="none" width="100%" id="postcontent"
@@ -164,7 +164,7 @@ require_logined_session();
                         . "\"><div class=\"chat-face\"><img src=\"./model/showuserimage.php?userno="
                         . $eachrecord['senderid']
                         . "\" onerror=\"this.src='img/noimage.svg';\" class=\"bbsphoto\" width=\"50px\"></div>";
-                    $eachrecord['message'] = nl2br($eachrecord['message']);
+                    $eachrecord['message'] = nl2br(h($eachrecord['message']));
                     if ($eachrecord['senderid'] == $userno) {
                         $string .= "<div class=\"chat-area\"><div class=\"chat-hukidashi mine\" style=\"display:inline-block;\"><span class=\"mytweet\" id=\"mytweet_"
                             . $eachrecord['messageeachid'] . "\">"
@@ -179,7 +179,7 @@ require_logined_session();
                             . $eachrecord['message']
                             . "</br><span class=\"smallletter\"><a href=\"mypage.php?userno="
                             . $eachrecord['senderid'] . "\" rel=\"external\">"
-                            . $memberlist[$eachrecord['senderid']]['nickname']
+                            . h($memberlist[$eachrecord['senderid']]['nickname'])
                             . "</a> " . $eachrecord['messagedate']
                             . "</span></div></div></div>";
                     }

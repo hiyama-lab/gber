@@ -364,22 +364,22 @@ require_logined_session();
 
                 //管理者には全機能を開放
                 if ($vieweradmin == 1) {
-                    echo "<h2 id=\"worktitle\">" . $records2[0]['worktitle']
+                    echo "<h2 id=\"worktitle\">" . h($records2[0]['worktitle'])
                         . "【終了】</h2>";
                     if ($records2[0]['content'] == "") {
                         $records2[0]['content'] = "仕事詳細が空欄です";
                     }
-                    $records2[0]['content'] = nl2br($records2[0]['content']);
+                    $records2[0]['content'] = nl2br(h($records2[0]['content']));
                     echo "<p id=\"content\">" . $records2[0]['content'] . "</p>";
                     if ($records2[0]['workdatetime'] == "") {
                         $records2[0]['workdatetime'] = "勤務予定日時が空欄です";
                     }
                     $records2[0]['workdatetime']
-                        = nl2br($records2[0]['workdatetime']);
+                        = nl2br(h($records2[0]['workdatetime']));
                     echo "<p id=\"workdatetime\">勤務予定日時：</br><span id=\"editworkdatetime\">"
                         . $records2[0]['workdatetime'] . "</span></p>";
                     echo "<p id=\"contact\">依頼者連絡先：<span id=\"editcontact\">"
-                        . $records2[0]['contact'] . "</span></p>";
+                        . h($records2[0]['contact']) . "</span></p>";
                     echo "<p id=\"place\">住所(自動生成)：</p><!-- jsでappend -->";
                     if ($vieweradmin || $_SESSION['userno'] == 1) {
                         echo "<button data-role=\"none\" id=\"changeaddressbutton\" onclick=\"editPin();\">住所変更</button></br>";
@@ -408,7 +408,7 @@ require_logined_session();
                     echo "<div id=\"detail-map\"></div><!-- jsでappend -->";
                     echo "<hr />";
                     echo "<h3>依頼者情報</h3>";
-                    echo "<p>" . nl2br($clientcomment) . "</p>";
+                    echo "<p>" . nl2br(h($clientcomment)) . "</p>";
                     echo "<hr />";
                     echo "<h3>日報</h3>";
                     if (count($records10) > 0) {
@@ -425,7 +425,7 @@ require_logined_session();
                             } else {
                                 echo "<p>" . $eachrecord['workday'] . ": 退会済</p>";
                             }
-                            echo "<p>　" . nl2br($eachrecord['workreport']) . "</p>";
+                            echo "<p>　" . nl2br(h($eachrecord['workreport'])) . "</p>";
                         }
                     }
                     echo "<hr />";
@@ -438,15 +438,15 @@ require_logined_session();
                                 echo "<p><a href=\"mypage.php?userno="
                                     . $eachrecord['workerno']
                                     . "\" rel=\"external\">"
-                                    . $nicknamelist[$eachrecord['workerno']]
+                                    . h($nicknamelist[$eachrecord['workerno']])
                                     . "</a></p>";
                             } else {
                                 echo "<p>退会済</p>";
                             }
                             echo "<div class=\"rateit\" data-rateit-value=\""
-                                . $eachrecord['evaluation']
+                                . h($eachrecord['evaluation'])
                                 . "\" data-rateit-min=\"0\" data-rateit-max=\"10\" data-rateit-ispreset=\"true\" data-rateit-readonly=\"true\"></div>";
-                            echo "<p>" . nl2br($eachrecord['comment'])
+                            echo "<p>" . nl2br(h($eachrecord['comment']))
                                 . "</p><hr />";
                         }
                     }
@@ -459,14 +459,14 @@ require_logined_session();
                             $records2[0]['content'] = "仕事詳細が空欄です";
                         }
                         $records2[0]['content']
-                            = nl2br($records2[0]['content']);
+                            = nl2br(h($records2[0]['content']));
                         echo "<p id=\"content\">" . $records2[0]['content']
                             . "</p>";
                         if ($records2[0]['workdatetime'] == "") {
                             $records2[0]['workdatetime'] = "勤務予定日時が空欄です";
                         }
                         $records2[0]['workdatetime']
-                            = nl2br($records2[0]['workdatetime']);
+                            = nl2br(h($records2[0]['workdatetime']));
                         echo "<p id=\"workdatetime\">勤務予定日時：</br><span id=\"editworkdatetime\">"
                             . $records2[0]['workdatetime'] . "</span></p>";
                         echo "<p id=\"place\">住所(自動生成)：</p><!-- jsでappend -->";
@@ -479,7 +479,7 @@ require_logined_session();
                                     == $_SESSION['userno']
                                 ) {
                                     echo "<p>" . $eachrecord['workday'] . "</p>";
-                                    echo "<p>　" . nl2br($eachrecord['workreport'])
+                                    echo "<p>　" . nl2br(h($eachrecord['workreport']))
                                         . "</p>";
                                 }
                             }
@@ -491,7 +491,7 @@ require_logined_session();
                                 if ($eachrecord['workerno']
                                     == $_SESSION['userno']
                                 ) {
-                                    echo "<p>" . nl2br($eachrecord['comment'])
+                                    echo "<p>" . nl2br(h($eachrecord['comment']))
                                         . "</p><hr />";
                                 }
                             }
@@ -518,23 +518,23 @@ require_logined_session();
             // 『依頼者』もしくは『管理者』のとき。代理入力に対応
             else {
                 if ($records2[0]['status'] == 3) {
-                    echo "<h2 id=\"worktitle\">" . $records2[0]['worktitle']
+                    echo "<h2 id=\"worktitle\">" . h($records2[0]['worktitle'])
                         . " 【作業終了】</h2>";
                     if ($records2[0]['content'] == "") {
                         $records2[0]['content'] = "仕事詳細が空欄です";
                     }
-                    $records2[0]['content'] = nl2br($records2[0]['content']);
+                    $records2[0]['content'] = nl2br(h($records2[0]['content']));
                     echo "<p id=\"content\">" . $records2[0]['content'] . "</p>";
                     if ($records2[0]['workdatetime'] == "") {
                         $records2[0]['workdatetime'] = "勤務予定日時が空欄です";
                     }
                     $records2[0]['workdatetime']
-                        = nl2br($records2[0]['workdatetime']);
+                        = nl2br(h($records2[0]['workdatetime']));
                     echo "<p id=\"workdatetime\">勤務予定日時：</br><span id=\"editworkdatetime\">"
                         . $records2[0]['workdatetime'] . "</span></p>";
                     if ($vieweradmin) {
                         echo "<p id=\"contact\">依頼者連絡先：<span id=\"editcontact\">"
-                            . $records2[0]['contact'] . "</span></p>";
+                            . h($records2[0]['contact']) . "</span></p>";
                     }
                     echo "<p id=\"place\">住所(自動生成)：</p><!-- jsでappend -->";
 
@@ -574,10 +574,10 @@ require_logined_session();
                         }
                         echo "<h3>依頼人、依頼場所の情報を記入してください。</h3>";
                         echo "<textarea data-role=\"none\" name=\"clientinfo\" placeholder=\"残すべき情報があればご記入ください\" required>"
-                            . $clientcomment . "</textarea>\n";
+                            . h($clientcomment) . "</textarea>\n";
                         echo "<input type=\"button\" value=\"情報を登録する\" onClick=\"registerClientInfo('"
                             . $workid . "','" . $groupno . "','"
-                            . $records2[0]['clientid'] . "');\" />\n";
+                            . h($records2[0]['clientid']) . "');\" />\n";
                         echo "<hr />";
                         if (count($records8) == 0) {
                             echo "<p>この仕事で働いた人はいません。終了報告を行います。</p></br>\n";
@@ -593,7 +593,7 @@ require_logined_session();
                                     echo "<p><a href=\"mypage.php?userno="
                                         . $eachworker['workerno']
                                         . "\" rel=\"external\">"
-                                        . $nicknamelist[$eachworker['workerno']]
+                                        . h($nicknamelist[$eachworker['workerno']])
                                         . "</a></p>\n";
                                 } else {
                                     echo "<p>退会済</p>\n";
@@ -605,7 +605,7 @@ require_logined_session();
                                     ) {
                                         echo "<p>" . $eachrecord['workday'] . " "
                                             . $ampmarray[$eachrecord['am']]
-                                            . " 日報：" . $eachrecord['workreport']
+                                            . " 日報：" . h($eachrecord['workreport'])
                                             . "</p>";
                                     }
                                 }
@@ -630,9 +630,9 @@ require_logined_session();
                                         > 0
                                     ) { //評価済みなら評価結果を表示
                                         echo "<span class=\"rateit\" data-rateit-value=\""
-                                            . $eachworker['evaluation']
+                                            . h($eachworker['evaluation'])
                                             . "\" data-rateit-min=\"0\" data-rateit-max=\"10\" data-rateit-ispreset=\"true\" data-rateit-readonly=\"true\"></span> 評価済";
-                                        echo "<p>" . nl2br($eachworker['comment'])
+                                        echo "<p>" . nl2br(h($eachworker['comment']))
                                             . "</p>";
                                     }
                                 }
@@ -682,7 +682,7 @@ require_logined_session();
                                 }
                                 echo "<span>※管理者に伝えたいコメントがあれば以下をクリックして記載してください</span><br>";
                                 echo "<span id=\"interestcomment\" class=\"jobreport\">"
-                                    . $answeredcomment
+                                    . h($answeredcomment)
                                     . "</span><script>$(\"span#interestcomment\").editable(\"click\",function(e){editcomment('"
                                     . $groupno . "','" . $workid . "','"
                                     . $_SESSION['userno']
@@ -696,19 +696,19 @@ require_logined_session();
                             $records2[0]['content'] = "仕事詳細が空欄です";
                         }
                         $records2[0]['content']
-                            = nl2br($records2[0]['content']);
+                            = nl2br(h($records2[0]['content']));
                         echo "<p id=\"content\">" . $records2[0]['content']
                             . "</p>";
                         if ($records2[0]['workdatetime'] == "") {
                             $records2[0]['workdatetime'] = "勤務予定日時が空欄です";
                         }
                         $records2[0]['workdatetime']
-                            = nl2br($records2[0]['workdatetime']);
+                            = nl2br(h($records2[0]['workdatetime']));
                         echo "<p id=\"workdatetime\">勤務予定日時：</br><span id=\"editworkdatetime\">"
                             . $records2[0]['workdatetime'] . "</span></p>";
                         if ($vieweradmin) {
                             echo "<p id=\"contact\">依頼者連絡先：<span id=\"editcontact\">"
-                                . $records2[0]['contact'] . "</span></p>";
+                                . h($records2[0]['contact']) . "</span></p>";
                         }
                         echo "<p id=\"place\">住所(自動生成)：</p><!-- jsでappend -->";
                         //住所変更用モジュール
@@ -773,7 +773,7 @@ require_logined_session();
                                 echo "<td><a href=\"mypage.php?userno="
                                     . $eachmember['userno']
                                     . "\" rel=\"external\">"
-                                    . $eachmember['nickname'] . "</a></td>";
+                                    . h($eachmember['nickname']) . "</a></td>";
                                 $someoneinterested = true;
                             }
                         }
@@ -806,7 +806,7 @@ require_logined_session();
                                     $kakuteistr .= "　<a href=\"mypage.php?userno="
                                         . $eachrecord['workerno']
                                         . "\" rel=\"external\">"
-                                        . $nicknamelist[$eachrecord['workerno']]
+                                        . h($nicknamelist[$eachrecord['workerno']])
                                         . "</a>";
                                 } else {
                                     $kakuteistr .= "　退会済";
@@ -829,7 +829,7 @@ require_logined_session();
                                 }
                                 if ($eachrecord['reportflag'] == 1) {
                                     $kakuteistr .= "　日報："
-                                        . $eachrecord['workreport'];
+                                        . h($eachrecord['workreport']);
                                 }
                                 if ($vieweradmin) {
                                     $kakuteistr .= "</span>";
@@ -874,9 +874,9 @@ require_logined_session();
                                 $str .= "<td class=\"memberprof\">"
                                     . $eachmember['userno'] . "</td>";
                                 $str .= "<td class=\"memberprof\">"
-                                    . $eachmember['nickname'] . "</td>";
+                                    . h($eachmember['nickname']) . "</td>";
                                 $str .= "<td class=\"memberprof\">"
-                                    . $evalarray[$eachmember['eval']] . "</td>";
+                                    . h($evalarray[$eachmember['eval']]) . "</td>";
                                 if ($eachmember['mylat'] == 0) {
                                     $distance = "未登録";
                                 } else {
@@ -894,13 +894,13 @@ require_logined_session();
                                 $str .= "<td class=\"memberprof clear\" id=\"pm_"
                                     . $eachmember['userno'] . "\"></td>";
                                 $str .= "<td class=\"memberprof\">"
-                                    . $eachmember['interest'] . "</td>";
+                                    . h($eachmember['interest']) . "</td>";
                                 $str .= "<td class=\"memberprof\">"
-                                    . $eachmember['comment'] . "</td>";
+                                    . h($eachmember['comment']) . "</td>";
                                 $str .= "<td class=\"memberprof\">"
-                                    . $eachmember['memo'] . "</td>";
+                                    . h($eachmember['memo']) . "</td>";
                                 $str .= "<td class=\"memberprof\">"
-                                    . $eachmember['accumulation'] . "</td>";
+                                    . h($eachmember['accumulation']) . "</td>";
                                 $str .= "</tr>\n";
                                 echo $str;
                             }
@@ -946,7 +946,7 @@ require_logined_session();
                                             echo "<a href=\"mypage.php?userno="
                                                 . $eachoffer['workerno']
                                                 . "\" rel=\"external\">"
-                                                . $nicknamelist[$eachoffer['workerno']]
+                                                . h($nicknamelist[$eachoffer['workerno']])
                                                 . "</a>";
                                         } else {
                                             echo "退会済";
@@ -983,11 +983,11 @@ require_logined_session();
                                 foreach ($records111 as $eachrecord) {
                                     if ($eachrecord['am'] == 1) {
                                         echo "<p>" . $eachrecord['workday'] . " 午前 "
-                                            . $nicknamelist[$eachrecord['workerno']]
+                                            . h($nicknamelist[$eachrecord['workerno']])
                                             . "</p>";
                                     } else {
                                         echo "<p>" . $eachrecord['workday'] . " 午後 "
-                                            . $nicknamelist[$eachrecord['workerno']]
+                                            . h($nicknamelist[$eachrecord['workerno']])
                                             . "</p>";
                                     }
                                 }
@@ -1083,7 +1083,7 @@ require_logined_session();
                                         . $eachoffer['am'] . "_" . $eachoffer['pm']
                                         . "_" . $eachoffer['workerno']
                                         . "\" class=\"jobreport\">"
-                                        . $eachoffer['workreport']
+                                        . h($eachoffer['workreport'])
                                         . "</span></br></br></span>\n";
                                     $jobreportstr .= "<script>$(\"span#day_"
                                         . $eachoffer['workday'] . "_"
@@ -1146,20 +1146,20 @@ require_logined_session();
                         if ($records2[0]['status'] == 0 && $vieweradmin == 1) {
                             //仕事詳細
                             echo "<h2 id=\"worktitle\">"
-                                . $records2[0]['worktitle'] . "</h2>";
+                                . h($records2[0]['worktitle']) . "</h2>";
                             if ($records2[0]['content'] == "") {
                                 $records2[0]['content'] = "仕事詳細が空欄です";
                             }
                             echo "<p id=\"content\">"
-                                . nl2br($records2[0]['content']) . "</p>";
+                                . nl2br(h($records2[0]['content'])) . "</p>";
                             if ($records2[0]['workdatetime'] == "") {
                                 $records2[0]['workdatetime'] = "勤務予定日時が空欄です";
                             }
                             echo "<p id=\"workdatetime\">勤務予定日時：</br><span id=\"editworkdatetime\">"
-                                . nl2br($records2[0]['workdatetime'])
+                                . nl2br(h($records2[0]['workdatetime']))
                                 . "</span></p>";
                             echo "<p id=\"contact\">依頼者連絡先：<span id=\"editcontact\">"
-                                . $records2[0]['contact'] . "</span></p>";
+                                . h($records2[0]['contact']) . "</span></p>";
                             echo "<p id=\"place\">住所(自動生成)：</p><!-- jsでappend -->";
 
                             if ($vieweradmin || $_SESSION['userno'] == 1) {
@@ -1200,7 +1200,7 @@ require_logined_session();
                                             $nicknamelist)
                                         ) {
                                             echo $eachrecord['workday'] . " "
-                                                . $nicknamelist[$eachrecord['workerno']]
+                                                . h($nicknamelist[$eachrecord['workerno']])
                                                 . " " . $eachrecord['worktime']
                                                 . "時間</br>";
                                         } else {
@@ -1222,7 +1222,7 @@ require_logined_session();
                                     ) {
                                         $estimator_str .= "<option value=\""
                                             . $eachrecord['userno'] . "\">"
-                                            . $nicknamelist[$eachrecord['userno']]
+                                            . h($nicknamelist[$eachrecord['userno']])
                                             . " " . $eachrecord['userno']
                                             . "</option>";
                                     } else {
@@ -1247,11 +1247,11 @@ require_logined_session();
                             echo "<h3>【契約内容の確認】</h3>";
                             echo "<form id=\"adminpropose\">\n";
                             echo "<div style=\"display:none;\"><label for=\"price\">見積価格</label><input type=\"text\" name=\"price\" value=\""
-                                . $records2[0]['price'] . "\"/></br></div>\n";
+                                . h($records2[0]['price']) . "\"/></br></div>\n";
                             //echo "<label for=\"content\">仕事詳細</label>";
                             echo "<label for=\"content\">【具体的な内容】</label>";
                             echo "<textarea data-role=\"none\" id=\"content\" name=\"content\" required>"
-                                . $records2[0]['content'] . "</textarea></br>";
+                                . h($records2[0]['content']) . "</textarea></br>";
                             echo "</br>";
                             echo "<label for=\"workdatetime\">【勤務予定日時】</label>";
                             echo "<span>※ 後から変更可能です。未定の場合「未定」と記入してください。</span>";
@@ -1260,7 +1260,7 @@ require_logined_session();
                                 . "</textarea></br>";
                             echo "<input type=\"button\" onclick=\"sendProposalAndAccept("
                                 . $workid . "," . $groupno . "," . $_SESSION['userno']
-                                . ",'" . $records2[0]['worktitle']
+                                . ",'" . h($records2[0]['worktitle'])
                                 . "')\" value=\"仕事の割り振りに進む\">\n";
                             echo "</form></br>\n";
                             // 日程を決めやすくするために、グループメンバーのカレンダーを表示する。長いので外部ファイル。
@@ -1277,12 +1277,12 @@ require_logined_session();
                             ) {
                                 //仕事詳細
                                 echo "<h2 id=\"worktitle\">"
-                                    . $records2[0]['worktitle'] . "</h2>";
+                                    . h($records2[0]['worktitle']) . "</h2>";
                                 if ($records2[0]['content'] == "") {
                                     $records2[0]['content'] = "仕事詳細が空欄です";
                                 }
                                 $records2[0]['content']
-                                    = nl2br($records2[0]['content']);
+                                    = nl2br(h($records2[0]['content']));
                                 echo "<p id=\"content\">"
                                     . $records2[0]['content'] . "</p>";
                                 if ($records2[0]['workdatetime'] == "") {
@@ -1290,7 +1290,7 @@ require_logined_session();
                                         = "勤務予定日時が空欄です";
                                 }
                                 $records2[0]['workdatetime']
-                                    = nl2br($records2[0]['workdatetime']);
+                                    = nl2br(h($records2[0]['workdatetime']));
                                 echo "<p id=\"workdatetime\">勤務予定日時：</br><span id=\"editworkdatetime\">"
                                     . $records2[0]['workdatetime'] . "</span></p>";
                                 echo "<p id=\"place\">住所(自動生成)：</p><!-- jsでappend -->";

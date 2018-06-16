@@ -75,17 +75,17 @@ require_logined_session();
                         $eachwork['summary'] = "未入力";
                     }
                     echo "<td style=\"padding: 8px;\"><span id=\""
-                        . $eachwork['id'] . "\">" . $eachwork['summary']
+                        . $eachwork['id'] . "\">" . h($eachwork['summary'])
                         . "</span></td><script>$(\"span#" . $eachwork['id']
                         . "\").editable({action:\"dblclick\"}, function(e){editsummary("
                         . $eachwork['id'] . ",e.value);});</script>";
                     echo "<td style=\"padding: 8px;\">"
-                        . mb_strlen($eachwork['summary']) . "</td>";
+                        . mb_strlen(h($eachwork['summary'])) . "</td>";
                     echo "<td style=\"padding: 8px;\"><a href=\"jobdetail.php?workid="
                         . $eachwork['id'] . "\" rel=\"external\">"
-                        . $eachwork['worktitle'] . "</a></td>";
+                        . h($eachwork['worktitle']) . "</a></td>";
                     echo "<td style=\"padding: 8px;\">"
-                        . nl2br($eachwork['content']) . "</td>";
+                        . nl2br(h($eachwork['content'])) . "</td>";
                     echo "</tr>";
                 }
                 ?>

@@ -137,7 +137,7 @@ require_logined_session();
                 if ($calendar[$eachmember['userno']]['active'] == 1) {
                     $eachmemberupdatestr = "<p><a href=\"mypage.php?userno="
                         . $eachmember['userno'] . "\" rel=\"external\">"
-                        . $eachmember['nickname'] . "</a> ";
+                        . h($eachmember['nickname']) . "</a> ";
                     if ($calendar[$eachmember['userno']]['lastupdated']
                         === "2000-01-01"
                     ) {
@@ -155,7 +155,7 @@ require_logined_session();
                 } else {
                     $eachmemberupdatestr = "<p><a href=\"mypage.php?userno="
                         . $eachmember['userno'] . "\" rel=\"external\">"
-                        . $eachmember['nickname'] . "</a> ";
+                        . h($eachmember['nickname']) . "</a> ";
                     $eachmemberupdatestr = $eachmemberupdatestr
                         . " カレンダーを開いていません";
                     $eachmemberupdatestr = $eachmemberupdatestr . "</p>";
@@ -219,7 +219,7 @@ require_logined_session();
                                     ) {
                                         echo "<span class=\"user"
                                             . $eachrecord['userno'] . "\">"
-                                            . $eachrecord['nickname']
+                                            . h($eachrecord['nickname'])
                                             . "</span></br>";
                                     }
                                 }
@@ -249,7 +249,7 @@ require_logined_session();
                                     ) {
                                         echo "<span class=\"user"
                                             . $eachrecord['userno'] . "\">"
-                                            . $eachrecord['nickname']
+                                            . h($eachrecord['nickname'])
                                             . "</span></br>";
                                     }
                                 }
@@ -266,7 +266,7 @@ require_logined_session();
                                     ) {
                                         echo "<span class=\"user"
                                             . $eachrecord['userno'] . "\">"
-                                            . $eachrecord['nickname']
+                                            . h($eachrecord['nickname'])
                                             . "</span></br>";
                                     }
                                 }
@@ -320,7 +320,7 @@ require_logined_session();
                                 . '_pm'] == 1
                             ) {
                                 echo "<span class=\"user" . $eachrecord['userno']
-                                    . "\">" . $eachrecord['nickname']
+                                    . "\">" . h($eachrecord['nickname'])
                                     . "</span></br>";
                             }
                         }
@@ -348,7 +348,7 @@ require_logined_session();
                                 . '_pm'] == 0
                             ) {
                                 echo "<span class=\"user" . $eachrecord['userno']
-                                    . "\">" . $eachrecord['nickname']
+                                    . "\">" . h($eachrecord['nickname'])
                                     . "</span></br>";
                             }
                         }
@@ -363,7 +363,7 @@ require_logined_session();
                                 . '_pm'] == 1
                             ) {
                                 echo "<span class=\"user" . $eachrecord['userno']
-                                    . "\">" . $eachrecord['nickname']
+                                    . "\">" . h($eachrecord['nickname'])
                                     . "</span></br>";
                             }
                         }
@@ -391,7 +391,7 @@ require_logined_session();
                     $eachmemberlastupdatestr_next
                         = "<p><a href=\"mypage.php?userno="
                         . $eachmember['userno'] . "\" rel=\"external\">"
-                        . $eachmember['nickname'] . "</a> ";
+                        . h($eachmember['nickname']) . "</a> ";
                     if ($calendar[$eachmember['userno']]['next_lastupdated']
                         === "2000-01-01"
                     ) {
@@ -411,7 +411,7 @@ require_logined_session();
                     $eachmemberupdatestr_next
                         = "<p><a href=\"mypage.php?userno="
                         . $eachmember['userno'] . "\" rel=\"external\">"
-                        . $eachmember['nickname'] . "</a> ";
+                        . h($eachmember['nickname']) . "</a> ";
                     $eachmemberupdatestr_next = $eachmemberupdatestr_next
                         . " カレンダーを開いていません";
                     $eachmemberupdatestr_next = $eachmemberupdatestr_next
@@ -477,7 +477,7 @@ require_logined_session();
                                 ) {
                                     echo "<span class=\"user"
                                         . $eachrecord['userno'] . "\">"
-                                        . $eachrecord['nickname'] . "</span></br>";
+                                        . h($eachrecord['nickname']) . "</span></br>";
                                 }
                             }
                             echo "</td>\n";
@@ -502,7 +502,7 @@ require_logined_session();
                                 ) {
                                     echo "<span class=\"user"
                                         . $eachrecord['userno'] . "\">"
-                                        . $eachrecord['nickname'] . "</span></br>";
+                                        . h($eachrecord['nickname']) . "</span></br>";
                                 }
                             }
                             echo "</td>\n";
@@ -518,7 +518,7 @@ require_logined_session();
                                 ) {
                                     echo "<span class=\"user"
                                         . $eachrecord['userno'] . "\">"
-                                        . $eachrecord['nickname'] . "</span></br>";
+                                        . h($eachrecord['nickname']) . "</span></br>";
                                 }
                             }
                             echo "</td>\n";
@@ -564,7 +564,7 @@ require_logined_session();
                             . '_pm'] == 1
                         ) {
                             echo "<span class=\"user" . $eachrecord['userno']
-                                . "\">" . $eachrecord['nickname'] . "</span></br>";
+                                . "\">" . h($eachrecord['nickname']) . "</span></br>";
                         }
                     }
                     echo "</td>\n";
@@ -587,7 +587,7 @@ require_logined_session();
                             . '_pm'] == 0
                         ) {
                             echo "<span class=\"user" . $eachrecord['userno']
-                                . "\">" . $eachrecord['nickname'] . "</span></br>";
+                                . "\">" . h($eachrecord['nickname']) . "</span></br>";
                         }
                     }
                     echo "</td>\n";
@@ -601,7 +601,7 @@ require_logined_session();
                             . '_pm'] == 1
                         ) {
                             echo "<span class=\"user" . $eachrecord['userno']
-                                . "\">" . $eachrecord['nickname'] . "</span></br>";
+                                . "\">" . h($eachrecord['nickname']) . "</span></br>";
                         }
                     }
                     echo "</td>\n";

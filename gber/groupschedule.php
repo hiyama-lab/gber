@@ -73,13 +73,13 @@ require_logined_session();
                 foreach ($records5 as $eachrequest) {
                     if ($eachrequest['status'] > $i) {
                         echo "<li data-role=\"list-divider\">"
-                            . $searchstatus[$eachrequest['status']] . "</li>\n";
+                            . h($searchstatus[$eachrequest['status']]) . "</li>\n";
                         $i = $eachrequest['status'];
                     }
                     echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
                         . $eachrequest['id'] . "&groupno=" . $groupno
-                        . "\" rel=\"external\"><h2>" . $eachrequest['worktitle']
-                        . "</h2><p>" . $eachrequest['content'] . "</p></a></li>\n";
+                        . "\" rel=\"external\"><h2>" . h($eachrequest['worktitle'])
+                        . "</h2><p>" . h($eachrequest['content']) . "</p></a></li>\n";
                 }
                 echo "</ul>\n";
             }

@@ -92,12 +92,12 @@ require_logined_session();
         <h2 id="worktitle"><?php if ($record['worktitle'] == "") {
                 echo "未入力";
             } else {
-                echo $record['worktitle'];
+                echo h($record['worktitle']);
             } ?></h2>
         <!--p id="content"><?php if ($record['content'] == "") {
             echo "未入力";
         } else {
-            echo nl2br($record['content']);
+            echo nl2br(h($record['content']));
         } ?></p-->
         <h3>日程調整</h3>
         <?php
@@ -117,7 +117,7 @@ require_logined_session();
                         $eachworkdate['comment'] = "時間を入力する場合ダブルクリック";
                     }
                     echo "<span id=\"comment_" . $eachworkdate['helpdateid']
-                        . "\" class=\"jobreport\">" . $eachworkdate['comment']
+                        . "\" class=\"jobreport\">" . h($eachworkdate['comment'])
                         . "</span><br><script>$(\"span#comment_"
                         . $eachworkdate['helpdateid']
                         . "\").editable(\"click\",function(e){editcomment("
@@ -125,7 +125,7 @@ require_logined_session();
                 } //通常の応募者なら、その結果を閲覧するだけ
                 else {
                     echo "<br><h3>" . $eachworkdate['workdate'] . "</h3>";
-                    echo "<span>" . $eachworkdate['comment'] . "</span><br>";
+                    echo "<span>" . h($eachworkdate['comment']) . "</span><br>";
                 }
 
 

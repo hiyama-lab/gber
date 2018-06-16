@@ -142,8 +142,8 @@ require_logined_session();
                             }
                             echo "<li data-theme=\"c\"><a href=\"jobdetail.php?workid="
                                 . $eachwork['id'] . "\" rel=\"external\"><h2>"
-                                . $eachwork['worktitle'] . "</h2><p>"
-                                . $eachwork['content'] . "</p></a></li>\n";
+                                . h($eachwork['worktitle']) . "</h2><p>"
+                                . h($eachwork['content']) . "</p></a></li>\n";
                         }
                     }
                     ?>
@@ -179,10 +179,10 @@ require_logined_session();
                                     . $eachwork['workid'] . "&groupno="
                                     . $eachwork['groupno']
                                     . "\" rel=\"external\"><h2>"
-                                    . $eachwork['worktitle'] . "</h2><p><strong>"
-                                    . $status[$eachwork['status']] . "　"
-                                    . $groupnamelist[$eachwork['groupno']]
-                                    . "グループ</strong></p><p>" . $eachwork['content']
+                                    . h($eachwork['worktitle']) . "</h2><p><strong>"
+                                    . h($status[$eachwork['status']]) . "　"
+                                    . h($groupnamelist[$eachwork['groupno']])
+                                    . "グループ</strong></p><p>" . h($eachwork['content'])
                                     . "</p></a></li>\n";
                             }
                         }
@@ -212,8 +212,8 @@ require_logined_session();
                             }
                             echo "<li data-theme=\"c\"><a href=\"jobdetail.php?workid="
                                 . $eachwork['id'] . "\" rel=\"external\"><h2>"
-                                . $eachwork['worktitle'] . "</h2><p>"
-                                . $eachwork['content'] . "</p></a></li>\n";
+                                . h($eachwork['worktitle']) . "</h2><p>"
+                                . h($eachwork['content']) . "</p></a></li>\n";
                         }
                     }
                     ?>

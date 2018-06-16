@@ -55,7 +55,7 @@ require_logined_session();
                 foreach ($records2 as $eachrecord) {
                     echo "<li data-theme=\"c\"><a href=\"messageboard.php?messageid="
                         . $eachrecord['messageid'] . "\" rel=\"external\"><h2>"
-                        . $eachrecord['messagename'] . "</h2><p>"
+                        . h($eachrecord['messagename']) . "</h2><p>"
                         . $eachrecord['lastupdate'] . "</p></a></li>\n";
                 }
                 echo "</ul>";

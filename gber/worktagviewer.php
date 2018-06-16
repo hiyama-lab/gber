@@ -82,19 +82,19 @@ require_logined_session();
         echo "<option value=\"\" >仕事一覧</option>";
         foreach ($worklist as $eachwork) {
             echo "<option value=\"" . $eachwork['groupno'] . "," . $eachwork['workid']
-                . "\">[" . $groupnamelist[$eachwork['groupno']] . "] "
+                . "\">[" . h($groupnamelist[$eachwork['groupno']]) . "] "
                 . $eachwork['workid'] . "</option>";
         }
         echo "</select><br><br>";
 
 
-        echo "<h1>" . $record['worktitle'] . "</h1>";
+        echo "<h1>" . h($record['worktitle']) . "</h1>";
 
         //定性的紹介文
         if ($record['content'] == "") {
             $record['content'] = "記載なし";
         }
-        echo "<p>" . $record['content'] . "</p>\n";
+        echo "<p>" . h($record['content']) . "</p>\n";
 
         //場所
         echo "<br><br><h2>場所</h2>";

@@ -61,11 +61,11 @@ $groupno = $_GET['groupno'];
                     if ($groupname['groupno'] != 0) {
                         if ($groupno == $groupname['groupno']) {
                             echo "\t\t\t<option value=\"" . $groupname['groupno']
-                                . "\" selected>" . $groupname['groupname']
+                                . "\" selected>" . h($groupname['groupname'])
                                 . "</option>\n";
                         } else {
                             echo "\t\t\t<option value=\"" . $groupname['groupno']
-                                . "\" disabled>" . $groupname['groupname']
+                                . "\" disabled>" . h($groupname['groupname'])
                                 . "</option>\n";
                         }
                     }

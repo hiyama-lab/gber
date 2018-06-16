@@ -85,7 +85,7 @@ require_logined_session();
             </div>
             <label for="birthyear">生年(西暦，半角数字4桁)</label>
             <input type="number" name="birthyear" id="birthyear" min="1900"
-                   step="1" value="<?php echo $records[0]['birthyear']; ?>"
+                   step="1" value="<?php echo h($records[0]['birthyear']); ?>"
                    placeholder="生年を記入してください。" required/></br>
             <label for="gender">性別</label>
             <select name="gender" id="gender" data-theme="c" data-iconpos="left"
@@ -98,11 +98,11 @@ require_logined_session();
             </select>
             <label for="phone">電話番号</label>
             <input type="text" id="phone" size="30" name="phone"
-                   value="<?php echo $records[0]['phone']; ?>"
+                   value="<?php echo h($records[0]['phone']); ?>"
                    placeholder="電話番号を記入してください。" required/></br>
             <label for="address">自宅住所</label>
             <input type="text" name="address" id="mapsearch"
-                   value="<?php echo $records[0]['address_string']; ?>"
+                   value="<?php echo h($records[0]['address_string']); ?>"
                    placeholder="住所を入力してください" required/></br>
             <label for="intro">自己紹介</label>
             <textarea data-role="none" id="intro" name="intro"
