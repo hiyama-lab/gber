@@ -21,7 +21,7 @@
 
 LOCK TABLES `db_user` WRITE;
 /*!40000 ALTER TABLE `db_user` DISABLE KEYS */;
-INSERT INTO `db_user` VALUES (1,'user1@example.com','0312345678','user1','男性',1954,'$2y$10$fUOe4xzMmcP/NmAEQZFBledJnVzLFtRTnqoFZzb8cVYufH9Br3wfC','user1です。','東京都文京区本郷７丁目３−１',35.7121,139.763,0,0,'','2018-02-19'),(2,'user2@example.com','0312345678','user2','男性',1950,'$2y$10$fUOe4xzMmcP/NmAEQZFBledJnVzLFtRTnqoFZzb8cVYufH9Br3wfC','user2です。','東京都文京区本郷７丁目３−１',35.7121,139.763,0,0,'','2018-02-19');
+INSERT INTO `db_user` VALUES (1,'user1@example.com','0312345678','user1','男性',1954,'$2y$10$fUOe4xzMmcP/NmAEQZFBledJnVzLFtRTnqoFZzb8cVYufH9Br3wfC','user1です。','東京都文京区本郷７丁目３−１',35.7121,139.763,0,'','2018-02-19'),(2,'user2@example.com','0312345678','user2','男性',1950,'$2y$10$fUOe4xzMmcP/NmAEQZFBledJnVzLFtRTnqoFZzb8cVYufH9Br3wfC','user2です。','東京都文京区本郷７丁目３−１',35.7121,139.763,0,'','2018-02-19');
 /*!40000 ALTER TABLE `db_user` ENABLE KEYS */;
 UNLOCK TABLES;
 

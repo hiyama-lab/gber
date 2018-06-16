@@ -211,9 +211,6 @@ require_logined_session();
             echo "<div id=\"skill-profile-container\"><img src=\"./model/showuserimage.php?userno="
                 . $userno . "\" onerror=\"this.src='img/noimage.svg';\" />";
             echo "<h1>" . $records[0]['nickname'];
-            if ($records[0]['certification'] == 1) {
-                echo " <img src=\"img/verified.png\" />";
-            }
             echo "</h1></div>";
 
             //定性的紹介文

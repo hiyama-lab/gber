@@ -198,6 +198,25 @@ class DB {
         return $stmt->fetchColumn() > 0 ? true : false;
     }
 
+    public function updateAccountWithPass($userno, $mail, $nickname, $pass){
+        $stmt = $this->pdo->prepare("UPDATE db_user SET mail = :mail, nickname = :nickname, pass = :pass WHERE userno = :userno");
+        return $stmt->execute([
+            ':userno' => $userno,
+            ':mail' => $mail,
+            ':nickname' => $nickname,
+            ':pass' => $pass
+        ]);
+    }
+
+    public function updateAccountWithoutPass($userno, $mail, $nickname){
+        $stmt = $this->pdo->prepare("UPDATE db_user SET mail = :mail, nickname = :nickname WHERE userno = :userno");
+        return $stmt->execute([
+            ':userno' => $userno,
+            ':mail' => $mail,
+            ':nickname' => $nickname,
+        ]);
+    }
+
 }
 
 $db = DB::getInstance();

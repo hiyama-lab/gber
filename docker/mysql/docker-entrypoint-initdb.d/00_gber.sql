@@ -76,7 +76,7 @@ CREATE TABLE `db_user` (
   `mail` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `nickname` varchar(20) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT '未設定',
+  `gender` varchar(10) DEFAULT NULL,
   `birthyear` int(11) DEFAULT '0',
   `pass` varchar(255) DEFAULT NULL,
   `intro` text,
@@ -84,7 +84,6 @@ CREATE TABLE `db_user` (
   `mylat` float DEFAULT NULL,
   `mylng` float DEFAULT NULL,
   `master` int(11) NOT NULL DEFAULT '0',
-  `certification` int(11) NOT NULL DEFAULT '0',
   `adminmemo` text NOT NULL,
   `registered_date` date DEFAULT NULL,
   PRIMARY KEY (`userno`)
