@@ -188,7 +188,7 @@ require_logined_session();
                 ) { //自分もしくはグループ管理者なら表示
                     echo "</br><h3>アカウント";
                     if ($userno == $_SESSION['userno'] || $caretakerflag) {
-                        echo "　<a href=\"editprofile.php?userno=" . $userno
+                        echo "　<a href=\"editaccount.php?userno=" . $userno
                             . "\" rel=\"external\" data-role=\"none\">編集</a>";
                     }
                     echo "</h3>";
