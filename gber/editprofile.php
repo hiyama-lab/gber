@@ -33,7 +33,7 @@ require_logined_session();
     // Get User Profile
     if ($userno == $_SESSION['userno'] || $caretakerflag) {
         $sql
-            = "SELECT userno,mail,phone,nickname,gender,birthyear,intro,mylat,mylng,address_string,certification FROM db_user WHERE userno='"
+            = "SELECT userno,mail,phone,nickname,gender,birthyear,intro,mylat,mylng,address_string FROM db_user WHERE userno='"
             . $userno . "'";
         $result = mysql_query($sql) or die ("Query error: " . mysql_error());
         $records = array();

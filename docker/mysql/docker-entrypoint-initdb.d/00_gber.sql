@@ -84,7 +84,6 @@ CREATE TABLE `db_user` (
   `mylat` float DEFAULT NULL,
   `mylng` float DEFAULT NULL,
   `master` int(11) NOT NULL DEFAULT '0',
-  `certification` int(11) NOT NULL DEFAULT '0',
   `adminmemo` text NOT NULL,
   `registered_date` date DEFAULT NULL,
   PRIMARY KEY (`userno`)

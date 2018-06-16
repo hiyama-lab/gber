@@ -129,9 +129,6 @@ require_logined_session();
                 <h2>
                     <?php
                     echo $records[0]['nickname'];
-                    if ($records[0]['certification'] == 1) {
-                        echo " <img src=\"img/verified.png\" />";
-                    }
                     ?>
                 </h2>
                 <?php
@@ -162,9 +159,6 @@ require_logined_session();
                 if ($records[0]['birthyear'] == 0) {
                     echo "<p>プロフィールが未設定です</p>";
                 } else {
-                    if ($records[0]['certification'] == 1) {
-                        echo "<p>本人認証済</p>";
-                    }
                     echo "<p>【生年】" . $records[0]['birthyear'] . "年</p>\n";
                     echo "<p>【性別】" . $records[0]['gender'] . "</p>\n";
                     echo "<p>【紹介文】</br>" . $records[0]['intro'] . "</p>\n";
