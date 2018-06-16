@@ -69,6 +69,8 @@ require_logined_session();
                    required/></br>
             <label for="pass">パスワード</label>
             <input type="password" id="pass" name="pass" required/></br>
+            <label for="pass_re">パスワード(再入力)</label>
+            <input type="password" id="pass_re" name="pass_re" required/></br>
             <input type="button" value="アカウント情報を更新する" onClick="uploadData();"/>
         </form>
     </div>
@@ -86,6 +88,8 @@ require_logined_session();
                 sweetAlert("エラー", "ニックネームが未入力です。", "error");
             } else if (pass != "" && (pass.length < 6 || pass.length > 32)) {
                 sweetAlert("エラー", "パスワードは6文字以上32文字以下で設定してください。", "error");
+            } else if( pass != $("input[name='pass_re']").val() ) {
+                sweetAlert("エラー", "パスワードが再入力のものと一致しません。", "error");
             } else {
                 uploadaccount();
             }

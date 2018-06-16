@@ -1,4 +1,4 @@
-INSERT INTO `db_user` VALUES (1,'admin@example.com',NULL,'admin',NULL,NULL,'$2y$10$7shvX66s5LttyC7XDpkhgeP1KzNatORFCFin19Nrh3y/lz1MUQyLG',NULL,NULL,NULL,NULL,0,'','2018-06-16');
+INSERT INTO `db_user` VALUES (1,'admin@example.com',NULL,'admin',NULL,NULL,'$2y$10$7shvX66s5LttyC7XDpkhgeP1KzNatORFCFin19Nrh3y/lz1MUQyLG',NULL,NULL,NULL,NULL,1,'','2018-06-16');
 INSERT INTO `photodata` VALUES (1,1,NULL,NULL);
 INSERT INTO `matchingparam_human` VALUES (1,1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0);
 INSERT INTO `questionnaire_socialactivity` VALUES (1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
