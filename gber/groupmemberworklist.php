@@ -12,9 +12,9 @@ require_logined_session();
 
 <div data-role="page" id="mypage">
     <?php
-    include __DIR__ . '/lib/mysql_credentials.php';
-    include __DIR__ . '/lib/db.php';
-    include __DIR__ . '/model/calcMatch.php';
+    require_once __DIR__ . '/lib/mysql_credentials.php';
+    require_once __DIR__ . '/lib/db.php';
+    require_once __DIR__ . '/model/calcMatch.php';
 
     $activitylog
         = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
