@@ -11,6 +11,8 @@ $post = json_decode(file_get_contents('php://input'), true);
 
 $userno = $post['userno'];
 $groupno = $post['groupno'];
+$workid = $post['workid'];
+$worktitle = $post['worktitle'];
 
 require_logined_session();
 if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $groupno])){
@@ -25,11 +27,9 @@ $sql2 = "UPDATE worklist SET status = '2', price = '"
 mysql_query($sql2, $con) or die('Error: ' . mysql_error());
 
 $datetime = date('Y-m-d G:i:s');
-$message = "<a href=\"quotation.php?workid=" . $post['workid'] . "&groupno="
-    . $groupno . "\" rel=\"external\">" . $post['worktitle'] . "</a>";
 
 //掲示板に投稿する
-$result = mysql_query("INSERT INTO bbs_group (groupno, senderid, message, datetime, jobpost) VALUES ('$groupno', '$userno', '$message', '$datetime', '1')",
+$result = mysql_query("INSERT INTO bbs_group (groupno, senderid, message, datetime, jobpost) VALUES ('$groupno', '$userno', '$worktitle', '$datetime', '$workid')",
     $con) or die ("Query error: " . mysql_error());
 
 echo $_GET['jsoncallback'] . '({"status":"succeed"});';

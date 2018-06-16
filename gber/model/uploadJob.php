@@ -46,9 +46,7 @@ foreach ($workdatelist as $eachworkdate) {
 
 //掲示板に挿入
 $datetime = date('Y-m-d G:i:s');
-$message = "<a href=\"jobdetail.php?workid=" . $workid . "\" rel=\"external\">"
-    . $worktitle . "</a>";
-mysql_query("INSERT INTO bbs_group (groupno, senderid, message, datetime, jobpost) VALUES ('0', '$userno', '$message', '$datetime', '1')",
+mysql_query("INSERT INTO bbs_group (groupno, senderid, message, datetime, jobpost) VALUES ('0', '$userno', '$worktitle', '$datetime', '$workid')",
     $con) or die('Error: ' . mysql_error());
 
 //メッセージボードを作成

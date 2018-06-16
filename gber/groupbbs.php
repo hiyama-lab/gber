@@ -41,7 +41,7 @@ require_logined_session();
     }
 
     $result2
-        = mysql_query("SELECT messageid,senderid,message,datetime,jobpost FROM bbs_group WHERE groupno=$groupno ORDER BY messageid DESC LIMIT 100") or die ("Query error: "
+        = mysql_query("SELECT messageid,groupno,senderid,message,datetime,jobpost FROM bbs_group WHERE groupno=$groupno ORDER BY messageid DESC LIMIT 100") or die ("Query error: "
         . mysql_error());
     $records2 = array();
     while ($row2 = mysql_fetch_assoc($result2)) {
@@ -106,9 +106,15 @@ require_logined_session();
                 if ($eachrecord['senderid'] == $userno
                     || $userno == 1
                 ) { //そのポストの投稿者のとき
-                    if ($eachrecord['jobpost'] == 1) {
+                    if ($eachrecord['jobpost'] > 0) {
+                        $message = "";
+                        if($eachrecord['groupno'] > 0){
+                            $message = "<a href=\"quotation.php?workid={$eachrecord['jobpost']}&groupno={$eachrecord['groupno']}\" rel=\"external\">" . h($eachrecord['message']) . "</a>";
+                        }else{
+                            $message = "<a href=\"jobdetail.php?workid={$eachrecord['jobpost']}\" rel=\"external\">". h($eachrecord['message']) . "</a>";
+                        }
                         $string .= "<div class=\"chat-area\"><div class=\"chat-hukidashi bbsjobpost\" style=\"display:inline-block;\"><span class=\"mytweet\">"
-                            . $eachrecord['message']
+                            . $message
                             . "</span></br><span class=\"smallletter\"><a href=\"mypage.php?userno="
                             . $eachrecord['senderid']
                             . "\" rel=\"external\">投稿者ID: "
@@ -132,9 +138,15 @@ require_logined_session();
                     }
                 } else {
                     if ($adminflag) { //管理者が見ているとき
-                        if ($eachrecord['jobpost'] == 1) {
+                        if ($eachrecord['jobpost'] > 0) {
+                            $message = "";
+                            if($eachrecord['groupno'] > 0){
+                                $message = "<a href=\"quotation.php?workid={$eachrecord['jobpost']}&groupno={$eachrecord['groupno']}\" rel=\"external\">" . h($eachrecord['message']) . "</a>";
+                            }else{
+                                $message = "<a href=\"jobdetail.php?workid={$eachrecord['jobpost']}\" rel=\"external\">". h($eachrecord['message']) . "</a>";
+                            }
                             $string .= "<div class=\"chat-area\"><div class=\"chat-hukidashi bbsjobpost\" style=\"display:inline-block;\"><span class=\"mytweet\">"
-                                . $eachrecord['message']
+                                . $message
                                 . "</span></br><span class=\"smallletter\"><a href=\"mypage.php?userno="
                                 . $eachrecord['senderid']
                                 . "\" rel=\"external\">投稿者ID: "
@@ -157,9 +169,15 @@ require_logined_session();
                                 . "); return false;\">削除</span></span></div></div></div>";
                         }
                     } else { //どちらでもないとき
-                        if ($eachrecord['jobpost'] == 1) {
+                        if ($eachrecord['jobpost'] > 0) {
+                            $message = "";
+                            if($eachrecord['groupno'] > 0){
+                                $message = "<a href=\"quotation.php?workid={$eachrecord['jobpost']}&groupno={$eachrecord['groupno']}\" rel=\"external\">" . h($eachrecord['message']) . "</a>";
+                            }else{
+                                $message = "<a href=\"jobdetail.php?workid={$eachrecord['jobpost']}\" rel=\"external\">". h($eachrecord['message']) . "</a>";
+                            }
                             $string .= "<div class=\"chat-area\"><div class=\"chat-hukidashi bbsjobpost\" style=\"display:inline-block;\">"
-                                . $eachrecord['message']
+                                . $message
                                 . "</br><span class=\"smallletter\"><a href=\"mypage.php?userno="
                                 . $eachrecord['senderid']
                                 . "\" rel=\"external\">投稿者ID: "
@@ -179,9 +197,8 @@ require_logined_session();
                     }
                 }
                 echo $string;
-                if (($eachrecord['senderid'] == $userno || $adminflag
-                        || $userno == 1)
-                    && $eachrecord['jobpost'] != 1
+                if (($eachrecord['senderid'] == $userno || $adminflag)
+                    && $eachrecord['jobpost'] == 0
                 ) {
                     echo "<script>$(\"span#mytweet_" . $eachrecord['messageid']
                         . "\").editable({type:\"textarea\", action:\"dblclick\"}, function(e){editpost("
