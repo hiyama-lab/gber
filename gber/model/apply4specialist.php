@@ -83,7 +83,7 @@ foreach($mailaddresses as $eachaddress){
         $messageText = $nickname."様\r\nグループメンバーへのオファーが承諾されました。\r\n詳細はログインしてご確認ください。\r\n";
         $messageHtml = $nickname."様<br />グループメンバーへのオファーが承諾されました。<br />詳細はログインしてご確認ください。<br />";
     } else {
-        $subject = "オファー棄却のお知らせ";
+        $subject = "オファー拒否のお知らせ";
         $messageText = $nickname."様\r\nグループメンバーへのオファーが断られました。\r\n詳細はログインしてご確認ください。\r\n";
         $messageHtml = $nickname."様<br />グループメンバーへのオファーが断られました。<br />詳細はログインしてご確認ください。<br />";
     }

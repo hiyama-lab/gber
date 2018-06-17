@@ -60,13 +60,13 @@ require_logined_session();
                             && !is_null($eachwork['interest'])
                             && $eachwork['interest'] == 0
                         ) {
-                            echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
+                            echo "<li data-role=\"list-divider\">参加したくない</li>\n";
                             $interestlevel = 2;
                         } else {
                             if ($interestlevel < 3
                                 && $eachwork['interest'] == 1
                             ) {
-                                echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
+                                echo "<li data-role=\"list-divider\">参加したい</li>\n";
                                 $interestlevel = 3;
                             }
                         }

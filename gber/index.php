@@ -152,7 +152,7 @@ if ($numnewmessage > 0) {
                     . "\" rel=\"external\"><img src=\"img/index/number1.svg\" class=\"list-icon\"><h2>勤務可能日を記入</h2><p>事前に勤務可能日を記入します</p></a></li>";
                 echo "<li data-theme=\"c\"><a href=\"jobofferlist.php?groupno="
                     . $eachgroup['groupno']
-                    . "\" rel=\"external\"><img src=\"img/index/number2.svg\" class=\"list-icon\"><h2>オファーを受ける</h2><p>作業のオファーを承諾/棄却します</p><span class=\"ui-li-count\">"
+                    . "\" rel=\"external\"><img src=\"img/index/number2.svg\" class=\"list-icon\"><h2>オファーを受ける</h2><p>作業のオファーを承諾/拒否します</p><span class=\"ui-li-count\">"
                     . $numunansweredoffer[$eachgroup['groupno']]
                     . "</span></a></li>";
                 echo "<li data-theme=\"c\"><a href=\"jobreportlist.php?groupno="

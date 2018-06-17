@@ -645,42 +645,42 @@ function loadAvailableWorker(){
         accepted_am = 0;
         waiting_pm = 0;
         accepted_pm = 0;
-        var marubatsu = ["×","<font color=\"red\">◯</font>","<font color=\"red\">依頼済</font>"];
+        var marubatsu = ["×","<font color=\"red\">◯</font>","<font color=\"red\">オファー済</font>"];
         $.each(workerschedule, function(index,val){
         if(!pastflag){
             var amstr = marubatsu[this[prefix+d_str+"_am"]];
             if(this[prefix+d_str+"_am"]==0){
-                amstr = "× <input type=\"button\" value=\"依頼\" onclick=\"sendoffernew('"+sendofferworkdate+"','1','0','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
+                amstr = "× <input type=\"button\" value=\"オファー\" onclick=\"sendoffernew('"+sendofferworkdate+"','1','0','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
             } else if(this[prefix+d_str+"_am"]==1){
-                amstr = "<font color=\"red\">◯</font> <input type=\"button\" value=\"依頼\" onclick=\"sendoffernew('"+sendofferworkdate+"','1','0','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
+                amstr = "<font color=\"red\">◯</font> <input type=\"button\" value=\"オファー\" onclick=\"sendoffernew('"+sendofferworkdate+"','1','0','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
             } else if(this[prefix+d_str+"_am"]==2){
                 waiting_am++;
             }
             var pmstr = marubatsu[this[prefix+d_str+"_pm"]];
             if(this[prefix+d_str+"_pm"]==0){
-                pmstr = "× <input type=\"button\" value=\"依頼\" onclick=\"sendoffernew('"+sendofferworkdate+"','0','1','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
+                pmstr = "× <input type=\"button\" value=\"オファー\" onclick=\"sendoffernew('"+sendofferworkdate+"','0','1','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
             } else if(this[prefix+d_str+"_pm"]==1){
-                pmstr = "<font color=\"red\">◯</font> <input type=\"button\" value=\"依頼\" onclick=\"sendoffernew('"+sendofferworkdate+"','0','1','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
+                pmstr = "<font color=\"red\">◯</font> <input type=\"button\" value=\"オファー\" onclick=\"sendoffernew('"+sendofferworkdate+"','0','1','"+val.userno+"','"+index+"','"+prefix+d_str+"');\"/>";
             } else if(this[prefix+d_str+"_pm"]==2){
                 waiting_pm++;
             }
         } else {
-            amstr = "<input type=\"button\" value=\"依頼\" onclick=\"sendoffernew('"+sendofferworkdate+"','1','0','"+val.userno+"','"+index+"','');\"/>";
-            pmstr = "<input type=\"button\" value=\"依頼\" onclick=\"sendoffernew('"+sendofferworkdate+"','0','1','"+val.userno+"','"+index+"','');\"/>";
+            amstr = "<input type=\"button\" value=\"オファー\" onclick=\"sendoffernew('"+sendofferworkdate+"','1','0','"+val.userno+"','"+index+"','');\"/>";
+            pmstr = "<input type=\"button\" value=\"オファー\" onclick=\"sendoffernew('"+sendofferworkdate+"','0','1','"+val.userno+"','"+index+"','');\"/>";
         }
             $("#am_"+val.userno).append(amstr);
             $("#pm_"+val.userno).append(pmstr);
         }); // end of foreach
-        //依頼済の日程を上書きする
+        //オファー済の日程を上書きする
         $.each(worker_candidate,function(index,val){
             if(val.workday == sendofferworkdate){
                 if(val.am == 1){
                     $("#am_"+val.workerno).empty();
-                    if(val.status == 0){waiting_am++; $("#am_"+val.workerno).append("<font color=\"red\">依頼済</font>");}
+                    if(val.status == 0){waiting_am++; $("#am_"+val.workerno).append("<font color=\"red\">オファー済</font>");}
                     else if(val.status == 1){accepted_am++; $("#am_"+val.workerno).append("<font color=\"blue\">承認済</font>");}
                 } else if(val.pm == 1){
                     $("#pm_"+val.workerno).empty();
-                    if(val.status == 0){waiting_pm++; $("#pm_"+val.workerno).append("<font color=\"red\">依頼済</font>");}
+                    if(val.status == 0){waiting_pm++; $("#pm_"+val.workerno).append("<font color=\"red\">オファー済</font>");}
                     else if(val.status == 1){accepted_pm++; $("#pm_"+val.workerno).append("<font color=\"blue\">承認済</font>");}
                 }
             }
