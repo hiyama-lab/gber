@@ -39,6 +39,8 @@ require_logined_session();
 
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
+    require_once __DIR__ . '/lib/db.php';
+    require_once __DIR__ . '/model/calcMatch.php';
 
     //高速化のために、不必要なPHPのローディングは消す
 
@@ -112,7 +114,6 @@ require_logined_session();
     foreach ($records as $eachrecord) {
         $nicknamelist[$eachrecord['userno']] = $eachrecord['nickname'];
     }
-
     // グループ構成員のスケジュールを$calendarに登録する
     if ($vieweradmin) {
         $calendar = array();
@@ -233,7 +234,7 @@ require_logined_session();
                     $records[$i]['eval'] = $row12['eval'];
                     $records[$i]['memo'] = $row12['memo'];
                     $records[$i]['accumulation'] = "0.0";
-                    $records[$i]['interest'] = "";
+                    $records[$i]['interest'] = 0;
                     $records[$i]['comment'] = "";
                     break;
                 }
@@ -260,15 +261,35 @@ require_logined_session();
         foreach ($records as $eachrecord) {
             if ($eachrecord['userno'] == $row120['userno']) {
                 if ($row120['interest']) {
-                    $records[$i]['interest'] = "◯";
+                    $records[$i]['interest'] = 1;
                 } else {
-                    $records[$i]['interest'] = "×";
+                    $records[$i]['interest'] = -1;
                 }
                 $records[$i]['comment'] = $row120['comment'];
                 break;
             }
             $i++;
         }
+    }
+
+    if($vieweradmin){
+        $db = DB::getInstance();
+        $workp = $db->getMatchingParamByWorkid($workid);
+        $matching_enabled = false;
+        foreach ($records as &$user) {
+            // マッチングパラメータを計算
+            $userp = $db->getMatchingParamByUserno($user['userno']);
+            // 興味ベクトルの大きさが0のユーザはマッチングしない
+            $user["match"] = calcMatch($userp, $workp);
+        }
+        unset($user);
+
+        // ORDER BY 参加希望(あり->未定義->なし) マッチング係数(正の数->未定義->負の数)
+        foreach ($records as $key => $row) {
+            $interest[$key]  = $row['interest'];
+            $match[$key] = $row['match'];
+        }
+        array_multisort($interest, SORT_DESC, $match, SORT_DESC, $records);
     }
 
     // 日報が全て記入済みなら、仕事終了処理に移行できる
@@ -855,16 +876,28 @@ require_logined_session();
                             echo "<th class=\"memberprof\"></th>";
                             echo "<th class=\"memberprof\">ID</th>";
                             echo "<th class=\"memberprof\">名前</th>";
-                            echo "<th class=\"memberprof\">評価</th>";
-                            echo "<th class=\"memberprof\">距離(m)</th>";
+                            echo "<th class=\"memberprof\">参加希望</th>";
+                            echo "<th class=\"memberprof\">スコア</th>";
                             echo "<th class=\"memberprof\">午前</th>";
                             echo "<th class=\"memberprof\">午後</th>";
-                            echo "<th class=\"memberprof\">参加希望</th>";
+                            echo "<th class=\"memberprof\">評価</th>";
+                            echo "<th class=\"memberprof\">距離(m)</th>";
                             echo "<th class=\"memberprof\">コメント</th>";
                             echo "<th class=\"memberprof\">メモ</th>";
                             echo "<th class=\"memberprof\">勤務時間(30日)</th>";
                             echo "</tr></thead><tbody>";
                             foreach ($records as $eachmember) {
+                                switch($eachmember['interest']){
+                                    case 1:
+                                        $interest = "○";
+                                        break;
+                                    case -1:
+                                        $interest = "×";
+                                        break;
+                                    default:
+                                        $interest = "未回答";
+                                }
+                                $score = $eachmember['match'] == UNDEFINED_SCORE ? "未回答" : $eachmember['match'];
                                 $str = "<tr>";
                                 $str .= "<td><a href=\"mypage.php?userno="
                                     . $eachmember['userno']
@@ -875,6 +908,14 @@ require_logined_session();
                                     . $eachmember['userno'] . "</td>";
                                 $str .= "<td class=\"memberprof\">"
                                     . h($eachmember['nickname']) . "</td>";
+                                $str .= "<td class=\"memberprof\">"
+                                    . $interest . "</td>";
+                                $str .= "<td class=\"memberprof\">"
+                                    . $score . "</td>";
+                                $str .= "<td class=\"memberprof clear\" id=\"am_"
+                                    . $eachmember['userno'] . "\"></td>";
+                                $str .= "<td class=\"memberprof clear\" id=\"pm_"
+                                    . $eachmember['userno'] . "\"></td>";
                                 $str .= "<td class=\"memberprof\">"
                                     . h($evalarray[$eachmember['eval']]) . "</td>";
                                 if ($eachmember['mylat'] == 0) {
@@ -889,12 +930,6 @@ require_logined_session();
                                 $str .= "<td class=\"memberprof\" id=\"distance_"
                                     . $eachmember['userno'] . "\">" . $distance
                                     . "</td>";
-                                $str .= "<td class=\"memberprof clear\" id=\"am_"
-                                    . $eachmember['userno'] . "\"></td>";
-                                $str .= "<td class=\"memberprof clear\" id=\"pm_"
-                                    . $eachmember['userno'] . "\"></td>";
-                                $str .= "<td class=\"memberprof\">"
-                                    . h($eachmember['interest']) . "</td>";
                                 $str .= "<td class=\"memberprof\">"
                                     . h($eachmember['comment']) . "</td>";
                                 $str .= "<td class=\"memberprof\">"
