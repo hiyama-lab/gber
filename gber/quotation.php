@@ -279,12 +279,11 @@ require_logined_session();
         foreach ($records as &$user) {
             // マッチングパラメータを計算
             $userp = $db->getMatchingParamByUserno($user['userno']);
-            // 興味ベクトルの大きさが0のユーザはマッチングしない
             $user["match"] = calcMatch($userp, $workp);
         }
         unset($user);
 
-        // ORDER BY 参加希望(あり->未定義->なし) マッチング係数(正の数->未定義->負の数)
+        // ORDER BY 参加希望(あり->未定義->なし) マッチング係数(正の数->負の数->未定義)
         foreach ($records as $key => $row) {
             $interest[$key]  = $row['interest'];
             $match[$key] = $row['match'];
@@ -897,7 +896,7 @@ require_logined_session();
                                     default:
                                         $interest = "未回答";
                                 }
-                                $score = $eachmember['match'] == UNDEFINED_SCORE ? "未回答" : $eachmember['match'];
+                                $score = $eachmember['match'] == UNDEFINED_SCORE ? "-" : $eachmember['match'];
                                 $str = "<tr>";
                                 $str .= "<td><a href=\"mypage.php?userno="
                                     . $eachmember['userno']

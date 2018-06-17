@@ -1,8 +1,7 @@
 <?php
 
-// スコアは -100 ~ 100 の整数を取る
-// スコアでソートする際に、0以上の整数 -> 興味ベクトル未定義 -> 負の整数 となるように-0.1を設定
-const UNDEFINED_SCORE = -0.1;
+// スコアは -100 ~ 100 の整数を取る。算出できない場合はスコアでソートする際に最後に来るように設定
+const UNDEFINED_SCORE = -10000;
 
 function calcMatch($userp, $workp){
     if(calcSize($userp)){

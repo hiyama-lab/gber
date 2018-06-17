@@ -224,3 +224,7 @@ textarea {
 #demo-account dd {
     margin-bottom: 3px;
 }
+
+#sorttable td {
+    text-align: center;
+}
