@@ -50,7 +50,9 @@ require_logined_session();
         foreach($records as $key => $row){
             $match[$key] = $row['match'];
         }
-        array_multisort($match, SORT_DESC, $records);
+        if(count($records)){
+            array_multisort($match, SORT_DESC, $records);
+        }
     }
 
     ?>

@@ -216,6 +216,7 @@ function acceptOffer(groupno, workid, workday, workerno, am, pm, status){
                         if(status==1){$("span#"+workerno+"_"+workday+"_"+am+"_"+pm).prepend("　承諾済");}
                         else{$("span#"+workerno+"_"+workday+"_"+am+"_"+pm).prepend("　削除済");}
                         $("span#report_"+workerno+"_"+workday+"_"+am+"_"+pm).hide();
+                        window.location.href = "quotation.php?workid="+workid+"&groupno="+groupno;
             }});
         },
         error: function(){
