@@ -228,3 +228,17 @@ textarea {
 #sorttable td {
     text-align: center;
 }
+
+div .work-box {
+    float: left;
+}
+
+div .score-box {
+    float: right;
+    text-align: center;
+    margin-right: -20px;
+}
+
+.score {
+    font-size: 30px;
+}

@@ -218,7 +218,7 @@ class DB {
     }
 
     public function getOngoingWork($groupno, $userno){
-        $stmt = $this->pdo->prepare("SELECT worklist.worktitle,worklist.content,worklist.id,workinterest.interest FROM worklist LEFT OUTER JOIN workinterest ON worklist.id = workinterest.workid AND workinterest.userno = :userno WHERE worklist.groupno = :groupno AND worklist.status='2' ORDER BY workinterest.interest LIMIT 100");
+        $stmt = $this->pdo->prepare("SELECT worklist.worktitle,worklist.content,worklist.workdatetime,worklist.id,workinterest.interest FROM worklist LEFT OUTER JOIN workinterest ON worklist.id = workinterest.workid AND workinterest.userno = :userno WHERE worklist.groupno = :groupno AND worklist.status='2' ORDER BY workinterest.interest LIMIT 100");
         $stmt->execute([':groupno' => $groupno, ':userno' => $userno]);
         return $stmt->fetchAll();
     }

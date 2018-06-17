@@ -15,6 +15,7 @@ require_logined_session();
     include __DIR__ . '/lib/mysql_credentials.php';
     require_once __DIR__ . '/lib/db.php';
     require_once __DIR__ . '/model/calcMatch.php';
+    require_once __DIR__ . '/common/workCell.php';
 
     $activitylog
         = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
@@ -71,29 +72,17 @@ require_logined_session();
             if (count($records) == 0) {
                 echo "<li>現在オファーはありません</li>";
             } else {
-                $score = 1000;
                 $workday = "2000-01-01";
                 foreach ($records as $eachwork) {
-                    // マッチングスコアがある場合はスコア順にまとめる。ない場合は日付順にまとめる
-                    if($matching_enabled){
-                        if ($eachwork['match'] < $score) {
-                            echo "<li data-role=\"list-divider\">マッチングスコア " . $eachwork['match'] . "</li>\n";
-                            $score = $eachwork['match'];
-                        }
-                    }else{
+                    // マッチングスコアがない場合は日付順にまとめる
+                    $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
+                    if(!$matching_enabled){
                         if ($eachwork['workday'] > $workday) {
                             echo "<li data-role=\"list-divider\">" . $eachwork['workday'] . "</li>\n";
                             $workday = $eachwork['workday'];
                         }
                     }
-                    $workdaymsg =  $matching_enabled ? " ({$eachwork['workday']})" : "";
-                    echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
-                        . $eachwork['workid'] . "&groupno=" . $groupno
-                        . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
-                        . $workdaymsg
-                        . "</h2><p><strong>" . $groupnamelist[$groupno]
-                        . "グループ</strong></p><p>" . h($eachwork['content'])
-                        . "</p></a></li>\n";
+                    echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workday'], $eachwork['content'], $score);
                 }
             }
             ?>

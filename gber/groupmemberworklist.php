@@ -15,6 +15,7 @@ require_logined_session();
     require_once __DIR__ . '/lib/mysql_credentials.php';
     require_once __DIR__ . '/lib/db.php';
     require_once __DIR__ . '/model/calcMatch.php';
+    require_once __DIR__ . '/common/workCell.php';
 
     $activitylog
         = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
@@ -84,27 +85,24 @@ require_logined_session();
                 if(count($undefined) > 0){
                     echo "<li data-role=\"list-divider\">参加希望未回答</li>\n";
                     foreach($undefined as $eachwork){
-                        $matching_msg = $matching_enabled ? " (M={$eachwork['match']})" : "";
-                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid={$eachwork['id']}&groupno=$groupno\" rel=\"external\">
-                                <h2>{$eachwork['worktitle']}$matching_msg</h2><p>{$eachwork['content']}</p></a></li>\n";
+                        $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
+                        echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
                     }
                 }
 
                 if(count($negative) > 0){
                     echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
                     foreach($negative as $eachwork){
-                        $matching_msg = $matching_enabled ? " (M={$eachwork['match']})" : "";
-                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid={$eachwork['id']}&groupno=$groupno\" rel=\"external\">
-                                <h2>{$eachwork['worktitle']}$matching_msg</h2><p>{$eachwork['content']}</p></a></li>\n";
+                        $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
+                        echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
                     }
                 }
 
                 if(count($positive) > 0){
                     echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
                     foreach($positive as $eachwork){
-                        $matching_msg = $matching_enabled ? " (M={$eachwork['match']})" : "";
-                        echo "<li data-theme=\"c\"><a href=\"quotation.php?workid={$eachwork['id']}&groupno=$groupno\" rel=\"external\">
-                                <h2>{$eachwork['worktitle']}$matching_msg</h2><p>{$eachwork['content']}</p></a></li>\n";
+                        $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
+                        echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
                     }
                 }
             }
