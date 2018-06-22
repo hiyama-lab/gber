@@ -23,6 +23,7 @@ RUN docker-php-ext-install mysql curl mcrypt pdo_mysql
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 COPY ./gber/ /var/www/html
 COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install
 
 # setup nginx
