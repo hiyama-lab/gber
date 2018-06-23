@@ -150,23 +150,23 @@ if ($numnewmessage > 0) {
                 echo "<li data-theme=\"c\"><a href=\"calendar.php?userno="
                     . $_SESSION['userno']
                     . "\" rel=\"external\"><img src=\"img/index/number1.svg\" class=\"list-icon\"><h2>勤務可能日を記入</h2><p>事前に勤務可能日を記入します</p></a></li>";
+                echo "<li data-theme=\"c\"><a href=\"groupmemberworklist.php?groupno="
+                    . $eachgroup['groupno']
+                    . "\" rel=\"external\"><img src=\"img/index/number2.svg\" class=\"list-icon\"><h2>参加希望を入力</h2><p>進行中の仕事に参加希望を入力します</p></a></li>";
                 echo "<li data-theme=\"c\"><a href=\"jobofferlist.php?groupno="
                     . $eachgroup['groupno']
-                    . "\" rel=\"external\"><img src=\"img/index/number2.svg\" class=\"list-icon\"><h2>オファーを受ける</h2><p>作業のオファーを承諾/棄却します</p><span class=\"ui-li-count\">"
+                    . "\" rel=\"external\"><img src=\"img/index/number3.svg\" class=\"list-icon\"><h2>オファーを受ける</h2><p>作業のオファーを承諾/拒否します</p><span class=\"ui-li-count\">"
                     . $numunansweredoffer[$eachgroup['groupno']]
                     . "</span></a></li>";
                 echo "<li data-theme=\"c\"><a href=\"jobreportlist.php?groupno="
                     . $eachgroup['groupno']
-                    . "\" rel=\"external\"><img src=\"img/index/number3.svg\" class=\"list-icon\"><h2>日報を記入</h2><p>勤務後、日報を記入します</p><span class=\"ui-li-count\">"
+                    . "\" rel=\"external\"><img src=\"img/index/number4.svg\" class=\"list-icon\"><h2>日報を記入</h2><p>勤務後、日報を記入します</p><span class=\"ui-li-count\">"
                     . $numunwrittenreport[$eachgroup['groupno']]
                     . "</span></a></li>";
                 echo "<li data-theme=\"c\"><a href=\"groupbbs.php?groupno="
                     . $eachgroup['groupno']
                     . "\" rel=\"external\"><img src=\"img/index/bulletin.svg\" class=\"list-icon\"><h2>掲示板</h2><p>グループの情報共有</p><span class=\"ui-li-count\">"
                     . $numnewbbspost[$eachgroup['groupno']] . "</span></a></li>";
-                echo "<li data-theme=\"c\"><a href=\"groupmemberworklist.php?groupno="
-                    . $eachgroup['groupno']
-                    . "\" rel=\"external\"><img src=\"img/index/introjobs.svg\" class=\"list-icon\"><h2>仕事一覧</h2><p>グループで進行中の仕事の一覧です</p></a></li>";
                 echo "<li data-theme=\"c\"><a href=\"groupmemberfunc.php?groupno="
                     . $eachgroup['groupno']
                     . "\" rel=\"external\"><img src=\"img/index/briefcase.svg\" class=\"list-icon\"><h2>その他機能</h2><p>勤務記録、メンバー一覧</p></a></li>";

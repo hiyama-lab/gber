@@ -202,7 +202,7 @@ require_logined_session();
         $records10[] = $row10;
     }
 
-    //****** グループメンバーのみ。承諾ボタン，棄却ボタンを表示する。世話人の分も合わせて表示する。******//
+    //****** グループメンバーのみ。承諾ボタン，拒否ボタンを表示する。世話人の分も合わせて表示する。******//
     if ($groupmember == 1) {
         if ($vieweradmin) {
             $result7 = mysql_query("SELECT * FROM workdate WHERE workid='" . $workid . "' ORDER BY workday")
@@ -672,11 +672,11 @@ require_logined_session();
                         if ($groupmember) {
                             if ($evaluatedflag) {
                                 if ($answeredinterest) {
-                                    echo "<p>【参加希望あり】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"希望なしに変更\" onClick=\"changeinterest("
+                                    echo "<p>【参加したい】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"参加したくないに変更\" onClick=\"changeinterest("
                                         . $groupno . "," . $workid . ","
                                         . $_SESSION['userno'] . ",0);\" /></p>";
                                 } else {
-                                    echo "<p>【参加希望なし】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"希望ありに変更\" onClick=\"changeinterest("
+                                    echo "<p>【参加したくない】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"参加したいに変更\" onClick=\"changeinterest("
                                         . $groupno . "," . $workid . ","
                                         . $_SESSION['userno'] . ",1);\" /></p>";
                                 }
@@ -745,16 +745,16 @@ require_logined_session();
                                 echo "<div class=\"ui-block-a\"><input type=\"button\" onclick=\"answerspecialistinterest("
                                     . $groupno . "," . $workid . ","
                                     . $_SESSION['userno']
-                                    . ", 1)\" value=\"参加希望あり\"></div>";
+                                    . ", 1)\" value=\"参加したい\"></div>";
                                 echo "<div class=\"ui-block-b\"><input type=\"button\" data-theme=\"c\" onclick=\"answerspecialistinterest("
                                     . $groupno . "," . $workid . ","
                                     . $_SESSION['userno']
-                                    . ", 0)\" value=\"参加希望なし\"></div>";
+                                    . ", 0)\" value=\"参加したくない\"></div>";
                                 echo "</div></br>";
                             }
                         }
 
-                        echo "<p>【参加希望ありメンバー】</p>";
+                        echo "<p>【参加したいメンバー】</p>";
                         echo "<table style=\"text-align: center;\"><tr>";
                         $someoneinterested = false;
                         foreach ($records as $eachmember) {
@@ -779,7 +779,7 @@ require_logined_session();
                         }
                         echo "</tr></table>";
                         if (!$someoneinterested) {
-                            echo "<p>まだ参加希望ありと回答した人はいません</p>";
+                            echo "<p>まだ参加したいと回答した人はいません</p>";
                         }
                         echo "<br><br>";
 
@@ -848,8 +848,8 @@ require_logined_session();
                             echo "<span data-theme=\"c\" data-role=\"collapsible\" data-collapsed=\"true\" data-iconpos=\"right\" data-inset=\"true\" style=\"margin-bottom: -1px;\"><h3>① 作業の割り振り</h3>";
                             $evalarray = ["未評価", "初心者", "中級者", "上級者"];
                             echo "<input data-role=\"date\" type=\"text\" name=\"workdate\" id=\"workdate\" placeholder=\"日付を選択してください\" required />";
-                            echo "<div>【午前】依頼済み: <span id=\"waiting_am\">0</span>人、承認済み: <span id=\"accepted_am\">0</span>人</div>";
-                            echo "<div>【午後】依頼済み: <span id=\"waiting_pm\">0</span>人、承認済み: <span id=\"accepted_pm\">0</span>人</div>";
+                            echo "<div>【午前】オファー済み: <span id=\"waiting_am\">0</span>人、承認済み: <span id=\"accepted_am\">0</span>人</div>";
+                            echo "<div>【午後】オファー済み: <span id=\"waiting_pm\">0</span>人、承認済み: <span id=\"accepted_pm\">0</span>人</div>";
                             echo "<table id=\"sorttable\">";
                             echo "<thead><tr>";
                             echo "<th class=\"memberprof\"></th>";
@@ -931,7 +931,7 @@ require_logined_session();
                                 foreach ($records7 as $eachoffer) {
                                     if ($eachoffer['status']
                                         == 0
-                                    ) {//status=0なら，承諾or棄却のボタン
+                                    ) {//status=0なら，承諾or拒否のボタン
                                         echo $eachoffer['workday'] . " ";
                                         if ($eachoffer['am'] == 1) {
                                             echo "午前　";
@@ -969,7 +969,7 @@ require_logined_session();
                                             . $eachoffer['workerno'] . "','"
                                             . $eachoffer['am'] . "','"
                                             . $eachoffer['pm']
-                                            . "','0')\" value=\"棄却\" data-theme=\"c\">";
+                                            . "','0')\" value=\"拒否\" data-theme=\"c\">";
                                         echo "</span></br>";
                                         //echo "<span>".$eachoffer['task']."</span></br></br>";
                                     }
@@ -979,7 +979,7 @@ require_logined_session();
 
                             if ($vieweradmin && $numberdeclined > 0) {
                                 echo "<div data-role=\"collapsible\" data-theme=\"c\">";
-                                echo "<h3>棄却した人一覧</h3>";
+                                echo "<h3>拒否した人一覧</h3>";
                                 foreach ($records111 as $eachrecord) {
                                     if ($eachrecord['am'] == 1) {
                                         echo "<p>" . $eachrecord['workday'] . " 午前 "
