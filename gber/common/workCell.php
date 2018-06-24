@@ -1,7 +1,7 @@
 <?php
 function echoWorkCell($workid, $groupno, $worktitle, $workday, $content, $match){
     if($match == UNDEFINED_SCORE){
-        $match = "-";
+        $match = 0;
     }
     $scoremsg = "<div class=\"score-box\"><h3>スコア</h3><span class=\"score\">$match</span></div>";
     if(mb_strlen($worktitle) > 10){
