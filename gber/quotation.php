@@ -1085,16 +1085,10 @@ require_logined_session();
                                         . "\" class=\"jobreport\">"
                                         . h($eachoffer['workreport'])
                                         . "</span></br></br></span>\n";
-                                    $jobreportstr .= "<script>$(\"span#day_"
-                                        . $eachoffer['workday'] . "_"
-                                        . $eachoffer['am'] . "_" . $eachoffer['pm']
-                                        . "_" . $eachoffer['workerno']
-                                        . "\").editable(\"click\",function(e){editreport('"
-                                        . $groupno . "','" . $workid . "','"
-                                        . $eachoffer['workday'] . "','"
-                                        . $eachoffer['workerno'] . "','"
-                                        . $eachoffer['am'] . "','" . $eachoffer['pm']
-                                        . "',e.value);});</script>";
+                                    $onclickstr = "var reportvalue = $('span#day_{$eachoffer['workday']}_{$eachoffer['am']}_{$eachoffer['pm']}_{$eachoffer['workerno']}')[0].innerHTML;";
+                                    $onclickstr .= "editreport($groupno,$workid,'{$eachoffer['workday']}',{$eachoffer['workerno']},{$eachoffer['am']},{$eachoffer['pm']},reportvalue);";
+                                    $jobreportstr .= "<input type=\"button\"  data-mini=\"true\" onclick=\"$onclickstr\"  value=\"日報を登録\"> </br>";
+                                    $jobreportstr .= "<script>$('span#day_{$eachoffer['workday']}_{$eachoffer['am']}_{$eachoffer['pm']}_{$eachoffer['workerno']}').editable('click',null)</script>";
                                     if ($eachoffer['reportflag'] == 0) {
                                         echo $jobreportstr;
                                         $reportcount = $reportcount + 1;
@@ -1311,7 +1305,7 @@ require_logined_session();
     <script type="text/javascript" src="js/quotation.js"></script>
     <script>
         setTimeout(function () {
-            var bbswidth = screen.width - 100;
+            var bbswidth = screen.width - 120;
             $(".jobreport").attr("style", "display:inline-block; padding:10px; border:1px #ccc solid; margin-left:6px;width:" + bbswidth + "px;");
         }, 10);
         setTimeout(function () {
