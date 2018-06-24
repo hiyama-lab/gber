@@ -1,9 +1,9 @@
 <?php
 function echoWorkCell($workid, $groupno, $worktitle, $workday, $content, $match){
-    $scoremsg = "";
-    if($match != UNDEFINED_SCORE){
-        $scoremsg = "<div class=\"score-box\"><h3>スコア</h3><span class=\"score\">$match</span></div>";
+    if($match == UNDEFINED_SCORE){
+        $match = "-";
     }
+    $scoremsg = "<div class=\"score-box\"><h3>スコア</h3><span class=\"score\">$match</span></div>";
     if(mb_strlen($worktitle) > 10){
         $worktitle = mb_substr($worktitle, 0, 10, "utf-8") . "...";
     }
