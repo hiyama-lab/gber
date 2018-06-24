@@ -12,13 +12,13 @@ require_logined_session();
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
 
-    if (!authorize($_SESSION['userno'], ROLE['GLOBAL_MASTER'], ['isapi' => false])){
+    $groupno = $_GET['groupno'];
+    $workid = $_GET['workid'];
+
+    if (!authorize($_SESSION['userno'], ROLE['MASTER_OR_ADMIN'], ['groupno' => $groupno, 'isapi' => false])){
         echo "閲覧権限がありません";
         exit;
     }
-
-    $groupno = $_GET['groupno'];
-    $workid = $_GET['workid'];
 
     $activitylog
         = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"

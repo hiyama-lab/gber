@@ -13,7 +13,9 @@ const ROLE = array(
     'GROUP_ADMIN' => 2,
     'GROUP_MEMBER' => 3,
     'USER' => 4,
-    'GROUP_ADMIN_OR_USER' => 5
+    'GROUP_ADMIN_OR_USER' => 5,
+    'MASTER_OR_ADMIN' => 6,
+    'MASTER_OR_SOMEADMIN' => 7
 );
 
 function require_unlogined_session () {
@@ -79,6 +81,10 @@ function authorize($userno_session, $role, array $args){
             return $userno_session == $args['userno'];
         case ROLE['GROUP_ADMIN_OR_USER']:
             return $db->isGroupAdmin($userno_session, $args['groupno']) || $userno_session == $args['userno'];
+        case ROLE['MASTER_OR_ADMIN']:
+            return $db->isMaster($userno_session) or $db->isGroupAdmin($userno_session, $args['groupno']);
+        case ROLE['MASTER_OR_SOMEADMIN']:
+            return $db->isMaster($userno_session) or $db->isSomeAdmin($userno_session);
     }
 }
 

@@ -189,6 +189,14 @@ class DB {
         return $stmt->fetchColumn() == 1 ? true : false;
     }
 
+    public function isSomeAdmin($userno){
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM grouplist WHERE userno = :userno and admin = 1");
+        $stmt->execute([
+            ':userno' => $userno,
+        ]);
+        return $stmt->fetchColumn() > 0 ? true : false;
+    }
+
     public function isGroupMember($userno, $groupno){
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM grouplist WHERE userno = :userno and groupno = :groupno");
         $stmt->execute([
