@@ -504,32 +504,44 @@ function editreport(groupno,workid,workday,workerno,am,pm,workreport){
     if(workreport=="" || workreport=="クリックして日報を入力してください"){
         console.log("編集されていません");
     } else {
-    var JSONdata = {
-        groupno: groupno,
-        workid: workid,
-        workday: workday,
-        workerno: workerno,
-        am: am,
-        pm: pm,
-        workreport: workreport
-    };
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(JSONdata),
-        dataType: "jsonp",
-        jsonp: 'jsoncallback',
-        url: baseurl+'model/registerWorkReport.php',
-        timeout: 10000,
-        success: function(data){
-/*          swal({
-                title: "成功",
-                text: "日報を更新しました。",
-                type: "success"});*/
-        },
-        error: function(){
-            sweetAlert("エラー", "エラーのため更新できませんでした", "error");
-        }
-    });}
+        swal({
+            title: "確認",
+            text: "日報を登録しますか？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "はい",
+            cancelButtonText: "いいえ",
+            closeOnConfirm: false
+        },function() {
+            var JSONdata = {
+                groupno: groupno,
+                workid: workid,
+                workday: workday,
+                workerno: workerno,
+                am: am,
+                pm: pm,
+                workreport: workreport
+            };
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(JSONdata),
+                dataType: "jsonp",
+                jsonp: 'jsoncallback',
+                url: baseurl+'model/registerWorkReport.php',
+                timeout: 10000,
+                success: function(data){
+                    swal({
+                        title: "成功",
+                        text: "日報を更新しました。",
+                        type: "success"});
+                },
+                error: function(){
+                    sweetAlert("エラー", "エラーのため更新できませんでした", "error");
+                }
+            });
+        });
+    }
 }
 
 /****** 日報を登録する ******/
@@ -722,12 +734,6 @@ function rewritenumbers(){
     $("#accepted_pm").append(accepted_pm);
 }
 
-//仕事内容を選択した時、仕事内容を日報欄に追加し、データベースを更新する。
-function insertjob(obj,spanid,groupno,workid,workday,workerno,am,pm){
-    if($("#"+spanid).text()=="クリックして日報を入力してください"){$("#"+spanid).empty();}
-    $("#"+spanid).prepend(obj.options[obj.selectedIndex].text+"。");
-    editreport(groupno,workid,workday,workerno,am,pm,$("#"+spanid).text());
-}
 
 //勤務時間を登録する
 function insertworktime(obj,groupno,workid,workday,workerno,am,pm){
