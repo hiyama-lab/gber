@@ -138,7 +138,7 @@ require_logined_session();
                         . "&workid=" . $eachwork['id'] . "\" rel=\"external\">"
                         . substr(h($eachwork['worktitle']), 0, 100) . "</a>";
                 } else {
-                    echo "【記入済】" . substr($h(eachwork['worktitle']), 0, 100);
+                    echo "【記入済】" . substr(h($eachwork['worktitle']), 0, 100);
                 }
                 echo "<br></td><td style=\"text-align:center; padding: 8px;\"><a href=\"mypage.php?userno="
                     . $eachwork['userno'][0] . "\" rel=\"external\">"
