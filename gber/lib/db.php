@@ -247,7 +247,7 @@ class DB {
         unset($row['matchingparamid']);
         unset($row['groupno']);
         unset($row['workid']);
-        return array_values($row);
+        return $row ? array_values($row) : [];
     }
 
 }

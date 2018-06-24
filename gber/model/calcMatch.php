@@ -4,7 +4,7 @@
 const UNDEFINED_SCORE = -10000;
 
 function calcMatch($userp, $workp){
-    if(calcSize($userp)){
+    if(calcSize($userp) && calcSize($workp)){
         $innerproduct = 0;
         foreach($userp as $k => $v){
             $innerproduct += $userp[$k] * $workp[$k];
