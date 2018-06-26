@@ -36,7 +36,7 @@ require_logined_session();
     if($matching_enabled){
         // それぞれの仕事に対してマッチング係数Mを計算
         foreach($records as &$work){
-            $workp = $db->getMatchingParamByWorkid($work['id']);
+            $workp = $db->getMatchingParamByWorkid($work['id'], $groupno);
             $match = calcMatch($userp, $workp);
             $work["match"] = $match;
         }

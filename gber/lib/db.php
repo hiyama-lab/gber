@@ -240,14 +240,53 @@ class DB {
         return array_values($row);
     }
 
-    public function getMatchingParamByWorkid($workid){
-        $stmt = $this->pdo->prepare('SELECT * FROM matchingparam_work WHERE workid = :workid');
-        $stmt->execute(['workid' => $workid]);
+    public function getMatchingParamByWorkid($workid, $groupno){
+        $stmt = $this->pdo->prepare('SELECT * FROM matchingparam_work WHERE workid = :workid AND groupno = :groupno');
+        $stmt->execute([
+            'workid' => $workid,
+            'groupno' => $groupno
+        ]);
         $row = $stmt->fetch();
         unset($row['matchingparamid']);
         unset($row['groupno']);
         unset($row['workid']);
         return $row ? array_values($row) : [];
+    }
+
+    public function getTaggedWorksAll(){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM helplist WHERE id IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='0')");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getTaggedWorksGroup($groupno){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM worklist WHERE groupno = :groupno AND id IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno = :groupno) and status < 5");
+        $stmt->execute(['groupno' => $groupno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getUntaggedWorksAll(){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM helplist WHERE id NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='0')");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getUntaggedWorksGroup($groupno){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM worklist WHERE groupno = :groupno AND id NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno = :groupno) and status < 5");
+        $stmt->execute(['groupno' => $groupno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getWorkDetailAll($workid){
+        $stmt = $this->pdo->prepare("SELECT worktitle, content FROM helplist WHERE id = :workid");
+        $stmt->execute(['workid' => $workid]);
+        return $stmt->fetch();
+    }
+
+    public function getWorkDetailGroup($workid){
+        $stmt = $this->pdo->prepare("SELECT worktitle, content FROM worklist WHERE id = :workid");
+        $stmt->execute(['workid' => $workid]);
+        return $stmt->fetch();
     }
 
 }

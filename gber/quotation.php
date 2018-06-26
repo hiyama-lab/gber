@@ -274,7 +274,7 @@ require_logined_session();
 
     if($vieweradmin){
         $db = DB::getInstance();
-        $workp = $db->getMatchingParamByWorkid($workid);
+        $workp = $db->getMatchingParamByWorkid($workid, $groupno);
         $matching_enabled = false;
         foreach ($records as &$user) {
             // マッチングパラメータを計算
