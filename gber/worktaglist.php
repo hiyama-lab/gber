@@ -11,7 +11,6 @@ require_logined_session();
 
 <div data-role="page"><!-- WRAPPER -->
     <?php
-    include __DIR__ . '/lib/mysql_credentials.php';
     require_once __DIR__ . '/lib/db.php';
 
     if(!authorize($_SESSION['userno'], ROLE['MASTER_OR_SOMEADMIN'], ['isapi' => false])){
@@ -34,22 +33,6 @@ require_logined_session();
         }
         $i++;
     }
-
-    //****** ニックネームリスト ******//
-    $result
-        = mysql_query("SELECT userno,nickname FROM db_user WHERE mail<>\"\"")
-    or die ("Query error: " . mysql_error());
-    $records = array();
-    while ($row = mysql_fetch_assoc($result)) {
-        $records[] = $row;
-    }
-    $nicknamelist = array();
-    foreach ($records as $eachrecord) {
-        $nicknamelist[$eachrecord['userno']] = $eachrecord['nickname'];
-    }
-
-    mysql_close($con);
-
     ?>
 
 

@@ -21,7 +21,7 @@ require_logined_session();
     }
 
     $db = DB::getInstance();
-    $db->addToActivityLog($_SESSION['userno'], $workid);
+    $db->addToActivityLog($_SESSION['userno'], "worktag.php");
 
     $workdetail = array();
     if ($groupno == 0) {
