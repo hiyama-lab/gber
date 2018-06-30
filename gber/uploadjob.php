@@ -17,6 +17,7 @@ require_logined_session();
 <?php
 
 include __DIR__ . '/lib/mysql_credentials.php';
+require_once __DIR__ . '/lib/db.php';
 $activitylog
     = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
     . $_SESSION['userno'] . "', 'uploadjob.php', '" . date('Y-m-d G:i:s') . "')", $con)
@@ -43,6 +44,19 @@ or die('Error: ' . mysql_error());
             <textarea data-role="none" id="content" name="content"
                       placeholder="具体的な募集内容" required></textarea></br>
             </br>
+            <label for="worktype">【仕事タイプ】</label>
+            <select name="worktype" id="worktype" data-inline="true" data-theme="c">
+                <option value="choose-one">仕事タイプをお選びください</option>
+                <?php
+                $db = DB::getInstance();
+                $result = $db->getAllWorktypes(0);
+                foreach($result as $worktype){
+                    echo "<option value=\"{$worktype['id']}\">{$worktype['name']}</option>";
+                }
+                ?>
+                <option value="0">その他</option>
+            </select>
+            </br></br>
             <label for="worktitile">【募集種類】</label>
             <div>募集内容の種類を選択してください。</div>
             <select name="workgenre" id="workgenre" data-theme="c"

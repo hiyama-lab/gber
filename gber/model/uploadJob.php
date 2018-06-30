@@ -4,6 +4,7 @@ header('Content-type: application/json');
 
 include __DIR__ . '/../lib/mysql_credentials.php';
 require_once __DIR__ . '/../lib/auth.php';
+require_once __DIR__ . '/../lib/db.php';
 
 date_default_timezone_set('Asia/Tokyo');
 
@@ -21,6 +22,7 @@ $userno = mysql_real_escape_string($_POST["userno"]);
 $workernum = mysql_real_escape_string($_POST["workernum"]);
 $price = mysql_real_escape_string($_POST["price"]);
 $contact = mysql_real_escape_string($_POST["contact"]);
+$worktype = mysql_real_escape_string($_POST["worktype"]);
 
 $workdatelist = $_POST["workdatelist"];
 
@@ -37,6 +39,17 @@ mysql_query("INSERT INTO helplist (userno, lat, lng, address, worktitle, content
 $workidresource = mysql_query("SELECT LAST_INSERT_ID()", $con)
 or die ("Query error: " . mysql_error());
 $workid = mysql_fetch_row($workidresource)[0];
+
+//仕事のタグ情報をmatchingparam_workに追加する。predefined_workで定義されている場合は定義済みのタグベクトルを使う
+//定義されていない場合(worktype==0)は、タグベクトルを挿入しない（worktaglist.phpからあとでタグをつける）
+$db = DB::getInstance();
+if($worktype != 0) {
+    $worktype = $db->getWorktypeById($worktype);
+    unset($worktype['id']);
+    unset($worktype['name']);
+    $worktype['workid'] = $workid;
+    $db->insertMatchingParamWork($worktype);
+}
 
 //仕事日を挿入
 foreach ($workdatelist as $eachworkdate) {
