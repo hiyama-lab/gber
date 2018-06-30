@@ -13,6 +13,8 @@ require_logined_session();
 <?php
 
 include __DIR__ . '/lib/mysql_credentials.php';
+require_once __DIR__ . '/lib/db.php';
+
 $activitylog
     = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
     . $_SESSION['userno'] . "', 'uploadspecialist.php', '" . date('Y-m-d G:i:s')
@@ -81,9 +83,10 @@ $groupno = $_GET['groupno'];
             <select name="worktype" id="worktype" data-inline="true" data-theme="c">
                 <option value="choose-one">仕事タイプをお選びください</option>
                 <?php
-                $result = mysql_query("SELECT id, name FROM predefined_work", $con);
-                while ($row = mysql_fetch_assoc($result)) {
-                    echo "<option value=\"{$row['id']}\">{$row['name']}</option>";
+                $db = DB::getInstance();
+                $result = $db->getAllWorktypes($groupno);
+                foreach($result as $worktype){
+                    echo "<option value=\"{$worktype['id']}\">{$worktype['name']}</option>";
                 }
                 ?>
                 <option value="0">その他</option>

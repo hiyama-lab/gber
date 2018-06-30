@@ -289,6 +289,24 @@ class DB {
         return $stmt->fetch();
     }
 
+    public function getAllWorktypes($groupno){
+        $stmt = $this->pdo->prepare("SELECT id, name FROM predefined_work WHERE groupno = :groupno");
+        $stmt->execute(['groupno' => $groupno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getWorktypeById($worktypeid){
+        $stmt = $this->pdo->prepare("SELECT * FROM predefined_work WHERE id = :worktypeid");
+        $stmt->execute(['worktypeid' => $worktypeid]);
+        return $stmt->fetch();
+    }
+
+    public function insertMatchingParamWork($workp){
+        $stmt = $this->pdo->prepare("INSERT INTO matchingparam_work (groupno, workid, worktype_prune, worktype_agriculture, worktype_cleaning, worktype_housework, worktype_shopping, worktype_repair, worktype_caretaking, worktype_teaching, worktype_consulting, study_english, study_foreignlanguage, study_it, study_business, study_caretaking, study_housework, study_liberalarts, study_art, volunteer_health, volunteer_elderly, volunteer_disable, volunteer_children, volunteer_sport, volunteer_town, volunteer_safety, volunteer_nature, volunteer_disaster, volunteer_international, hobby_musicalinstrument, hobby_chorus, hobby_dance, hobby_shodo, hobby_kado, hobby_sado, hobby_wasai, hobby_knit, hobby_cooking, hobby_gardening, hobby_diy, hobby_painting, hobby_pottery, hobby_photo, hobby_writing, hobby_go, hobby_camp, hobby_watchsport, hobby_watchperformance, hobby_watchmovie, hobby_listenmusic, hobby_reading, hobby_pachinko, hobby_karaoke, hobby_game, hobby_attraction, hobby_train, hobby_car, trip_daytrip, trip_domestic, trip_international, sport_baseball, sport_tabletennis, sport_tennis, sport_badminton, sport_golf, sport_gateball, sport_bowling, sport_fishing, sport_swimming, sport_skiing, sport_climbing, sport_cycling, sport_jogging, sport_walking)
+ VALUES (:groupno, :workid, :worktype_prune, :worktype_agriculture, :worktype_cleaning, :worktype_housework, :worktype_shopping, :worktype_repair, :worktype_caretaking, :worktype_teaching, :worktype_consulting, :study_english, :study_foreignlanguage, :study_it, :study_business, :study_caretaking, :study_housework, :study_liberalarts, :study_art, :volunteer_health, :volunteer_elderly, :volunteer_disable, :volunteer_children, :volunteer_sport, :volunteer_town, :volunteer_safety, :volunteer_nature, :volunteer_disaster, :volunteer_international, :hobby_musicalinstrument, :hobby_chorus, :hobby_dance, :hobby_shodo, :hobby_kado, :hobby_sado, :hobby_wasai, :hobby_knit, :hobby_cooking, :hobby_gardening, :hobby_diy, :hobby_painting, :hobby_pottery, :hobby_photo, :hobby_writing, :hobby_go, :hobby_camp, :hobby_watchsport, :hobby_watchperformance, :hobby_watchmovie, :hobby_listenmusic, :hobby_reading, :hobby_pachinko, :hobby_karaoke, :hobby_game, :hobby_attraction, :hobby_train, :hobby_car, :trip_daytrip, :trip_domestic, :trip_international, :sport_baseball, :sport_tabletennis, :sport_tennis, :sport_badminton, :sport_golf, :sport_gateball, :sport_bowling, :sport_fishing, :sport_swimming, :sport_skiing, :sport_climbing, :sport_cycling, :sport_jogging, :sport_walking)");
+        return $stmt->execute($workp);
+    }
+
 }
 
 $db = DB::getInstance();

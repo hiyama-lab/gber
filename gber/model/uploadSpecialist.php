@@ -5,6 +5,7 @@ header('Content-type: application/json');
 include __DIR__ . '/../lib/mysql_credentials.php';
 include __DIR__ . '/../lib/sendEmail.php';
 require_once __DIR__ . '/../lib/auth.php';
+require_once __DIR__ . '/../lib/db.php';
 
 $userno = mysql_real_escape_string($_POST["userno"]);
 $lat = mysql_real_escape_string($_POST["lat"]);
@@ -29,15 +30,13 @@ $workid = mysql_insert_id();
 
 //仕事のタグ情報をmatchingparam_workに追加する。predefined_workで定義されている場合は定義済みのタグベクトルを使う
 //定義されていない場合(worktype==0)は、タグベクトルを挿入しない（worktaglist.phpからあとでタグをつける）
-if($worktype == 0){
-    // do nothing
-}else{
-    $result = mysql_query("SELECT * FROM predefined_work WHERE id = '$worktype'", $con) or die('Error: ' . mysql_error());
-    $row = mysql_fetch_assoc($result);
-    extract($row);
-    mysql_query("INSERT INTO matchingparam_work (groupno, workid, worktype_prune, worktype_agriculture, worktype_cleaning, worktype_housework, worktype_shopping, worktype_repair, worktype_caretaking, worktype_teaching, worktype_consulting, study_english, study_foreignlanguage, study_it, study_business, study_caretaking, study_housework, study_liberalarts, study_art, volunteer_health, volunteer_elderly, volunteer_disable, volunteer_children, volunteer_sport, volunteer_town, volunteer_safety, volunteer_nature, volunteer_disaster, volunteer_international, hobby_musicalinstrument, hobby_chorus, hobby_dance, hobby_shodo, hobby_kado, hobby_sado, hobby_wasai, hobby_knit, hobby_cooking, hobby_gardening, hobby_diy, hobby_painting, hobby_pottery, hobby_photo, hobby_writing, hobby_go, hobby_camp, hobby_watchsport, hobby_watchperformance, hobby_watchmovie, hobby_listenmusic, hobby_reading, hobby_pachinko, hobby_karaoke, hobby_game, hobby_attraction, hobby_train, hobby_car, trip_daytrip, trip_domestic, trip_international, sport_baseball, sport_tabletennis, sport_tennis, sport_badminton, sport_golf, sport_gateball, sport_bowling, sport_fishing, sport_swimming, sport_skiing, sport_climbing, sport_cycling, sport_jogging, sport_walking)
- VALUES ('$genre', '$workid', '$worktype_prune', '$worktype_agriculture', '$worktype_cleaning', '$worktype_housework', '$worktype_shopping', '$worktype_repair', '$worktype_caretaking', '$worktype_teaching', '$worktype_consulting', '$study_english', '$study_foreignlanguage', '$study_it', '$study_business', '$study_caretaking', '$study_housework', '$study_liberalarts', '$study_art', '$volunteer_health', '$volunteer_elderly', '$volunteer_disable', '$volunteer_children', '$volunteer_sport', '$volunteer_town', '$volunteer_safety', '$volunteer_nature', '$volunteer_disaster', '$volunteer_international', '$hobby_musicalinstrument', '$hobby_chorus', '$hobby_dance', '$hobby_shodo', '$hobby_kado', '$hobby_sado', '$hobby_wasai', '$hobby_knit', '$hobby_cooking', '$hobby_gardening', '$hobby_diy', '$hobby_painting', '$hobby_pottery', '$hobby_photo', '$hobby_writing', '$hobby_go', '$hobby_camp', '$hobby_watchsport', '$hobby_watchperformance', '$hobby_watchmovie', '$hobby_listenmusic', '$hobby_reading', '$hobby_pachinko', '$hobby_karaoke', '$hobby_game', '$hobby_attraction', '$hobby_train', '$hobby_car', '$trip_daytrip', '$trip_domestic', '$trip_international', '$sport_baseball', '$sport_tabletennis', '$sport_tennis', '$sport_badminton', '$sport_golf', '$sport_gateball', '$sport_bowling', '$sport_fishing', '$sport_swimming', '$sport_skiing', '$sport_climbing', '$sport_cycling', '$sport_jogging', '$sport_walking')", $con)
-    or die ("Query error: " . mysql_error());
+$db = DB::getInstance();
+if($worktype != 0) {
+    $worktype = $db->getWorktypeById($worktype);
+    unset($worktype['id']);
+    unset($worktype['name']);
+    $worktype['workid'] = $workid;
+    $db->insertMatchingParamWork($worktype);
 }
 
 echo $_GET['jsoncallback'] . '({"status":"succeed"});';

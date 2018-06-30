@@ -1673,6 +1673,7 @@ DROP TABLE IF EXISTS `predefined_work`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `predefined_work` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `groupno` int(11) NOT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `worktype_prune` decimal(5,1) NOT NULL DEFAULT '0.0',
   `worktype_agriculture` decimal(5,1) NOT NULL DEFAULT '0.0',
