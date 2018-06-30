@@ -493,3 +493,43 @@ function registerWorktype(){
         });
     }
 }
+
+function deleteWorktype(worktypeid, groupno){
+    var JSONdata = {
+        id: worktypeid
+    };
+    swal({
+        title: "確認",
+        text: "本当に削除しますか？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "はい",
+        cancelButtonText: "いいえ",
+        closeOnConfirm: false
+    }, function () {
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(JSONdata),
+            dataType: "jsonp",
+            jsonp: 'jsoncallback',
+            url: baseurl + 'model/deleteWorktype.php',
+            timeout: 10000,
+            success: function (data) {
+                swal({
+                        title: "成功",
+                        text: "削除しました。",
+                        type: "success"
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            window.location.href = "worktypelist.php?groupno=" + groupno;
+                        }
+                    });
+            },
+            error: function () {
+                sweetAlert("エラー", "エラーのため削除できませんでした", "error");
+            }
+        });
+    });
+}

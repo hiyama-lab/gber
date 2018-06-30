@@ -316,6 +316,15 @@ class DB {
         $stmt = $this->pdo->prepare("UPDATE predefined_work SET name = :name, worktype_prune = :worktype_prune, worktype_agriculture = :worktype_agriculture, worktype_cleaning = :worktype_cleaning, worktype_housework = :worktype_housework, worktype_shopping = :worktype_shopping, worktype_repair = :worktype_repair, worktype_caretaking = :worktype_caretaking, worktype_teaching = :worktype_teaching, worktype_consulting = :worktype_consulting, study_english = :study_english, study_foreignlanguage = :study_foreignlanguage, study_it = :study_it, study_business = :study_business, study_caretaking = :study_caretaking, study_housework = :study_housework, study_liberalarts = :study_liberalarts, study_art = :study_art, volunteer_health = :volunteer_health, volunteer_elderly = :volunteer_elderly, volunteer_disable = :volunteer_disable, volunteer_children = :volunteer_children, volunteer_sport = :volunteer_sport, volunteer_town = :volunteer_town, volunteer_safety = :volunteer_safety, volunteer_nature = :volunteer_nature, volunteer_disaster = :volunteer_disaster, volunteer_international = :volunteer_international, hobby_musicalinstrument = :hobby_musicalinstrument, hobby_chorus = :hobby_chorus, hobby_dance = :hobby_dance, hobby_shodo = :hobby_shodo, hobby_kado = :hobby_kado, hobby_sado = :hobby_sado, hobby_wasai = :hobby_wasai, hobby_knit = :hobby_knit, hobby_cooking = :hobby_cooking, hobby_gardening = :hobby_gardening, hobby_diy = :hobby_diy, hobby_painting = :hobby_painting, hobby_pottery = :hobby_pottery, hobby_photo = :hobby_photo, hobby_writing = :hobby_writing, hobby_go = :hobby_go, hobby_camp = :hobby_camp, hobby_watchsport = :hobby_watchsport, hobby_watchperformance = :hobby_watchperformance, hobby_watchmovie = :hobby_watchmovie, hobby_listenmusic = :hobby_listenmusic, hobby_reading = :hobby_reading, hobby_pachinko = :hobby_pachinko, hobby_karaoke = :hobby_karaoke, hobby_game = :hobby_game, hobby_attraction = :hobby_attraction, hobby_train = :hobby_train, hobby_car = :hobby_car, trip_daytrip = :trip_daytrip, trip_domestic = :trip_domestic, trip_international = :trip_international, sport_baseball = :sport_baseball, sport_tabletennis = :sport_tabletennis, sport_tennis = :sport_tennis, sport_badminton = :sport_badminton, sport_golf = :sport_golf, sport_gateball = :sport_gateball, sport_bowling = :sport_bowling, sport_fishing = :sport_fishing, sport_swimming = :sport_swimming, sport_skiing = :sport_skiing, sport_climbing = :sport_climbing, sport_cycling = :sport_cycling, sport_jogging = :sport_jogging, sport_walking = :sport_walking WHERE id = :id AND groupno = :groupno");
         return $stmt->execute($worktype);
     }
+
+    public function deleteWorktype($worktypeid){
+        if($this->getWorktypeById($worktypeid)){
+            $stmt = $this->pdo->prepare("DELETE FROM predefined_work WHERE id = :worktypeid");
+            return $stmt->execute(['worktypeid' => $worktypeid]);
+        }else{
+            return true;
+        }
+    }
 }
 
 $db = DB::getInstance();

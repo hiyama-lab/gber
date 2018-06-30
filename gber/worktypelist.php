@@ -43,11 +43,11 @@ require_logined_session();
         <h3><?php echo h($groupnamerecords[$groupno]['groupname']);?>グループ</h3>
 
         <?php
-        echo "<table><tr><th>削除</th><th>仕事タイプ</th></tr>";
+        echo "<table>";
         foreach($worktypes as $worktype){
             echo "<tr>";
-            echo "<td style=\"text-align: center; \">削除</td>";
             echo "<td style=\"padding: 8px;\"><a href=\"worktype.php?groupno=$groupno&worktypeid={$worktype['id']}\" rel=\"external\">" . h($worktype['name']) . "</a></td>";
+            echo "<td style=\"text-align: center; \"><input type=\"button\" class=\"delete-worktype\" value=\"削除\" onClick=\"deleteWorktype({$worktype['id']},$groupno);\"/></td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -57,12 +57,18 @@ require_logined_session();
         </form>
 
     </div>
+    <script>
+        $(function () {
+            $("div:has('> .delete-worktype')").css({padding: ".1em .5em", margin: ".2em .3em"});
+        });
+    </script>
 
 
 </div><!-- end of content -->
 
 
 <?php include("./common/commonFooter.php"); ?>
+<script type="text/javascript" src="js/questionnaire.js"></script>
 </div><!-- end of wrapper -->
 </body>
 </html>
