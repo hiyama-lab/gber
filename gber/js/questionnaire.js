@@ -383,3 +383,113 @@ function answerworktag(){
         });
     }
 }
+
+function registerWorktype(){
+    if( $("input[name='name']").val() == "" ){
+        sweetAlert("エラー","仕事タイプが未入力です。","error");
+    } else {
+        var worktypeid = $("input[name='worktypeid']").val();
+        var groupno = $("input[name='groupno']").val();
+        var name = $("input[name='name']").val();
+        var JSONdata = {
+            id: worktypeid,
+            groupno: groupno,
+            name: name,
+            worktype_prune: Number($("[name='checkbox-worktype-1']").prop("checked")),
+            worktype_agriculture: Number($("[name='checkbox-worktype-2']").prop("checked")),
+            worktype_cleaning: Number($("[name='checkbox-worktype-3']").prop("checked")),
+            worktype_housework: Number($("[name='checkbox-worktype-4']").prop("checked")),
+            worktype_shopping: Number($("[name='checkbox-worktype-5']").prop("checked")),
+            worktype_repair: Number($("[name='checkbox-worktype-6']").prop("checked")),
+            worktype_caretaking: Number($("[name='checkbox-worktype-7']").prop("checked")),
+            worktype_teaching: Number($("[name='checkbox-worktype-8']").prop("checked")),
+            worktype_consulting: Number($("[name='checkbox-worktype-9']").prop("checked")),
+            study_english: Number($("[name='checkbox-study-english']").prop("checked")),
+            study_foreignlanguage: Number($("[name='checkbox-study-foreignlanguage']").prop("checked")),
+            study_it: Number($("[name='checkbox-study-it']").prop("checked")),
+            study_business: Number($("[name='checkbox-study-business']").prop("checked")),
+            study_caretaking: Number($("[name='checkbox-study-caretaking']").prop("checked")),
+            study_housework: Number($("[name='checkbox-study-housework']").prop("checked")),
+            study_liberalarts: Number($("[name='checkbox-study-liberalarts']").prop("checked")),
+            study_art: Number($("[name='checkbox-study-art']").prop("checked")),
+            volunteer_health: Number($("[name='checkbox-volunteer-health']").prop("checked")),
+            volunteer_elderly: Number($("[name='checkbox-volunteer-elderly']").prop("checked")),
+            volunteer_disable: Number($("[name='checkbox-volunteer-disable']").prop("checked")),
+            volunteer_children: Number($("[name='checkbox-volunteer-children']").prop("checked")),
+            volunteer_sport: Number($("[name='checkbox-volunteer-sport']").prop("checked")),
+            volunteer_town: Number($("[name='checkbox-volunteer-town']").prop("checked")),
+            volunteer_safety: Number($("[name='checkbox-volunteer-safety']").prop("checked")),
+            volunteer_nature: Number($("[name='checkbox-volunteer-nature']").prop("checked")),
+            volunteer_disaster: Number($("[name='checkbox-volunteer-disaster']").prop("checked")),
+            volunteer_international: Number($("[name='checkbox-volunteer-international']").prop("checked")),
+            hobby_musicalinstrument: Number($("[name='checkbox-hobby-musicalinstrument']").prop("checked")),
+            hobby_chorus: Number($("[name='checkbox-hobby-chorus']").prop("checked")),
+            hobby_dance: Number($("[name='checkbox-hobby-dance']").prop("checked")),
+            hobby_shodo: Number($("[name='checkbox-hobby-shodo']").prop("checked")),
+            hobby_kado: Number($("[name='checkbox-hobby-kado']").prop("checked")),
+            hobby_sado: Number($("[name='checkbox-hobby-sado']").prop("checked")),
+            hobby_wasai: Number($("[name='checkbox-hobby-wasai']").prop("checked")),
+            hobby_knit: Number($("[name='checkbox-hobby-knit']").prop("checked")),
+            hobby_cooking: Number($("[name='checkbox-hobby-cooking']").prop("checked")),
+            hobby_gardening: Number($("[name='checkbox-hobby-gardening']").prop("checked")),
+            hobby_diy: Number($("[name='checkbox-hobby-diy']").prop("checked")),
+            hobby_painting: Number($("[name='checkbox-hobby-painting']").prop("checked")),
+            hobby_pottery: Number($("[name='checkbox-hobby-pottery']").prop("checked")),
+            hobby_photo: Number($("[name='checkbox-hobby-photo']").prop("checked")),
+            hobby_writing: Number($("[name='checkbox-hobby-writing']").prop("checked")),
+            hobby_go: Number($("[name='checkbox-hobby-go']").prop("checked")),
+            hobby_camp: Number($("[name='checkbox-hobby-camp']").prop("checked")),
+            hobby_watchsport: Number($("[name='checkbox-hobby-watchsport']").prop("checked")),
+            hobby_watchperformance: Number($("[name='checkbox-hobby-watchperformance']").prop("checked")),
+            hobby_watchmovie: Number($("[name='checkbox-hobby-watchmovie']").prop("checked")),
+            hobby_listenmusic: Number($("[name='checkbox-hobby-listenmusic']").prop("checked")),
+            hobby_reading: Number($("[name='checkbox-hobby-reading']").prop("checked")),
+            hobby_pachinko: Number($("[name='checkbox-hobby-pachinko']").prop("checked")),
+            hobby_karaoke: Number($("[name='checkbox-hobby-karaoke']").prop("checked")),
+            hobby_game: Number($("[name='checkbox-hobby-game']").prop("checked")),
+            hobby_attraction: Number($("[name='checkbox-hobby-attraction']").prop("checked")),
+            hobby_train: Number($("[name='checkbox-hobby-train']").prop("checked")),
+            hobby_car: Number($("[name='checkbox-hobby-car']").prop("checked")),
+            trip_daytrip: Number($("[name='checkbox-trip-daytrip']").prop("checked")),
+            trip_domestic: Number($("[name='checkbox-trip-domestic']").prop("checked")),
+            trip_international: Number($("[name='checkbox-trip-international']").prop("checked")),
+            sport_baseball: Number($("[name='checkbox-sport-baseball']").prop("checked")),
+            sport_tabletennis: Number($("[name='checkbox-sport-tabletennis']").prop("checked")),
+            sport_tennis: Number($("[name='checkbox-sport-tennis']").prop("checked")),
+            sport_badminton: Number($("[name='checkbox-sport-badminton']").prop("checked")),
+            sport_golf: Number($("[name='checkbox-sport-golf']").prop("checked")),
+            sport_gateball: Number($("[name='checkbox-sport-gateball']").prop("checked")),
+            sport_bowling: Number($("[name='checkbox-sport-bowling']").prop("checked")),
+            sport_fishing: Number($("[name='checkbox-sport-fishing']").prop("checked")),
+            sport_swimming: Number($("[name='checkbox-sport-swimming']").prop("checked")),
+            sport_skiing: Number($("[name='checkbox-sport-skiing']").prop("checked")),
+            sport_climbing: Number($("[name='checkbox-sport-climbing']").prop("checked")),
+            sport_cycling: Number($("[name='checkbox-sport-cycling']").prop("checked")),
+            sport_jogging: Number($("[name='checkbox-sport-jogging']").prop("checked")),
+            sport_walking: Number($("[name='checkbox-sport-walking']").prop("checked"))
+        };
+        //alert(JSON.stringify(JSONdata));
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(JSONdata),
+            dataType: "jsonp",
+            jsonp: 'jsoncallback',
+            url: baseurl+'model/registerWorktype.php',
+            //timeout: 10000,
+            success: function(data){
+                swal({
+                        title: "成功",
+                        text: "登録しました",
+                        type: "success"},
+                    function(isConfirm){
+                        if(isConfirm){
+                            window.location.href = "worktypelist.php?groupno=" + groupno;
+                        }
+                    });
+            },
+            error: function(){
+                sweetAlert("エラー", "登録できませんでした", "error");
+            }
+        });
+    }
+}

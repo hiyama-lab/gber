@@ -83,6 +83,7 @@ require_logined_session();
 
 
         <h3>仕事タグ付け</h3>
+        <p><a href="worktypelist.php?groupno=0" rel="external">仕事タイプの設定を行う</a></p>
         <p><a href="worktaglist.php" rel="external">仕事のタグ付けを行う</a></p>
         <p><a href="worksummarylist.php" rel="external">仕事のサマリーを書く</a></p>
         <p><a href="worktagviewer.php" rel="external">仕事のタグ付けを確認する</a></p>
