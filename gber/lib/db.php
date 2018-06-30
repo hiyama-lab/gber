@@ -135,7 +135,7 @@ class DB {
     }
 
     public function getGroupNameRecords(){
-        $stmt = $this->pdo->prepare("SELECT groupname FROM groupnamelist");
+        $stmt = $this->pdo->prepare("SELECT groupno, groupname FROM groupnamelist");
         $stmt->execute();
         return $stmt->fetchAll();
     }

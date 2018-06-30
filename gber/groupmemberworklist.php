@@ -86,7 +86,7 @@ require_logined_session();
                     echo "<li data-role=\"list-divider\">参加希望未回答</li>\n";
                     foreach($undefined as $eachwork){
                         $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
-                        echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
+                        echoWorkCell($eachwork['id'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
                     }
                 }
 
@@ -94,7 +94,7 @@ require_logined_session();
                     echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
                     foreach($negative as $eachwork){
                         $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
-                        echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
+                        echoWorkCell($eachwork['id'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
                     }
                 }
 
@@ -102,7 +102,7 @@ require_logined_session();
                     echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
                     foreach($positive as $eachwork){
                         $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
-                        echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
+                        echoWorkCell($eachwork['id'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
                     }
                 }
             }
