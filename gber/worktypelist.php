@@ -40,17 +40,24 @@ require_logined_session();
 
 
         <h2>仕事タイプ一覧</h2>
-        <h3><?php echo h($groupnamerecords[$groupno]['groupname']);?>グループ</h3>
-
         <?php
-        echo "<table>";
-        foreach($worktypes as $worktype){
-            echo "<tr>";
-            echo "<td style=\"padding: 8px;\"><a href=\"worktype.php?groupno=$groupno&worktypeid={$worktype['id']}\" rel=\"external\">" . h($worktype['name']) . "</a></td>";
-            echo "<td style=\"text-align: center; \"><input type=\"button\" class=\"delete-worktype\" value=\"削除\" onClick=\"deleteWorktype({$worktype['id']},$groupno);\"/></td>";
-            echo "</tr>";
+        if($groupno == 0){
+            echo "<h3>全体</h3>";
+        }else{
+            echo "<h3>" . h($groupnamerecords[$groupno]['groupname']) . "グループ</h3>";
         }
-        echo "</table>";
+        if(count($worktypes) == 0){
+            echo "登録されている仕事タイプはありません</br>";
+        }else{
+            echo "<table>";
+            foreach($worktypes as $worktype){
+                echo "<tr>";
+                echo "<td style=\"padding: 8px;\"><a href=\"worktype.php?groupno=$groupno&worktypeid={$worktype['id']}\" rel=\"external\">" . h($worktype['name']) . "</a></td>";
+                echo "<td style=\"text-align: center; \"><input type=\"button\" class=\"delete-worktype\" value=\"削除\" onClick=\"deleteWorktype({$worktype['id']},$groupno);\"/></td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+        }
         ?>
         <form>
             <input type="button" value="仕事タイプ新規追加" onClick="location.href='worktype.php?groupid=<?php echo $groupno;?>'"/>
