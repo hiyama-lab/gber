@@ -870,6 +870,7 @@ require_logined_session();
                             echo "<input data-role=\"date\" type=\"text\" name=\"workdate\" id=\"workdate\" placeholder=\"日付を選択してください\" required />";
                             echo "<div>【午前】オファー済み: <span id=\"waiting_am\">0</span>人、承認済み: <span id=\"accepted_am\">0</span>人</div>";
                             echo "<div>【午後】オファー済み: <span id=\"waiting_pm\">0</span>人、承認済み: <span id=\"accepted_pm\">0</span>人</div>";
+                            echo "<div class=\"scrollable\">";
                             echo "<table id=\"sorttable\">";
                             echo "<thead><tr>";
                             echo "<th class=\"memberprof\"></th>";
@@ -939,6 +940,7 @@ require_logined_session();
                                 echo $str;
                             }
                             echo "</tbody></table>";
+                            echo "</div>";
                             echo "</span></ul><!--end of #jobs-->";
                         }
 

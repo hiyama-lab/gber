@@ -241,3 +241,7 @@ div .score-box {
 .score {
     font-size: 30px;
 }
+
+div .scrollable{
+    overflow-x: scroll;
+}
