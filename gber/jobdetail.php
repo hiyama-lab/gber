@@ -145,7 +145,7 @@ require_logined_session();
         <p><?php echo $status; ?></p>
         <?php
         if ($nointerestflag) {
-            echo "<p>【参加希望なし】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"希望ありに変更\" onClick=\"changeippaninterest("
+            echo "<p>【参加したくない】→　<input type=\"button\" data-role=\"none\" data-inline=\"true\" value=\"参加したいに変更\" onClick=\"changeippaninterest("
                 . $workid . "," . $_SESSION['userno'] . ",1);\" /></p>";
         }
 

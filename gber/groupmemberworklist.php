@@ -91,7 +91,7 @@ require_logined_session();
                 }
 
                 if(count($negative) > 0){
-                    echo "<li data-role=\"list-divider\">参加希望なし</li>\n";
+                    echo "<li data-role=\"list-divider\">参加したくない</li>\n";
                     foreach($negative as $eachwork){
                         $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
                         echoWorkCell($eachwork['id'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
@@ -99,7 +99,7 @@ require_logined_session();
                 }
 
                 if(count($positive) > 0){
-                    echo "<li data-role=\"list-divider\">参加希望あり</li>\n";
+                    echo "<li data-role=\"list-divider\">参加したい</li>\n";
                     foreach($positive as $eachwork){
                         $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
                         echoWorkCell($eachwork['id'], $groupno, $eachwork['worktitle'], $eachwork['workdatetime'], $eachwork['content'], $eachwork['match']);
