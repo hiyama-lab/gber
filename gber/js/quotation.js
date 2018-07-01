@@ -481,13 +481,13 @@ function sendoffernew(workday,am,pm,workerno,scheduleno,prefix){
                         if(am == 1){
                             workerschedule[scheduleno][prefix+"_am"]=2;
                             $("#am_"+workerno).empty();
-                            $("#am_"+workerno).append("<font color=\"red\">依頼済</font>");
+                            $("#am_"+workerno).append("<font color=\"red\">オファー済</font>");
                             waiting_am++;
                             rewritenumbers();
                         } else if(pm == 1){
                             workerschedule[scheduleno][prefix+"_pm"]=2;
                             $("#pm_"+workerno).empty();
-                            $("#pm_"+workerno).append("<font color=\"red\">依頼済</font>");
+                            $("#pm_"+workerno).append("<font color=\"red\">オファー済</font>");
                             waiting_pm++;
                             rewritenumbers();
                         }
