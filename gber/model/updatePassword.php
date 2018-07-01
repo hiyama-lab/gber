@@ -20,6 +20,8 @@ $hash = password_hash($pass, PASSWORD_DEFAULT, $options);
 mysql_query("UPDATE db_user SET pass='" . $hash . "' WHERE mail='" . $mail . "'", $con)
 or die('Error: ' . mysql_error());
 
+echo $_GET['jsoncallback'] . '({"status":"succeed"});';
+
 mysql_close($con);
 
 ?>

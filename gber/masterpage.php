@@ -220,10 +220,20 @@ require_logined_session();
                 jsonp: 'jsoncallback',
                 url: baseurl + 'model/updatePassword.php',
                 timeout: 10000,
+                success: function (data) {
+                    swal({
+                            title: "成功",
+                            text: "メールアドレスとパスワードを更新しました",
+                            type: "success"
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                window.location.href = "masterpage.php";
+                            }
+                        });
+                },
                 error: function (data) {
-                    $("#repass").empty();
-                    $("#repass").prepend(data.responseText);
-                    console.log(data.responseText);
+                    sweetAlert("エラー", "エラーのためパスワードを再設定できませんでした", "error");
                 }
             });
         }

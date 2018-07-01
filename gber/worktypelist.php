@@ -60,7 +60,7 @@ require_logined_session();
         }
         ?>
         <form>
-            <input type="button" value="仕事タイプ新規追加" onClick="location.href='worktype.php?groupid=<?php echo $groupno;?>'"/>
+            <input type="button" value="仕事タイプ新規追加" onClick="location.href='worktype.php?groupno=<?php echo $groupno;?>'"/>
         </form>
 
     </div>
