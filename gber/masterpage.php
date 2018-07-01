@@ -70,7 +70,7 @@ require_logined_session();
         <h3>パスワード再設定フォーム</h3>
         <form id="register-form">
             <input type="text" id="mail" size="30" name="mail"
-                   autocapitalize="none" placeholder="メアド" required/>
+                   autocapitalize="none" placeholder="メールアドレス" required/>
             <input type="password" id="pass" name="pass" placeholder="パスワード"
                    required/>
             <input type="button" value="登録する" data-theme="b" name="go"

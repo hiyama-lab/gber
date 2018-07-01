@@ -21,14 +21,14 @@ $options = array('cost' => 10);
 $hash = password_hash($pass, PASSWORD_DEFAULT, $options);
 
 $db = DB::getInstance();
-//メアドとパスワードの重複確認をする
+//メールアドレスとパスワードの重複確認をする
 if ($db->isRegisteredUser($mail) > 0) {
     die ("This user is already registered.");
 } else {
     //DBに登録
     $result = $db->registerUser($mail, $nickname, $hash, date('Y-m-d')) or die ("Query error");
 
-    //登録データのメアドとパスワードからユーザIDを取得する
+    //登録データのメールアドレスとパスワードからユーザIDを取得する
     $row = $db->findUserByMail($mail);
     $userno = $row['userno'];
 
