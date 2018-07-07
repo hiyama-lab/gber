@@ -108,7 +108,6 @@ tbody tr:nth-child(even)  td { background-color: #eee; }
 @media screen and (max-width: 640px) {
     table {
     overflow-x: auto;
-    display: block;
     }
 }
 
@@ -223,4 +222,26 @@ textarea {
 
 #demo-account dd {
     margin-bottom: 3px;
+}
+
+#sorttable td {
+    text-align: center;
+}
+
+div .work-box {
+    float: left;
+}
+
+div .score-box {
+    float: right;
+    text-align: center;
+    margin-right: -20px;
+}
+
+.score {
+    font-size: 30px;
+}
+
+div .scrollable{
+    overflow-x: scroll;
 }

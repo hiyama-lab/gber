@@ -58,6 +58,8 @@ require_logined_session();
 
         <h2>仕事管理</h2>
         <ul>
+            <li><p><a href="worktypelist.php?groupno=<?php echo $groupno; ?>" rel="external">仕事タイプの設定を行う</a></p></li>
+            <li><p><a href="worktaglist.php" rel="external">仕事のタグ付けを行う</a></p></li>
             <!--li><p><a href="groupschedule.php?groupno=<?php echo $groupno; ?>" rel="external">仕事（進行中）</a></p></li-->
             <li><p>
                     <a href="groupscheduleold.php?groupno=<?php echo $groupno; ?>"

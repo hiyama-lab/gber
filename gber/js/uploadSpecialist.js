@@ -125,6 +125,8 @@ function uploadData(){
         sweetAlert("エラー","仕事タイトルが未入力です。","error");
     } else if( $("[name='genre']").val() == "choose-one" ){
         sweetAlert("エラー","グループが未選択です。","error");
+    } else if( $("[name='worktype']").val() == "choose-one" ){
+        sweetAlert("エラー","仕事タイプが未選択です。","error");
     } else if( $("[name='content']").val() == "" ){
         sweetAlert("エラー","依頼内容が未入力です。","error");
     } else if( $("[name='workdatetime']").val() == "" ){
@@ -142,15 +144,30 @@ function uploadData(){
         success: function(data){
             swal({
                 title: "成功",
-                text: "投稿しました。連絡いたしますのでしばらくお待ちください。",
+                text: "仕事を投稿し、管理者にメールで通知しました。",
                 type: "success"},
                 function(isConfirm){
                     if(isConfirm){
                         window.location.href = "index.php";
             }});
         },
-        error: function(){
-            sweetAlert("エラー", "エラーのため依頼できませんでした", "error");
+        error: function(err){
+            switch(err.responseText){
+                case "mail error":
+                    swal({
+                        title: "警告",
+                        text: "仕事の投稿は完了しましたが、管理者へのメール送信は失敗しました。",
+                        type: "warning"},
+                        function(isConfirm){
+                            if(isConfirm){
+                                window.location.href = "index.php";
+                            }
+                        });
+                    break;
+                default:
+                    sweetAlert("エラー", "エラーのため仕事を作成できませんでした", "error");
+                    break;
+            }
         }
     })}
 }

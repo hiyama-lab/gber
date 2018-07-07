@@ -13,6 +13,9 @@ require_logined_session();
 <div data-role="page" id="mypage">
     <?php
     include __DIR__ . '/lib/mysql_credentials.php';
+    require_once __DIR__ . '/lib/db.php';
+    require_once __DIR__ . '/model/calcMatch.php';
+    require_once __DIR__ . '/common/workCell.php';
 
     $activitylog
         = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
@@ -34,7 +37,24 @@ require_logined_session();
         $records[] = $row;
     }
 
-    mysql_close($con);
+    $userp = $db->getMatchingParamByUserno($userno);
+    // 興味ベクトルの大きさが0のユーザはマッチングしない
+    $matching_enabled = calcSize($userp) ? true : false;
+    if($matching_enabled){
+        // それぞれの仕事に対してマッチング係数Mを計算
+        foreach($records as &$work){
+            $workp = $db->getMatchingParamByWorkid($work['workid'], $groupno);
+            $work["match"] = calcMatch($userp, $workp);
+        }
+        unset($work);
+
+        foreach($records as $key => $row){
+            $match[$key] = $row['match'];
+        }
+        if(count($records)){
+            array_multisort($match, SORT_DESC, $records);
+        }
+    }
 
     ?>
 
@@ -54,18 +74,15 @@ require_logined_session();
             } else {
                 $workday = "2000-01-01";
                 foreach ($records as $eachwork) {
-                    if ($eachwork['workday'] > $workday) {
-                        // 日付で区切り線を入れる
-                        echo "<li data-role=\"list-divider\">"
-                            . $eachwork['workday'] . "</li>\n";
-                        $workday = $eachwork['workday'];
+                    // マッチングスコアがない場合は日付順にまとめる
+                    $score = $matching_enabled ? $eachwork['match'] : UNDEFINED_SCORE;
+                    if(!$matching_enabled){
+                        if ($eachwork['workday'] > $workday) {
+                            echo "<li data-role=\"list-divider\">" . $eachwork['workday'] . "</li>\n";
+                            $workday = $eachwork['workday'];
+                        }
                     }
-                    echo "<li data-theme=\"c\"><a href=\"quotation.php?workid="
-                        . $eachwork['workid'] . "&groupno=" . $groupno
-                        . "\" rel=\"external\"><h2>" . h($eachwork['worktitle'])
-                        . "</h2><p><strong>" . $groupnamelist[$groupno]
-                        . "グループ</strong></p><p>" . h($eachwork['content'])
-                        . "</p></a></li>\n";
+                    echoWorkCell($eachwork['workid'], $groupno, $eachwork['worktitle'], $eachwork['workday'], $eachwork['content'], $score);
                 }
             }
             ?>

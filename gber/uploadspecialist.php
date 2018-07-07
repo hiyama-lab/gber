@@ -13,6 +13,8 @@ require_logined_session();
 <?php
 
 include __DIR__ . '/lib/mysql_credentials.php';
+require_once __DIR__ . '/lib/db.php';
+
 $activitylog
     = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
     . $_SESSION['userno'] . "', 'uploadspecialist.php', '" . date('Y-m-d G:i:s')
@@ -77,6 +79,19 @@ $groupno = $_GET['groupno'];
             <span>※ 依頼者氏名、団体名、もしくは概要を記入してください。</span>
             <input type="text" id="worktitle" size="50" name="worktitle"
                    placeholder="タイトルを記入してください。(50文字まで)" required/></br>
+            <label for="worktype">【仕事タイプ】</label>
+            <select name="worktype" id="worktype" data-inline="true" data-theme="c">
+                <option value="choose-one">仕事タイプをお選びください</option>
+                <?php
+                $db = DB::getInstance();
+                $result = $db->getAllWorktypes($groupno);
+                foreach($result as $worktype){
+                    echo "<option value=\"{$worktype['id']}\">{$worktype['name']}</option>";
+                }
+                ?>
+                <option value="0">その他</option>
+            </select>
+            </br></br>
             <label for="content">【具体的な内容】</label>
             <span>※ 仕事内容、場所など勤務に必要な情報を入力してください。</span>
             <textarea data-role="none" id="content" name="content"

@@ -70,7 +70,7 @@ require_logined_session();
         <h3>パスワード再設定フォーム</h3>
         <form id="register-form">
             <input type="text" id="mail" size="30" name="mail"
-                   autocapitalize="none" placeholder="メアド" required/>
+                   autocapitalize="none" placeholder="メールアドレス" required/>
             <input type="password" id="pass" name="pass" placeholder="パスワード"
                    required/>
             <input type="button" value="登録する" data-theme="b" name="go"
@@ -83,6 +83,7 @@ require_logined_session();
 
 
         <h3>仕事タグ付け</h3>
+        <p><a href="worktypelist.php?groupno=0" rel="external">仕事タイプの設定を行う</a></p>
         <p><a href="worktaglist.php" rel="external">仕事のタグ付けを行う</a></p>
         <p><a href="worksummarylist.php" rel="external">仕事のサマリーを書く</a></p>
         <p><a href="worktagviewer.php" rel="external">仕事のタグ付けを確認する</a></p>
@@ -219,10 +220,20 @@ require_logined_session();
                 jsonp: 'jsoncallback',
                 url: baseurl + 'model/updatePassword.php',
                 timeout: 10000,
+                success: function (data) {
+                    swal({
+                            title: "成功",
+                            text: "メールアドレスとパスワードを更新しました",
+                            type: "success"
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                window.location.href = "masterpage.php";
+                            }
+                        });
+                },
                 error: function (data) {
-                    $("#repass").empty();
-                    $("#repass").prepend(data.responseText);
-                    console.log(data.responseText);
+                    sweetAlert("エラー", "エラーのためパスワードを再設定できませんでした", "error");
                 }
             });
         }

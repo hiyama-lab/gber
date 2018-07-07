@@ -125,6 +125,8 @@ function uploadData(){
         sweetAlert("エラー","仕事タイトルが未入力です。","error");
     } else if( $("[name='content']").val() == "" ){
         sweetAlert("エラー","依頼内容が未入力です。","error");
+    } else if( $("[name='worktype']").val() == "choose-one" ){
+        sweetAlert("エラー","仕事タイプが未選択です。","error");
     } else if( $("[name='workgenre']").val() == "choose-one" ){
         sweetAlert("エラー","募集内容の種類が未選択です。","error");
     } else if( $("[name='groupgenre']").val() == "choose-one" ){

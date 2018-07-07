@@ -90,83 +90,84 @@ require_logined_session();
     <div data-role="content"><!-- START OF CONTENT -->
         <h1>グループメンバー</h1>
 
-
-        <table id="sorttable">
-            <thead>
-            <tr>
-                <th class="memberprof"></th>
-                <th class="memberprof">ID</th>
-                <th class="memberprof">管理者</th>
-                <th class="memberprof">ニックネーム</th>
-                <th class="memberprof">生年</th>
-                <th class="memberprof">メールアドレス</th>
-                <th class="memberprof">電話番号</th>
-                <th class="memberprof">評価</th>
-                <th class="memberprof">除名</th>
-                <th class="memberprof">代理人</th>
-                <th class="memberprof">メモ</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $adminarray = ["×", "◯"];
-            $i = 0;
-            foreach ($records as $eachmember) {
-                $giverstr = "";
-                $giveronlyone = true;
-                if ($eachmember['giver'] != null) {
-                    foreach ($eachmember['giver'] as $eachgiver) {
-                        if ($giveronlyone) {
-                            $giverstr .= $eachgiver;
-                            $giveronlyone = false;
-                        } else {
-                            $giverstr .= "," . $eachgiver;
+        <div class="scrollable">
+            <table id="sorttable">
+                <thead>
+                <tr>
+                    <th class="memberprof"></th>
+                    <th class="memberprof">ID</th>
+                    <th class="memberprof">管理者</th>
+                    <th class="memberprof">ニックネーム</th>
+                    <th class="memberprof">生年</th>
+                    <th class="memberprof">メールアドレス</th>
+                    <th class="memberprof">電話番号</th>
+                    <th class="memberprof">評価</th>
+                    <th class="memberprof">除名</th>
+                    <th class="memberprof">代理人</th>
+                    <th class="memberprof">メモ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $adminarray = ["×", "◯"];
+                $i = 0;
+                foreach ($records as $eachmember) {
+                    $giverstr = "";
+                    $giveronlyone = true;
+                    if ($eachmember['giver'] != null) {
+                        foreach ($eachmember['giver'] as $eachgiver) {
+                            if ($giveronlyone) {
+                                $giverstr .= $eachgiver;
+                                $giveronlyone = false;
+                            } else {
+                                $giverstr .= "," . $eachgiver;
+                            }
                         }
                     }
-                }
-                $str = "<tr>";
-                $str .= "<td><a href=\"mypage.php?userno=" . $eachmember['userno']
-                    . "\" rel=\"external\"><img src=\"./model/showuserimage.php?userno="
-                    . $eachmember['userno']
-                    . "\" onerror=\"this.src='img/noimage.svg';\" width=\"50px\" /></a></td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['userno']
-                    . "</td>";
-                $str .= "<td class=\"memberprof\">"
-                    . $adminarray[$eachmember['admin']] . "</td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['nickname']
-                    . "</td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['birthyear']
-                    . "</td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['mail'] . "</td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['phone']
-                    . "</td>";
-                $str .= "<td class=\"memberprof\"><span id=\"currenteval_" . $i
-                    . "\"></span> <button data-role=\"none\" onclick=\"changeeval("
-                    . $eachmember['userno'] . ", " . $groupno . ", currenteval[" . $i
-                    . "], " . $i . ");\">変更</button></td>";
-                $str .= "<td class=\"memberprof\"><button data-role=\"none\" onclick=\"removefromgroup("
-                    . $eachmember['userno'] . ", " . $groupno
-                    . ");\">除名</button></td>";
-                if ($eachmember['giver'] == null) {
-                    $str .= "<td class=\"memberprof\"></td>";
-                } else {
-                    $str .= "<td class=\"memberprof\">" . $giverstr . "</td>";
-                }
-                if ($eachmember['memo'] == null) {
-                    $str .= "<td class=\"memberprof\" id=\"memo_"
-                        . $eachmember['userno'] . "\"></td>";
-                } else {
-                    $str .= "<td class=\"memberprof\" id=\"memo_"
-                        . $eachmember['userno'] . "\">" . $eachmember['memo']
+                    $str = "<tr>";
+                    $str .= "<td><a href=\"mypage.php?userno=" . $eachmember['userno']
+                        . "\" rel=\"external\"><img src=\"./model/showuserimage.php?userno="
+                        . $eachmember['userno']
+                        . "\" onerror=\"this.src='img/noimage.svg';\" width=\"50px\" /></a></td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['userno']
                         . "</td>";
+                    $str .= "<td class=\"memberprof\">"
+                        . $adminarray[$eachmember['admin']] . "</td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['nickname']
+                        . "</td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['birthyear']
+                        . "</td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['mail'] . "</td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['phone']
+                        . "</td>";
+                    $str .= "<td class=\"memberprof\"><span id=\"currenteval_" . $i
+                        . "\"></span> <button data-role=\"none\" onclick=\"changeeval("
+                        . $eachmember['userno'] . ", " . $groupno . ", currenteval[" . $i
+                        . "], " . $i . ");\">変更</button></td>";
+                    $str .= "<td class=\"memberprof\"><button data-role=\"none\" onclick=\"removefromgroup("
+                        . $eachmember['userno'] . ", " . $groupno
+                        . ");\">除名</button></td>";
+                    if ($eachmember['giver'] == null) {
+                        $str .= "<td class=\"memberprof\"></td>";
+                    } else {
+                        $str .= "<td class=\"memberprof\">" . $giverstr . "</td>";
+                    }
+                    if ($eachmember['memo'] == null) {
+                        $str .= "<td class=\"memberprof\" id=\"memo_"
+                            . $eachmember['userno'] . "\"></td>";
+                    } else {
+                        $str .= "<td class=\"memberprof\" id=\"memo_"
+                            . $eachmember['userno'] . "\">" . $eachmember['memo']
+                            . "</td>";
+                    }
+                    $str .= "</tr>\n";
+                    echo $str;
+                    $i++;
                 }
-                $str .= "</tr>\n";
-                echo $str;
-                $i++;
-            }
-            ?>
-            </tbody>
-        </table>
+                ?>
+                </tbody>
+            </table>
+        </div>
         <script>
             <?php
             foreach ($records as $eachmember) {

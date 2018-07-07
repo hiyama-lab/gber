@@ -14,7 +14,7 @@ if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN'], ['groupno' => $post['gr
     exit;
 }
 
-//確定済みのワーカーのメアドを一覧で取得
+//確定済みのワーカーのメールアドレスを一覧で取得
 $result
     = mysql_query("SELECT nickname, mail FROM db_user WHERE userno IN (SELECT DISTINCT workerno FROM workdate WHERE workid='" . $post['workid'] . "')", $con)
 or die ("Query error: " . mysql_error());

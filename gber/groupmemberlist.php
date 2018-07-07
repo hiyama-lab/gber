@@ -58,36 +58,37 @@ require_logined_session();
     <div data-role="content"><!-- START OF CONTENT -->
         <h1>メンバー一覧</h1>
 
-
-        <table id="sorttable">
-            <thead>
-            <tr>
-                <th class="memberprof"></th>
-                <th class="memberprof">ID</th>
-                <th class="memberprof">ニックネーム</th>
-                <th class="memberprof">生年</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            foreach ($records as $eachmember) {
-                $str = "<tr>";
-                $str .= "<td><a href=\"mypage.php?userno=" . $eachmember['userno']
-                    . "\" rel=\"external\"><img src=\"./model/showuserimage.php?userno="
-                    . $eachmember['userno']
-                    . "\" onerror=\"this.src='img/noimage.svg';\" width=\"50px\" /></a></td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['userno']
-                    . "</td>";
-                $str .= "<td class=\"memberprof\">" . h($eachmember['nickname'])
-                    . "</td>";
-                $str .= "<td class=\"memberprof\">" . $eachmember['birthyear']
-                    . "</td>";
-                $str .= "</tr>\n";
-                echo $str;
-            }
-            ?>
-            </tbody>
-        </table>
+        <div class="scrollable">
+            <table id="sorttable">
+                <thead>
+                <tr>
+                    <th class="memberprof"></th>
+                    <th class="memberprof">ID</th>
+                    <th class="memberprof">ニックネーム</th>
+                    <th class="memberprof">生年</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach ($records as $eachmember) {
+                    $str = "<tr>";
+                    $str .= "<td><a href=\"mypage.php?userno=" . $eachmember['userno']
+                        . "\" rel=\"external\"><img src=\"./model/showuserimage.php?userno="
+                        . $eachmember['userno']
+                        . "\" onerror=\"this.src='img/noimage.svg';\" width=\"50px\" /></a></td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['userno']
+                        . "</td>";
+                    $str .= "<td class=\"memberprof\">" . h($eachmember['nickname'])
+                        . "</td>";
+                    $str .= "<td class=\"memberprof\">" . $eachmember['birthyear']
+                        . "</td>";
+                    $str .= "</tr>\n";
+                    echo $str;
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
         </br>
 
 

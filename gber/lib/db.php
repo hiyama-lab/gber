@@ -135,7 +135,7 @@ class DB {
     }
 
     public function getGroupNameRecords(){
-        $stmt = $this->pdo->prepare("SELECT groupname FROM groupnamelist");
+        $stmt = $this->pdo->prepare("SELECT groupno, groupname FROM groupnamelist");
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -189,6 +189,14 @@ class DB {
         return $stmt->fetchColumn() == 1 ? true : false;
     }
 
+    public function isSomeAdmin($userno){
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM grouplist WHERE userno = :userno and admin = 1");
+        $stmt->execute([
+            ':userno' => $userno,
+        ]);
+        return $stmt->fetchColumn() > 0 ? true : false;
+    }
+
     public function isGroupMember($userno, $groupno){
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM grouplist WHERE userno = :userno and groupno = :groupno");
         $stmt->execute([
@@ -208,7 +216,7 @@ class DB {
         ]);
     }
 
-    public function updateAccountWithoutPass($userno, $mail, $nickname){
+    public function updateAccountWithoutPass($userno, $mail, $nickname) {
         $stmt = $this->pdo->prepare("UPDATE db_user SET mail = :mail, nickname = :nickname WHERE userno = :userno");
         return $stmt->execute([
             ':userno' => $userno,
@@ -217,6 +225,123 @@ class DB {
         ]);
     }
 
+    public function getOngoingWork($groupno, $userno){
+        $stmt = $this->pdo->prepare("SELECT worklist.worktitle,worklist.content,worklist.workdatetime,worklist.id,workinterest.interest FROM worklist LEFT OUTER JOIN workinterest ON worklist.id = workinterest.workid AND workinterest.userno = :userno WHERE worklist.groupno = :groupno AND worklist.status='2' ORDER BY workinterest.interest LIMIT 100");
+        $stmt->execute([':groupno' => $groupno, ':userno' => $userno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getMatchingParamByUserno($userno){
+        $stmt = $this->pdo->prepare('SELECT * FROM matchingparam_human WHERE userno = :userno');
+        $stmt->execute(['userno' => $userno]);
+        $row = $stmt->fetch();
+        unset($row['matchingparamid']);
+        unset($row['userno']);
+        return array_values($row);
+    }
+
+    public function getMatchingParamByWorkid($workid, $groupno){
+        $stmt = $this->pdo->prepare('SELECT * FROM matchingparam_work WHERE workid = :workid AND groupno = :groupno');
+        $stmt->execute([
+            'workid' => $workid,
+            'groupno' => $groupno
+        ]);
+        $row = $stmt->fetch();
+        unset($row['matchingparamid']);
+        unset($row['groupno']);
+        unset($row['workid']);
+        return $row ? array_values($row) : [];
+    }
+
+    public function getTaggedWorksAll(){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM helplist WHERE id IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='0')");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getTaggedWorksGroup($groupno){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM worklist WHERE groupno = :groupno AND id IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno = :groupno) and status < 5");
+        $stmt->execute(['groupno' => $groupno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getUntaggedWorksAll(){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM helplist WHERE id NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno='0')");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getUntaggedWorksGroup($groupno){
+        $stmt = $this->pdo->prepare("SELECT worktitle,id FROM worklist WHERE groupno = :groupno AND id NOT IN (SELECT DISTINCT workid FROM matchingparam_work WHERE groupno = :groupno) and status < 5");
+        $stmt->execute(['groupno' => $groupno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getWorkDetailAll($workid){
+        $stmt = $this->pdo->prepare("SELECT worktitle, content FROM helplist WHERE id = :workid");
+        $stmt->execute(['workid' => $workid]);
+        return $stmt->fetch();
+    }
+
+    public function getWorkDetailGroup($workid){
+        $stmt = $this->pdo->prepare("SELECT worktitle, content FROM worklist WHERE id = :workid");
+        $stmt->execute(['workid' => $workid]);
+        return $stmt->fetch();
+    }
+
+    public function getAllWorktypes($groupno){
+        $stmt = $this->pdo->prepare("SELECT id, name FROM predefined_work WHERE groupno = :groupno");
+        $stmt->execute(['groupno' => $groupno]);
+        return $stmt->fetchAll();
+    }
+
+    public function getWorktypeById($worktypeid){
+        $stmt = $this->pdo->prepare("SELECT * FROM predefined_work WHERE id = :worktypeid");
+        $stmt->execute(['worktypeid' => $worktypeid]);
+        return $stmt->fetch();
+    }
+
+    public function insertMatchingParamWork($workp){
+        $stmt = $this->pdo->prepare("INSERT INTO matchingparam_work (groupno, workid, worktype_prune, worktype_agriculture, worktype_cleaning, worktype_housework, worktype_shopping, worktype_repair, worktype_caretaking, worktype_teaching, worktype_consulting, study_english, study_foreignlanguage, study_it, study_business, study_caretaking, study_housework, study_liberalarts, study_art, volunteer_health, volunteer_elderly, volunteer_disable, volunteer_children, volunteer_sport, volunteer_town, volunteer_safety, volunteer_nature, volunteer_disaster, volunteer_international, hobby_musicalinstrument, hobby_chorus, hobby_dance, hobby_shodo, hobby_kado, hobby_sado, hobby_wasai, hobby_knit, hobby_cooking, hobby_gardening, hobby_diy, hobby_painting, hobby_pottery, hobby_photo, hobby_writing, hobby_go, hobby_camp, hobby_watchsport, hobby_watchperformance, hobby_watchmovie, hobby_listenmusic, hobby_reading, hobby_pachinko, hobby_karaoke, hobby_game, hobby_attraction, hobby_train, hobby_car, trip_daytrip, trip_domestic, trip_international, sport_baseball, sport_tabletennis, sport_tennis, sport_badminton, sport_golf, sport_gateball, sport_bowling, sport_fishing, sport_swimming, sport_skiing, sport_climbing, sport_cycling, sport_jogging, sport_walking)
+ VALUES (:groupno, :workid, :worktype_prune, :worktype_agriculture, :worktype_cleaning, :worktype_housework, :worktype_shopping, :worktype_repair, :worktype_caretaking, :worktype_teaching, :worktype_consulting, :study_english, :study_foreignlanguage, :study_it, :study_business, :study_caretaking, :study_housework, :study_liberalarts, :study_art, :volunteer_health, :volunteer_elderly, :volunteer_disable, :volunteer_children, :volunteer_sport, :volunteer_town, :volunteer_safety, :volunteer_nature, :volunteer_disaster, :volunteer_international, :hobby_musicalinstrument, :hobby_chorus, :hobby_dance, :hobby_shodo, :hobby_kado, :hobby_sado, :hobby_wasai, :hobby_knit, :hobby_cooking, :hobby_gardening, :hobby_diy, :hobby_painting, :hobby_pottery, :hobby_photo, :hobby_writing, :hobby_go, :hobby_camp, :hobby_watchsport, :hobby_watchperformance, :hobby_watchmovie, :hobby_listenmusic, :hobby_reading, :hobby_pachinko, :hobby_karaoke, :hobby_game, :hobby_attraction, :hobby_train, :hobby_car, :trip_daytrip, :trip_domestic, :trip_international, :sport_baseball, :sport_tabletennis, :sport_tennis, :sport_badminton, :sport_golf, :sport_gateball, :sport_bowling, :sport_fishing, :sport_swimming, :sport_skiing, :sport_climbing, :sport_cycling, :sport_jogging, :sport_walking)");
+        return $stmt->execute($workp);
+    }
+
+    public function insertWorktype($worktype){
+        $stmt = $this->pdo->prepare("INSERT INTO predefined_work (groupno, name, worktype_prune, worktype_agriculture, worktype_cleaning, worktype_housework, worktype_shopping, worktype_repair, worktype_caretaking, worktype_teaching, worktype_consulting, study_english, study_foreignlanguage, study_it, study_business, study_caretaking, study_housework, study_liberalarts, study_art, volunteer_health, volunteer_elderly, volunteer_disable, volunteer_children, volunteer_sport, volunteer_town, volunteer_safety, volunteer_nature, volunteer_disaster, volunteer_international, hobby_musicalinstrument, hobby_chorus, hobby_dance, hobby_shodo, hobby_kado, hobby_sado, hobby_wasai, hobby_knit, hobby_cooking, hobby_gardening, hobby_diy, hobby_painting, hobby_pottery, hobby_photo, hobby_writing, hobby_go, hobby_camp, hobby_watchsport, hobby_watchperformance, hobby_watchmovie, hobby_listenmusic, hobby_reading, hobby_pachinko, hobby_karaoke, hobby_game, hobby_attraction, hobby_train, hobby_car, trip_daytrip, trip_domestic, trip_international, sport_baseball, sport_tabletennis, sport_tennis, sport_badminton, sport_golf, sport_gateball, sport_bowling, sport_fishing, sport_swimming, sport_skiing, sport_climbing, sport_cycling, sport_jogging, sport_walking) VALUES (:groupno, :name, :worktype_prune, :worktype_agriculture, :worktype_cleaning, :worktype_housework, :worktype_shopping, :worktype_repair, :worktype_caretaking, :worktype_teaching, :worktype_consulting, :study_english, :study_foreignlanguage, :study_it, :study_business, :study_caretaking, :study_housework, :study_liberalarts, :study_art, :volunteer_health, :volunteer_elderly, :volunteer_disable, :volunteer_children, :volunteer_sport, :volunteer_town, :volunteer_safety, :volunteer_nature, :volunteer_disaster, :volunteer_international, :hobby_musicalinstrument, :hobby_chorus, :hobby_dance, :hobby_shodo, :hobby_kado, :hobby_sado, :hobby_wasai, :hobby_knit, :hobby_cooking, :hobby_gardening, :hobby_diy, :hobby_painting, :hobby_pottery, :hobby_photo, :hobby_writing, :hobby_go, :hobby_camp, :hobby_watchsport, :hobby_watchperformance, :hobby_watchmovie, :hobby_listenmusic, :hobby_reading, :hobby_pachinko, :hobby_karaoke, :hobby_game, :hobby_attraction, :hobby_train, :hobby_car, :trip_daytrip, :trip_domestic, :trip_international, :sport_baseball, :sport_tabletennis, :sport_tennis, :sport_badminton, :sport_golf, :sport_gateball, :sport_bowling, :sport_fishing, :sport_swimming, :sport_skiing, :sport_climbing, :sport_cycling, :sport_jogging, :sport_walking)");
+        return $stmt->execute($worktype);
+    }
+
+    public function updateWorktype($worktype){
+        $stmt = $this->pdo->prepare("UPDATE predefined_work SET name = :name, worktype_prune = :worktype_prune, worktype_agriculture = :worktype_agriculture, worktype_cleaning = :worktype_cleaning, worktype_housework = :worktype_housework, worktype_shopping = :worktype_shopping, worktype_repair = :worktype_repair, worktype_caretaking = :worktype_caretaking, worktype_teaching = :worktype_teaching, worktype_consulting = :worktype_consulting, study_english = :study_english, study_foreignlanguage = :study_foreignlanguage, study_it = :study_it, study_business = :study_business, study_caretaking = :study_caretaking, study_housework = :study_housework, study_liberalarts = :study_liberalarts, study_art = :study_art, volunteer_health = :volunteer_health, volunteer_elderly = :volunteer_elderly, volunteer_disable = :volunteer_disable, volunteer_children = :volunteer_children, volunteer_sport = :volunteer_sport, volunteer_town = :volunteer_town, volunteer_safety = :volunteer_safety, volunteer_nature = :volunteer_nature, volunteer_disaster = :volunteer_disaster, volunteer_international = :volunteer_international, hobby_musicalinstrument = :hobby_musicalinstrument, hobby_chorus = :hobby_chorus, hobby_dance = :hobby_dance, hobby_shodo = :hobby_shodo, hobby_kado = :hobby_kado, hobby_sado = :hobby_sado, hobby_wasai = :hobby_wasai, hobby_knit = :hobby_knit, hobby_cooking = :hobby_cooking, hobby_gardening = :hobby_gardening, hobby_diy = :hobby_diy, hobby_painting = :hobby_painting, hobby_pottery = :hobby_pottery, hobby_photo = :hobby_photo, hobby_writing = :hobby_writing, hobby_go = :hobby_go, hobby_camp = :hobby_camp, hobby_watchsport = :hobby_watchsport, hobby_watchperformance = :hobby_watchperformance, hobby_watchmovie = :hobby_watchmovie, hobby_listenmusic = :hobby_listenmusic, hobby_reading = :hobby_reading, hobby_pachinko = :hobby_pachinko, hobby_karaoke = :hobby_karaoke, hobby_game = :hobby_game, hobby_attraction = :hobby_attraction, hobby_train = :hobby_train, hobby_car = :hobby_car, trip_daytrip = :trip_daytrip, trip_domestic = :trip_domestic, trip_international = :trip_international, sport_baseball = :sport_baseball, sport_tabletennis = :sport_tabletennis, sport_tennis = :sport_tennis, sport_badminton = :sport_badminton, sport_golf = :sport_golf, sport_gateball = :sport_gateball, sport_bowling = :sport_bowling, sport_fishing = :sport_fishing, sport_swimming = :sport_swimming, sport_skiing = :sport_skiing, sport_climbing = :sport_climbing, sport_cycling = :sport_cycling, sport_jogging = :sport_jogging, sport_walking = :sport_walking WHERE id = :id AND groupno = :groupno");
+        return $stmt->execute($worktype);
+    }
+
+    public function deleteWorktype($worktypeid){
+        if($this->getWorktypeById($worktypeid)){
+            $stmt = $this->pdo->prepare("DELETE FROM predefined_work WHERE id = :worktypeid");
+            return $stmt->execute(['worktypeid' => $worktypeid]);
+        }else{
+            return true;
+        }
+    }
+
+    public function getSocialQuestionnaireCount($userno){
+        $stmt = $this->pdo->prepare("SELECT answered FROM questionnaire_socialactivity WHERE userno = :userno");
+        $stmt->execute(['userno' => $userno]);
+        return $stmt->fetchColumn();
+    }
+
+    public function updateMatchingParamHuman($userno, $userp){
+        $stmt = $this->pdo->prepare("UPDATE matchingparam_human SET worktype_prune = :worktype_prune, worktype_agriculture = :worktype_agriculture, worktype_cleaning = :worktype_cleaning, worktype_housework = :worktype_housework, worktype_shopping = :worktype_shopping, worktype_repair = :worktype_repair, worktype_caretaking = :worktype_caretaking, worktype_teaching = :worktype_teaching, worktype_consulting = :worktype_consulting, study_english = :study_english, study_foreignlanguage = :study_foreignlanguage, study_it = :study_it, study_business = :study_business, study_caretaking = :study_caretaking, study_housework = :study_housework, study_liberalarts = :study_liberalarts, study_art = :study_art, volunteer_health = :volunteer_health, volunteer_elderly = :volunteer_elderly, volunteer_disable = :volunteer_disable, volunteer_children = :volunteer_children, volunteer_sport = :volunteer_sport, volunteer_town = :volunteer_town, volunteer_safety = :volunteer_safety, volunteer_nature = :volunteer_nature, volunteer_disaster = :volunteer_disaster, volunteer_international = :volunteer_international, hobby_musicalinstrument = :hobby_musicalinstrument, hobby_chorus = :hobby_chorus, hobby_dance = :hobby_dance, hobby_shodo = :hobby_shodo, hobby_kado = :hobby_kado, hobby_sado = :hobby_sado, hobby_wasai = :hobby_wasai, hobby_knit = :hobby_knit, hobby_cooking = :hobby_cooking, hobby_gardening = :hobby_gardening, hobby_diy = :hobby_diy, hobby_painting = :hobby_painting, hobby_pottery = :hobby_pottery, hobby_photo = :hobby_photo, hobby_writing = :hobby_writing, hobby_go = :hobby_go, hobby_camp = :hobby_camp, hobby_watchsport = :hobby_watchsport, hobby_watchperformance = :hobby_watchperformance, hobby_watchmovie = :hobby_watchmovie, hobby_listenmusic = :hobby_listenmusic, hobby_reading = :hobby_reading, hobby_pachinko = :hobby_pachinko, hobby_karaoke = :hobby_karaoke, hobby_game = :hobby_game, hobby_attraction = :hobby_attraction, hobby_train = :hobby_train, hobby_car = :hobby_car, trip_daytrip = :trip_daytrip, trip_domestic = :trip_domestic, trip_international = :trip_international, sport_baseball = :sport_baseball, sport_tabletennis = :sport_tabletennis, sport_tennis = :sport_tennis, sport_badminton = :sport_badminton, sport_golf = :sport_golf, sport_gateball = :sport_gateball, sport_bowling = :sport_bowling, sport_fishing = :sport_fishing, sport_swimming = :sport_swimming, sport_skiing = :sport_skiing, sport_climbing = :sport_climbing, sport_cycling = :sport_cycling, sport_jogging = :sport_jogging, sport_walking = :sport_walking WHERE userno = :userno");
+        return $stmt->execute(array_merge(['userno' => $userno], $userp));
+    }
+
+    public function getQuestionnaireSocial($userno){
+        $stmt = $this->pdo->prepare("SELECT * FROM questionnaire_socialactivity WHERE userno = :userno");
+        $stmt->execute(['userno' => $userno]);
+        return $stmt->fetch();
+    }
 }
 
 $db = DB::getInstance();

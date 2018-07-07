@@ -10,7 +10,7 @@ require_once __DIR__ . '/../lib/auth.php';
 $workdata = json_decode(file_get_contents('php://input'), true);
 
 require_logined_session();
-if (!authorize($_SESSION['userno'], ROLE['USER'], ['userno' => $workdata['workerno']])){
+if (!authorize($_SESSION['userno'], ROLE['GROUP_ADMIN_OR_USER'], ['userno' => $workdata['workerno'], 'groupno' => $workdata['groupno']])){
     http_response_code(403);
     exit;
 }

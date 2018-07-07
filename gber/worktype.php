@@ -13,7 +13,7 @@ require_logined_session();
     require_once __DIR__ . '/lib/db.php';
 
     $groupno = $_GET['groupno'];
-    $workid = $_GET['workid'];
+    $worktypeid = $_GET['worktypeid'];
 
     if (!authorize($_SESSION['userno'], ROLE['MASTER_OR_ADMIN'], ['groupno' => $groupno, 'isapi' => false])){
         echo "閲覧権限がありません";
@@ -21,18 +21,21 @@ require_logined_session();
     }
 
     $db = DB::getInstance();
-    $db->addToActivityLog($_SESSION['userno'], "worktag.php");
+    $db->addToActivityLog($_SESSION['userno'], "worktype.php");
 
-    $workdetail = array();
-    if ($groupno == 0) {
-        $workdetail = $db->getWorkDetailAll($workid);
-    } else {
-        $workdetail = $db->getWorkDetailGroup($workid);
-    }
-    $workp = $db->getMatchingParamByWorkid($workid, $groupno);
+    $workp = array_fill(0,72,0);
 
-    if(count($workp) == 0){
-        $workp = array_fill(0,72,0);
+    if($worktypeid !== null){
+        $worktype = $db->getWorktypeById($worktypeid);
+        if(!$worktype){
+            echo "不正なアクセスです";
+            exit;
+        }
+        $workp = $worktype;
+        unset($workp['id']);
+        unset($workp['groupno']);
+        unset($workp['name']);
+        $workp = array_values($workp);
     }
 
     function checked($flag){
@@ -48,16 +51,7 @@ require_logined_session();
 
     <!-- CONTENT -->
     <div data-role="content">
-        <h2><?php echo h($workdetail['worktitle']); ?></h2>
-        <p><?php echo nl2br(h($workdetail['content'])); ?></p>
-        <?php
-        if ($groupno == 0) {
-            echo "<p><a href=\"jobdetail.php?workid=" . $workid
-                . "\" rel=\"external\">詳細</a></p>";
-        } else {
-            //echo "<p><a href=\"quotation.php?groupno=".$groupno."&workid=".$workid."\" rel=\"external\">詳細</a></p>";
-        }
-        ?>
+        <h2>仕事タイプ作成・編集</h2>
         <form id="questionnaire_socialactivity"
               name="questionnaire_socialactivity">
             </br>
@@ -66,20 +60,15 @@ require_logined_session();
                 <input type="text" id="groupno" name="groupno"
                        value="<?php echo $groupno; ?>" readonly="readonly"
                        required/></br>
-                <label for="workid">ワークID</label>
-                <input type="text" id="workid" name="workid"
-                       value="<?php echo $workid; ?>" readonly="readonly"
-                       required/></br>
-                <label for="userno">ユーザID</label>
-                <input type="text" id="userno" name="userno"
-                       value="<?php echo $_SESSION['userno']; ?>"
+                <label for="worktyepid">ワークタイプID</label>
+                <input type="text" id="worktypeid" name="worktypeid"
+                       value="<?php echo $worktypeid; ?>"
                        readonly="readonly" required/></br>
             </div>
 
-
-            <p>当てはまるものにチェックを入れてください</p>
-            <p>※仕事/イベントと下記ジャンルに直接的な関連がなくても、<br>※下記のジャンルが好きな人は当該仕事/イベントに興味ありそうだと思われる場合は、<br>※チェックをつけるようにしてください。
-            </p>
+            <label for="name"><b>仕事タイプ</b></label>
+            <input type="text" id="name" size="50" name="name" placeholder="仕事タイプを入力してください"
+                   value="<?php echo $worktype['name'];?>" required/></br>
 
 
             <fieldset data-role="controlgroup" data-theme="c"
@@ -341,7 +330,7 @@ require_logined_session();
 
 
             <input type="button" value="登録する" data-theme="b" name="go"
-                   onClick="answerworktag();"/>
+                   onClick="registerWorktype();"/>
         </form>
     </div>
 
