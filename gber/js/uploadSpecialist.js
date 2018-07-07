@@ -144,7 +144,7 @@ function uploadData(){
         success: function(data){
             swal({
                 title: "成功",
-                text: "投稿しました。連絡いたしますのでしばらくお待ちください。",
+                text: "仕事を投稿し、管理者にメールで通知しました。",
                 type: "success"},
                 function(isConfirm){
                     if(isConfirm){
@@ -152,8 +152,22 @@ function uploadData(){
             }});
         },
         error: function(err){
-            console.log(err);
-            sweetAlert("エラー", "エラーのため依頼できませんでした", "error");
+            switch(err.responseText){
+                case "mail error":
+                    swal({
+                        title: "警告",
+                        text: "仕事の投稿は完了しましたが、管理者へのメール送信は失敗しました。",
+                        type: "warning"},
+                        function(isConfirm){
+                            if(isConfirm){
+                                window.location.href = "index.php";
+                            }
+                        });
+                    break;
+                default:
+                    sweetAlert("エラー", "エラーのため仕事を作成できませんでした", "error");
+                    break;
+            }
         }
     })}
 }

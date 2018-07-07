@@ -39,8 +39,6 @@ if($worktype != 0) {
     $db->insertMatchingParamWork($worktype);
 }
 
-echo $_GET['jsoncallback'] . '({"status":"succeed"});';
-
 //グループ管理者(たち)にメール送信
 $mailresults
     = mysql_query("SELECT mail, nickname FROM db_user WHERE userno IN (SELECT userno FROM grouplist WHERE groupno='"
@@ -49,18 +47,26 @@ $mailaddresses = array();
 while ($mailrows = mysql_fetch_assoc($mailresults)) {
     $mailaddresses[] = $mailrows;
 }
-foreach ($mailaddresses as $eachaddress) {
-    $mailto = $eachaddress['mail'];
-    $nickname = $eachaddress['nickname'];
-    $subject = $groupnamelist[$genre] . "グループに新規仕事登録のお知らせ";
-    $messageText = $nickname . "様\r\n" . $groupnamelist[$genre]
-        . "グループに新規で仕事が登録されましたので、管理者の方々にお知らせします。\r\n仕事タイトルは「" . $worktitle
-        . "」です。\r\nその仕事の責任者の方は、ログインして「②見積もり」から作業を行ってください。\r\n";
-    $messageHtml = $nickname . "様<br />" . $groupnamelist[$genre]
-        . "グループに新規で仕事が登録されましたので、管理者の方々にお知らせします。<br />仕事タイトルは「" . $worktitle
-        . "」です。<br />その仕事の責任者の方は、ログインして「②見積もり」から作業を行ってください。<br />";
-    sendEmail($baseurl, $subject, $messageText, $messageHtml, $mailto);
+
+try {
+    foreach ($mailaddresses as $eachaddress) {
+        $mailto = $eachaddress['mail'];
+        $nickname = $eachaddress['nickname'];
+        $subject = $groupnamelist[$genre] . "グループに新規仕事登録のお知らせ";
+        $messageText = $nickname . "様\r\n" . $groupnamelist[$genre]
+            . "グループに新規で仕事が登録されましたので、管理者の方々にお知らせします。\r\n仕事タイトルは「" . $worktitle
+            . "」です。\r\nその仕事の責任者の方は、ログインして「②見積もり」から作業を行ってください。\r\n";
+        $messageHtml = $nickname . "様<br />" . $groupnamelist[$genre]
+            . "グループに新規で仕事が登録されましたので、管理者の方々にお知らせします。<br />仕事タイトルは「" . $worktitle
+            . "」です。<br />その仕事の責任者の方は、ログインして「②見積もり」から作業を行ってください。<br />";
+        sendEmail($baseurl, $subject, $messageText, $messageHtml, $mailto);
+    }
+} catch (Exception $e) {
+    echo "mail error";
+    exit;
 }
+
+echo $_GET['jsoncallback'] . '({"status":"succeed"});';
 
 $activitylog
     = mysql_query("INSERT INTO activity_logs (userno, queryname, datetime) VALUES ('"
