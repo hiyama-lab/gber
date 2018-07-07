@@ -96,6 +96,9 @@ $ vi kubernetes/cert-custom/certificate.yaml
 $ kubectl create -f kubernetes/cert-custom/certificate.yaml
 # 登録されたsecretを確認
 $ kubectl get secret gber-cert -o yaml
+
+# gber.yamlの末尾4行のコメントアウトを外し、hostsに手順6で取得したドメインを設定する
+$ vi kubernetes/gber.yaml
 ```
  
 ### 8. デプロイ
@@ -150,7 +153,6 @@ $ helm init --upgrade --service-account tiller
 $ cd
 $ git clone https://github.com/jetstack/cert-manager
 $ cd cert-manager
-$ git checkout -b v0.2.3
 $ helm install --name cert-manager --namespace kube-system contrib/charts/cert-manager
 
 # issuer.yamlのemailにLet's Encryptから通知を受け取るメールアドレスを設定
@@ -164,10 +166,19 @@ $ vi kubernetes/cert-letsencrypt/certificate.yaml
 # certificateをdeploy（証明書を取得してsecretに登録）
 $ kubectl create -f kubernetes/cert-letsencrypt/certificate.yaml
 
-# デプロイに成功すると、gber-certシークレットに証明書と鍵が登録されます
+# 証明書を取得するのに10分程度かかります
+# この間にgber.yamlの末尾4行のコメントアウトを外し、hostsに手順6で取得したドメインを設定しておきます
+$ vi kubernetes/gber.yaml
+
+# 証明書取得に成功すると、gber-certシークレットに証明書と鍵が登録されます
 $ kubectl get secret gber-cert -o yaml 
 # certificateのログでも証明書が正常に取得できたことを確認できます
 $ kubectl describe certificate gber-cert
+
+# gber-certシークレットに証明書と鍵が登録されていることが確認できたら、ingressの設定を更新します
+$ kubectl apply -f kubernetes/gber.yaml
+
+# ingressの設定反映に5~10分程度かかります
 ```
 
 ### 10. 動作確認
