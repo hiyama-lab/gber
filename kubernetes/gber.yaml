@@ -144,8 +144,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: gber-static-ip
 spec:
-  tls:
-  - secretName: gber-cert
   backend:
     serviceName: nginx
     servicePort: 80
+#  tls:
+#  - secretName: gber-cert
+#    hosts:
+#    - foohogebar.tk
