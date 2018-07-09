@@ -4,7 +4,7 @@
 
 ## gberイメージのビルド
 
-gberは `gber-nginx`, `gber-php`, `gber-mysql` の3つのイメージで構成されています。  
+gberは `gber-nginx`, `gber-php`, `gber-mysql` の3つのイメージで構成されています。
 イメージのビルド方法は以下の通りです。
 
 ```bash
@@ -19,7 +19,7 @@ $ docker-compose build
 
 ## gberイメージの起動
 
-開発環境ではローカルの`gber`配下にあるファイル群をgber-nginx, gber-phpコンテナにマウントする形で起動します。  
+開発環境ではローカルの`gber`配下にあるファイル群をgber-nginx, gber-phpコンテナにマウントする形で起動します。
 そのため、初回起動時のみcomposerのinstallが必要です。正常にinstallが終了すると、ローカルに`gber/vendor`ディレクトリが生成されます。
 
 ```bash
@@ -31,7 +31,7 @@ $ docker exec -it gber_php_1 composer install
 
 ## gber-demoイメージのビルド
 
-gber-demoは `gber-demo` という1つのイメージで構成されています。  
+gber-demoは `gber-demo` という1つのイメージで構成されています。
 イメージのビルド方法は以下の通りです。
 
 ```bash

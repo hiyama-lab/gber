@@ -14,8 +14,8 @@ GBERを導入する前に、以下の作業を行ってください。
 
 ### 1. Google Cloud Shellの準備
 
-[Google Cloud Console](https://console.cloud.google.com)にアクセスし、使用するプロジェクトを選択します。  
-その後、右上の「Google Cloud Shellを有効化」のアイコンをクリックしShellを表示します。  
+[Google Cloud Console](https://console.cloud.google.com)にアクセスし、使用するプロジェクトを選択します。
+その後、右上の「Google Cloud Shellを有効化」のアイコンをクリックしShellを表示します。
 以後は画面下部に出現したShell上で作業を行います。
 
 ### 2. Kubernetesクラスタの作成
@@ -35,7 +35,7 @@ DBのパスワードやAPI Keyなどのcredential情報をGKEに登録します�
 ```bash
 $ git clone https://github.com/hiyama-lab/gber.git
 $ cd gber
-$ git checkout 1.0.3
+$ git checkout 1.1.0
 $ cp config/gber.env.example config/gber.env
 $ vi config/gber.env
 $ kubectl create secret generic gber-secrets --from-env-file config/gber.env
@@ -43,7 +43,7 @@ $ kubectl create secret generic gber-secrets --from-env-file config/gber.env
 
 ### 4. Persistent Diskの作成
 
-GBERのデータを永続化するためのDiskを用意します。  
+GBERのデータを永続化するためのDiskを用意します。
 ユーザ情報や仕事の情報などGBERのデータはこのDiskに保管され、kubernetes clusterが削除されてもこれらのデータは残ります。
 
 ```bash
@@ -78,10 +78,10 @@ gber-static-ip          35.190.37.204  RESERVED
 
 ### 7. SSL証明書の取得と設定（手動）
 
-この手順では、外部のSSL証明書プロバイダにおいて手動で取得したSSL証明書を設定します。  
+この手順では、外部のSSL証明書プロバイダにおいて手動で取得したSSL証明書を設定します。
 Let's Encryptを使ってSSL証明書を自動で発行・設定する場合はこの手順をskipし、手順8に進んでください。
 
-まずSSL証明書を取得します。SSL証明書の取得方法はSSL証明書プロバイダのサイトを参考にしてください。  
+まずSSL証明書を取得します。SSL証明書の取得方法はSSL証明書プロバイダのサイトを参考にしてください。
 SSL証明書が取得できたら、以下の手順で設定を行います。
 
 ```bash
@@ -100,7 +100,7 @@ $ kubectl get secret gber-cert -o yaml
 # gber.yamlの末尾4行のコメントアウトを外し、hostsに手順6で取得したドメインを設定する
 $ vi kubernetes/gber.yaml
 ```
- 
+
 ### 8. デプロイ
 
 GKE上にGBERをデプロイします。
@@ -132,10 +132,10 @@ gber-ingress   *         35.190.37.204   80        2m
 
 ### 9. SSL証明書の取得と設定（自動）
 
-この手順はLet's EncryptのSSL証明書を自動で設定する場合の手順です。  
+この手順はLet's EncryptのSSL証明書を自動で設定する場合の手順です。
 手順7で既にSSL証明書の設定をしている場合はスキップしてください。
 
-cert-managerを使って、Let's EncryptのSSL証明書を自動で取得してIngressに設定します。    
+cert-managerを使って、Let's EncryptのSSL証明書を自動で取得してIngressに設定します。
 設定の前に、あらかじめ取得したドメイン名がグローバルIPに解決される状態であることを確認してください（手順6）
 
 以下の手順でLet's EncryptのSSL証明書を設定します。
@@ -171,7 +171,7 @@ $ kubectl create -f kubernetes/cert-letsencrypt/certificate.yaml
 $ vi kubernetes/gber.yaml
 
 # 証明書取得に成功すると、gber-certシークレットに証明書と鍵が登録されます
-$ kubectl get secret gber-cert -o yaml 
+$ kubectl get secret gber-cert -o yaml
 # certificateのログでも証明書が正常に取得できたことを確認できます
 $ kubectl describe certificate gber-cert
 
@@ -183,11 +183,11 @@ $ kubectl apply -f kubernetes/gber.yaml
 
 ### 10. 動作確認
 
-ブラウザからIPアドレスまたはドメインにアクセスし、GBERのログイン画面が表示されることを確認します。  
+ブラウザからIPアドレスまたはドメインにアクセスし、GBERのログイン画面が表示されることを確認します。
 GKEの設定反映に5~10分程度要するため、手順8を実行してから10分以上経過したあとにアクセスしてください。
 
 ### 11. adminアカウントのメールアドレス・パスワードの変更（必須）
-GBERにはデフォルトで以下のadminアカウントが登録されています。  
+GBERにはデフォルトで以下のadminアカウントが登録されています。
 初回ログイン時にadminアカウントでログインし、必ずメールアドレスとパスワードを変更してください。
 
 |       | メールアドレス        | パスワード |

@@ -1,7 +1,7 @@
 <p align="center"><img src="gber.png" alt="GBER" width=230></p>
 
 <p align="center">
-<a href="https://github.com/hiyama-lab/gber/releases/tag/1.0.3"><img src="https://img.shields.io/badge/Version-v1.0.3-orange.svg" alt="Version"></a>
+<a href="https://github.com/hiyama-lab/gber/releases/tag/1.1.0"><img src="https://img.shields.io/badge/Version-v1.1.0-orange.svg" alt="Version"></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
